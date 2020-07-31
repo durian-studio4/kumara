@@ -1,0 +1,74 @@
+@import '~antd/es/style/themes/default.less';
+
+.main {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  // @media screen and (max-width: @screen-sm) {
+  //   width: 95%;
+  // }
+
+  .left_background {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: auto;
+    background-color: #68adfa;
+    color: white;
+    line-height: 1.3em;
+    padding-left: 5%;
+    width: 50%;
+    height: 100%;
+  }
+
+  .right_background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10% 5%;
+    width: 50%;
+    max-width: 50%;
+  }
+
+  .icon {
+    margin-left: 16px;
+    color: @text-color-secondary;
+    font-size: 24px;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: @primary-color;
+    }
+  }
+
+  .title {
+    font-size: 1.5em;
+    font-weight: 400;
+    margin-bottom: 5%;
+  }
+
+  .p_error {
+    color: red;
+    margin-top: 1em;
+    margin-left: 1em;
+  }
+
+  :global {
+    .antd-pro-login-submit {
+      width: 100%;
+      margin-top: 24px;
+    }
+  }
+}
+
+// export const StyledP = styled.p`
+//   color: ${(props) => props.color};
+//   font-size: ${(props) => props.size};
+//   font-weight: ${(props) => props.weight};
+//   margin-top: ${(props) => props.top};
+//   margin-bottom: ${(props) => props.bottom};
+//   margin-left: ${(props) => props.left};
+// `

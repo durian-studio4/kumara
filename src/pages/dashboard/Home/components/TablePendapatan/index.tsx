@@ -42,9 +42,13 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang }) => {
       },
       {
         align: 'center',
-        title: 'Cash',
+        title: 'Cash Laci',
         key: 'cash',
         dataIndex: 'cash',
+      },
+      {
+        align: 'center',
+        title: 'Cash Masuk',
       },
       {
         align: 'center',
@@ -63,13 +67,19 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang }) => {
   );
 
   if (Boolean(error)) {
-    return <PageError status={status} />;
+    return (
+      <div>
+        <PageError status={status} />
+      </div>
+    );
   }
 
   return (
     <div>
       <p className={styles.title}>Kategori Pendapatan</p>
-      <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+      </div>
     </div>
   );
 };

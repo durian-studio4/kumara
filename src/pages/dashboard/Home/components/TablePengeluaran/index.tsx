@@ -51,13 +51,19 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang }) => {
   );
 
   if (Boolean(error)) {
-    return <PageError status={status} />;
+    return (
+      <div>
+        <PageError status={status} />
+      </div>
+    );
   }
 
   return (
     <div>
       <p className={styles.title}>Kategori Pengeluaran</p>
-      <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+      </div>
     </div>
   );
 };

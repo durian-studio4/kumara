@@ -55,7 +55,9 @@ const TableRetur: React.FC<Props> = () => {
         <FormattedMessage id="retur-sales" defaultMessage="Retur Sales" />
       </div>
       {/* <p className={styles.title}>Retur Sales</p> */}
-      <Table columns={columns} dataSource={data} loading={Boolean(loading)} />
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />
+      </div>
     </div>
   );
 };

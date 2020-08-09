@@ -81,10 +81,20 @@ const TableRetur: React.FC<Props> = ({
           <>
             {props.status_pembayaran === 0 ? (
               <Row justify="space-around">
-                <Button id={props.id} onClick={handleVisibleConfirm} type="primary">
+                <Button
+                  className={styles.button}
+                  id={props.id}
+                  onClick={handleVisibleConfirm}
+                  type="primary"
+                >
                   Selesai
                 </Button>
-                <Button onClick={() => cancel(props.id)} type="primary" danger>
+                <Button
+                  className={styles.button}
+                  onClick={() => cancel(props.id)}
+                  type="primary"
+                  danger
+                >
                   Batal
                 </Button>
               </Row>
@@ -114,7 +124,9 @@ const TableRetur: React.FC<Props> = ({
   return (
     <div>
       <p className={styles.title}>List Pembayaran Tempo</p>
-      <Table columns={columns} dataSource={data} loading={loading} />
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={loading} />
+      </div>
     </div>
   );
 };

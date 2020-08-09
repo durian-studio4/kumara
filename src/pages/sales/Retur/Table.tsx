@@ -57,7 +57,11 @@ const TableRetur: React.FC<Props> = ({ data, loading, status, error }) => {
     return <PageError status={status} />;
   }
 
-  return <Table columns={columns} dataSource={data} loading={loading} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} dataSource={data} loading={loading} />;
+    </div>
+  );
 };
 
 export default TableRetur;

@@ -59,7 +59,11 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
     return <h1>Something went wrong!</h1>;
   }
 
-  return <Table columns={columns} dataSource={data} loading={loading} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} dataSource={data} loading={loading} />;
+    </div>
+  );
 };
 
 export default TableComponent;

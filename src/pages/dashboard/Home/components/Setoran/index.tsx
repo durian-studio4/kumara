@@ -31,7 +31,9 @@ const Setoran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
       <div className={styles.title} style={{ marginBottom: '2rem' }}>
         <FormattedMessage id="setoran" defaultMessage="Setoran" />
       </div>
-      <Table data={data} isLoading={Boolean(loading)} status={Number(status)} isError={error} />
+      <div style={{ overflow: 'auto' }}>
+        <Table data={data} isLoading={Boolean(loading)} status={Number(status)} isError={error} />
+      </div>
     </Col>
   );
 };

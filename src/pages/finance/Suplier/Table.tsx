@@ -10,7 +10,6 @@ interface Props {
   loading: boolean;
   status: number;
   error: boolean;
-  cancel: (id: string) => void;
   handleVisibleConfirm: (id: any) => void;
   handleVisibleUpdate: (id: any) => void;
 }
@@ -46,9 +45,21 @@ const TableComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
+        title: 'Nama Barang',
+        dataIndex: 'nama_barang',
+        ...getColumnSearchProps('nama_barang'),
+      },
+      {
+        align: 'center',
+        title: 'Satuan Barang',
+        dataIndex: 'satuan_barang',
+        ...getColumnSearchProps('satuan_barang'),
+      },
+      {
+        align: 'center',
         title: 'Detail Barang',
-        render: (props: any) => (
-          <Button type="primary" id={props.id} onClick={handleVisibleUpdate}>
+        render: ({ id }: any) => (
+          <Button type="primary" onClick={() => handleVisibleUpdate(id)}>
             Detail
           </Button>
         ),
@@ -89,7 +100,9 @@ const TableComponent: React.FC<Props> = ({
         <p className={styles.title}>Suplier</p>
         <p className={styles.title_add}>Approve</p>
       </Row>
-      <Table columns={columns} dataSource={data} loading={loading} />
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={loading} />
+      </div>
     </div>
   );
 };

@@ -35,11 +35,19 @@ const TableComponent: React.FC<Props> = ({ data, status, isError, isLoading }) =
     [],
   );
 
-  if (isError) {
-    return <PageError status={status} />;
+  if (Boolean(isError)) {
+    return (
+      <div>
+        <PageError status={status} />
+      </div>
+    );
   }
 
-  return <Table columns={columns} dataSource={data} loading={isLoading} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} dataSource={data} loading={isLoading} />;
+    </div>
+  );
 };
 
 export default TableComponent;

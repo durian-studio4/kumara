@@ -12,21 +12,26 @@ function App() {
 
   const handleFetch = async (url: string) => {
     setLoading(true);
-    try {
-      const fetching = await fetch(url, {
-        headers: {
-          Authorization: String(token),
-        },
-      });
-      const json = await fetching.json();
-      const result = await json;
-      setData(result.data);
-      setStatus(result.status_code);
+    if (token) {
+      try {
+        const fetching = await fetch(url, {
+          headers: {
+            Authorization: String(token),
+          },
+        });
+        const json = await fetching.json();
+        const result = await json;
+        setData(result.data);
+        setStatus(result.status_code);
+        setLoading(false);
+        setIsError(false);
+      } catch (err) {
+        setLoading(false);
+        setIsError(true);
+      }
+    } else {
       setLoading(false);
-      setIsError(false);
-    } catch (err) {
-      setLoading(false);
-      setIsError(true);
+      return false;
     }
   };
 

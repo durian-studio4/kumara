@@ -26,8 +26,12 @@ const TotalOmset: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_cabang, id_kategori, date]);
 
-  if (status !== 200 || error) {
-    return <PageError status={status} />;
+  if (error) {
+    return (
+      <div>
+        <PageError status={status} />
+      </div>
+    );
   }
 
   return (

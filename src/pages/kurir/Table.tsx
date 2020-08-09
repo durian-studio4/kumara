@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
+import { Table, Button, Row } from 'antd';
 import styles from './index.less';
-import { Table, Button } from 'antd';
 
 import PageError from '@/components/PageError';
 import useFilterColumn from '@/hooks/useFilterColumn';
@@ -12,6 +12,7 @@ interface Props {
   status: number;
   loading: boolean;
   isError: any;
+  handleVisibleAdd: () => void;
   handleEditDetail: (id: string) => void;
   handleUpdateDetail: (id: string) => void;
   handleDownloadDetail: ({ id, sales }: ExcelProps) => void;
@@ -22,6 +23,7 @@ const TableKurir: React.FC<Props> = ({
   status,
   loading,
   isError,
+  handleVisibleAdd,
   handleEditDetail,
   handleUpdateDetail,
   handleDownloadDetail,
@@ -109,9 +111,16 @@ const TableKurir: React.FC<Props> = ({
   }
 
   return (
-    <div>
-      <p className={styles.title}>List Pengiriman Hari Ini</p>
-      <Table columns={columns} dataSource={data} loading={loading} />
+    <div style={{ marginTop: '2em' }}>
+      <Row justify="space-between">
+        <p className={styles.title}>List Pengiriman Hari Ini</p>
+        <p className={styles.title_add} onClick={handleVisibleAdd}>
+          + Tambah
+        </p>
+      </Row>
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={loading} />
+      </div>
     </div>
   );
 };

@@ -74,6 +74,10 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
 
   const onClearState = () => {
     setState({ ...initialState });
+    onClearSatuan();
+    onClearBarang();
+    onClearQty();
+    onCancel();
   };
 
   const createRetur = () => {

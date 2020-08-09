@@ -59,7 +59,9 @@ const TablePiutang: React.FC<Props> = () => {
       <div className={styles.title} style={{ marginBottom: '2rem' }}>
         <FormattedMessage id="piutang-sales" defaultMessage="Piutang Sales" />
       </div>
-      <Table columns={columns} dataSource={data} loading={Boolean(loading)} />
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />
+      </div>
     </div>
   );
 };

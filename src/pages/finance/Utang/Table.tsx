@@ -65,6 +65,13 @@ const TableComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
+        title: 'Satuan Barang',
+        key: 'satuan_barang',
+        dataIndex: 'satuan_barang',
+        ...getColumnSearchProps('satuan_barang'),
+      },
+      {
+        align: 'center',
         title: 'Harga / Satuan',
         qty: 'harga',
         dataIndex: 'harga',
@@ -124,7 +131,11 @@ const TableComponent: React.FC<Props> = ({
     return <PageError status={status} />;
   }
 
-  return <Table columns={columns} dataSource={data} loading={loading} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} dataSource={data} loading={loading} />;
+    </div>
+  );
 };
 
 export default TableComponent;

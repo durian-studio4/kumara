@@ -45,9 +45,8 @@ const SetoranComponent: React.FC<Props> = () => {
     setVisibleConfirm(!visible_confirm);
   };
 
-  const handleVisibleUpdate = (e: any) => {
-    const { id } = e.target;
-    setIdUpdate(id);
+  const handleVisibleUpdate = (id: string) => {
+    setIdUpdate(Number(id));
     setVisibleUpdate(!visible_update);
   };
 

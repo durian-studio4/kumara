@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { Table } from 'antd';
+import { Table, Row, Button } from 'antd';
+import styles from './index.less';
 
 import useFilterColumn from '@/hooks/useFilterColumn';
 import PageError from '@/components/PageError';
@@ -50,6 +51,45 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
         dataIndex: 'nama_suplier',
         ...getColumnSearchProps('nama_suplier'),
       },
+      {
+        align: 'center',
+        title: 'Status Pembayaran',
+        key: 'status_pembayaran',
+        render: (props: any) => (
+          <>
+            {props.status_pembayaran === 0 ? (
+              <Row justify="space-around">
+                <Button
+                  className={styles.button}
+                  id={props.id}
+                  // onClick={handleVisibleConfirm}
+                  type="primary"
+                >
+                  Selesai
+                </Button>
+                <Button
+                  className={styles.button}
+                  // onClick={() => cancel(props.id)}
+                  type="primary"
+                  danger
+                >
+                  Batal
+                </Button>
+              </Row>
+            ) : null}
+            {props.status_pembayaran === 1 ? (
+              <p className={styles.p} style={{ color: '#1890ff' }}>
+                Selesai
+              </p>
+            ) : null}
+            {props.status_pembayaran === 2 ? (
+              <p className={styles.p} style={{ color: '#ff4d4f' }}>
+                Batal
+              </p>
+            ) : null}
+          </>
+        ),
+      },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -59,7 +99,11 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
     return <PageError status={status} />;
   }
 
-  return <Table columns={columns} dataSource={data} loading={loading} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} dataSource={data} loading={loading} />;
+    </div>
+  );
 };
 
 export default TableComponent;

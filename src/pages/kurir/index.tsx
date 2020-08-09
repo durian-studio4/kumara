@@ -7,6 +7,7 @@ import ChartKurir from './Chart';
 import TableKurir from './Table';
 import UpdateKurir from './Update';
 import DetailKurir from './Detail';
+import AddKurir from './Add';
 
 import useFetch from '@/hooks/useFetch';
 import useCreate from '@/hooks/useCreate';
@@ -30,6 +31,8 @@ const KurirComponent: React.FC<Props> = () => {
   const [visible_detail, setDetail] = useState(false);
   const [id_detail, setIdDetail] = useState(0);
 
+  const [visible_add, setVisibleAdd] = useState(false);
+
   const [data_chart, status_chart, loading_chart, error_chart, fetchChart] = useFetch();
 
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
@@ -51,6 +54,8 @@ const KurirComponent: React.FC<Props> = () => {
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status_update]);
+
+  const handleVisibleAdd = () => setVisibleAdd(!visible_add);
 
   const handleVisibleDetail = () => setDetail(!visible_detail);
 
@@ -118,10 +123,13 @@ const KurirComponent: React.FC<Props> = () => {
         status={Number(status_list)}
         loading={Boolean(loading_list)}
         isError={error_list}
+        handleVisibleAdd={handleVisibleAdd}
         handleEditDetail={handleDetail}
         handleUpdateDetail={handleUpdate}
         handleDownloadDetail={downloadExcel}
       />
+
+      {visible_add ? <AddKurir visible={visible_add} onCancel={handleVisibleAdd} /> : null}
 
       {visible_update ? (
         <UpdateKurir

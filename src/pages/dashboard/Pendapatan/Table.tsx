@@ -72,7 +72,9 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date }) => {
   return (
     <div>
       <p className={styles.title}>Kategori Pendapatan</p>
-      <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+      </div>
     </div>
   );
 };

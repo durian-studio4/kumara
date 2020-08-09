@@ -59,7 +59,9 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
   return (
     <Card style={{ height: '50%', width: '45%' }}>
       <p className={styles.title}>Pengeluaran Operational</p>
-      <Table columns={columns} dataSource={data} loading={loading} />
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data} loading={loading} />
+      </div>
     </Card>
   );
 };

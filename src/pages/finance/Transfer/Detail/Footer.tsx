@@ -20,7 +20,7 @@ const FooterComponent: React.FC<Props> = () => {
       <div>
         <div>
           <p style={{ textAlign: 'center' }}>Hormat kami,</p>
-          <p style={{ textAlign: 'center' }}>Argi Medical</p>
+          <p style={{ textAlign: 'center' }}>Kumara Medical</p>
         </div>
       </div>
     </Fragment>

@@ -46,6 +46,12 @@ const TableComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
+        title: 'Total',
+        dataIndex: 'total',
+        ...getColumnSearchProps('total'),
+      },
+      {
+        align: 'center',
         title: 'Detail Barang',
         render: ({ id }: any) => (
           <Button type="primary" className={styles.button} onClick={() => handleVisibleUpdate(id)}>
@@ -79,7 +85,11 @@ const TableComponent: React.FC<Props> = ({
     return <PageError status={status} />;
   }
 
-  return <Table columns={columns} loading={loading} dataSource={data} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} loading={loading} dataSource={data} />;
+    </div>
+  );
 };
 
 export default TableComponent;

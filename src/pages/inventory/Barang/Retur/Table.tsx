@@ -53,7 +53,11 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
     return <PageError status={status} />;
   }
 
-  return <Table columns={columns} loading={loading} dataSource={data} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} loading={loading} dataSource={data} />;
+    </div>
+  );
 };
 
 export default TableComponent;

@@ -31,7 +31,11 @@ const TableComponent: React.FC<Props> = ({ data, loading }) => {
     [],
   );
 
-  return <Table columns={columns} dataSource={data} loading={loading} />;
+  return (
+    <div style={{ overflow: 'auto' }}>
+      <Table columns={columns} dataSource={data} loading={loading} />;
+    </div>
+  );
 };
 
 export default TableComponent;

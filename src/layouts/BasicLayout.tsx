@@ -2,7 +2,6 @@ import ProLayout, {
   MenuDataItem,
   BasicLayoutProps as ProLayoutProps,
   Settings,
-  SettingDrawer,
 } from '@ant-design/pro-layout';
 import React from 'react';
 import { Link, useIntl, connect, Dispatch } from 'umi';
@@ -118,15 +117,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           {children}
         </Authorized>
       </ProLayout>
-      <SettingDrawer
-        settings={settings}
-        onSettingChange={(config) =>
-          dispatch({
-            type: 'settings/changeSetting',
-            payload: config,
-          })
-        }
-      />
     </>
   );
 };

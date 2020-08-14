@@ -35,6 +35,7 @@ const TableComponent: React.FC<Props> = ({
             <tr>
               <th>Nama Barang</th>
               <th>Unit</th>
+              <th>Satuan</th>
               <th>Harga</th>
               <th>Jumlah</th>
               <th>Diskon</th>
@@ -49,6 +50,7 @@ const TableComponent: React.FC<Props> = ({
                 <tr key={i}>
                   <td>{item.nama_barang}</td>
                   <td>{item.qty}</td>
+                  <td>{item.satuan_barang}</td>
                   <td>{item.harga}</td>
                   <td>{item.jumlah}</td>
                   <td>{Math.ceil(item.diskon).toLocaleString('id')}</td>

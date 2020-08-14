@@ -7,12 +7,22 @@ const { RangePicker } = DatePicker;
 
 interface Props {
   handleChange: () => void;
+  id_kategori: string;
 }
 
-const DatePickerComponent: React.FC<Props> = ({ handleChange }) => {
+const DatePickerComponent: React.FC<Props> = ({ handleChange, id_kategori }) => {
   return (
     <div>
-      <RangePicker className={styles.main} onChange={handleChange} format="YYYY-MM-DD HH:mm:ss" />
+      {id_kategori === '2' ? (
+        <RangePicker
+          className={styles.main}
+          onChange={handleChange}
+          format="YYYY-MM-DD HH:mm:ss"
+          picker="month"
+        />
+      ) : (
+        <RangePicker className={styles.main} onChange={handleChange} format="YYYY-MM-DD HH:mm:ss" />
+      )}
     </div>
   );
 };

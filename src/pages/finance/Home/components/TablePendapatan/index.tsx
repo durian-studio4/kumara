@@ -7,21 +7,22 @@ import PageError from '@/components/PageError';
 
 interface Props {
   id_cabang: string;
-  id_kategori: string;
+  id_kategori: number;
+  date: string[];
 }
 
-const TablePendapatan: React.FC<Props> = ({ id_cabang, id_kategori }) => {
+const TablePendapatan: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   const [data, status, isLoading, error, fetchList] = useFetch();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(
-        `${REACT_APP_ENV}/admin/v1/finance/dashboard/kategori/pendapatan?id_cabang=${id_cabang}&kategori=${id_kategori}`,
+        `${REACT_APP_ENV}/admin/v1/finance/dashboard/kategori/pendapatan?id_cabang=${id_cabang}&kategori=${id_kategori}&start_date=${date[0]}&end_date=${date[1]}`,
       );
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_cabang]);
+  }, [id_cabang, id_kategori, date]);
 
   const columns = useMemo(
     () => [
@@ -73,7 +74,7 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, id_kategori }) => {
     <div>
       <p className={styles.title}>Kategori Pendapatan</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={Boolean(isLoading)} />
+        <Table columns={columns} dataSource={data.detail} loading={Boolean(isLoading)} />
       </div>
     </div>
   );

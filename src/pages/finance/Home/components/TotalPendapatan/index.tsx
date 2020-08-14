@@ -18,12 +18,12 @@ import PageError from '@/components/PageError';
 import PageLoading from '@/components/PageLoading';
 
 interface Props {
-  date: string[];
   id_cabang: string;
-  id_kategori: string;
+  id_kategori: number;
+  date: string[];
 }
 
-const TotalPendapatan: React.FC<Props> = ({ date, id_cabang, id_kategori }) => {
+const TotalPendapatan: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   const [data_chart, status_chart, loading_chart, error_chart, fetchChart] = useFetch();
 
   useEffect(() => {

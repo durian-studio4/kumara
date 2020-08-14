@@ -33,7 +33,7 @@ const HomeComponent: React.FC<Props> = () => {
   const [date, setDate] = useState([firstDay, lastDay]);
 
   const onChangeDate = (date: any, dateString: any) => {
-    setDate(dateString);
+    setDate([dateString[0] || '', dateString[1] || '']);
   };
 
   return (
@@ -45,7 +45,7 @@ const HomeComponent: React.FC<Props> = () => {
           address={`${REACT_APP_ENV}/admin/v1/pengaturan/cabang/get`}
           handleChange={onChangeCabang}
         />
-        <DatePicker handleChange={onChangeDate} />
+        <DatePicker handleChange={onChangeDate} id_kategori={String(kategori)} />
       </div>
       <React.Fragment>
         <Suspense fallback={<PageLoading />}>
@@ -57,26 +57,26 @@ const HomeComponent: React.FC<Props> = () => {
             }}
           >
             <Row gutter={68}>
-              <TotalOmset id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
-              <Setoran id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
+              <TotalOmset id_cabang={String(cabang)} id_kategori={Number(kategori)} date={date} />
+              <Setoran id_cabang={String(cabang)} id_kategori={Number(kategori)} date={date} />
             </Row>
             <Row gutter={68}>
               <TotalPendapatan
                 id_cabang={String(cabang)}
-                id_kategori={String(kategori)}
+                id_kategori={Number(kategori)}
                 date={date}
               />
               <TotalPengeluaran
                 id_cabang={String(cabang)}
-                id_kategori={String(kategori)}
+                id_kategori={Number(kategori)}
                 date={date}
               />
             </Row>
           </Card>
         </Suspense>
       </React.Fragment>
-      <TablePendapatan id_cabang={String(cabang)} id_kategori={String(kategori)} />
-      <TablePengeluaran id_cabang={String(cabang)} id_kategori={String(kategori)} />
+      <TablePendapatan id_cabang={String(cabang)} id_kategori={Number(kategori)} date={date} />
+      <TablePengeluaran id_cabang={String(cabang)} id_kategori={Number(kategori)} date={date} />
     </GridContent>
   );
 };

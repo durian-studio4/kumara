@@ -290,6 +290,12 @@ export default defineConfig({
                   path: '/master/suplier',
                   component: './master/Suplier',
                 },
+                {
+                  name: 'Data Notifikasi',
+                  icon: 'fileText',
+                  path: '/master/notifikasi',
+                  component: './master/Notifikasi',
+                },
               ],
             },
             // {

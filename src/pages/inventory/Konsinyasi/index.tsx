@@ -33,6 +33,18 @@ const KonsinyasiComponent: React.FC<Props> = () => {
     postList(`${REACT_APP_ENV}/admin/v1/inventory/konsinyasi`, json, clear);
   };
 
+  const deleteKonsinyasi = (id: string) => {
+    const JSONData = JSON.stringify({ done: 'done' });
+    const clear = () => console.log('clear');
+    postList(`${REACT_APP_ENV}/admin/v1/inventory/konsiyansi/${id}/delete`, JSONData, clear);
+  };
+
+  const selesaiKonsinyasi = (id: string) => {
+    const JSONData = JSON.stringify({ done: 'done' });
+    const clear = () => console.log('clear');
+    postList(`${REACT_APP_ENV}/admin/v1/inventory/konsiyansi/${id}`, JSONData, clear);
+  };
+
   return (
     <div>
       <p className={styles.title}>Konsinyasi</p>
@@ -47,6 +59,8 @@ const KonsinyasiComponent: React.FC<Props> = () => {
         loading={Boolean(loading_list)}
         status={Number(status_list)}
         error={error_list}
+        onDelete={deleteKonsinyasi}
+        onSelesai={selesaiKonsinyasi}
       />
       {visible ? (
         <AddComponent

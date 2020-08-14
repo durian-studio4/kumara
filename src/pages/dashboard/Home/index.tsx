@@ -33,7 +33,7 @@ const HomeComponent: React.FC<Props> = () => {
   const [date, setDate] = useState([firstDay, lastDay]);
 
   const onChangeDate = (date: any, dateString: any) => {
-    setDate(dateString);
+    setDate([dateString[0] || '', dateString[1] || '']);
   };
 
   return (
@@ -45,7 +45,7 @@ const HomeComponent: React.FC<Props> = () => {
           address={`${REACT_APP_ENV}/admin/v1/pengaturan/cabang/get`}
           handleChange={onChangeCabang}
         />
-        <DatePicker handleChange={onChangeDate} />
+        <DatePicker handleChange={onChangeDate} id_kategori={String(kategori)} />
       </div>
       <React.Fragment>
         <Suspense fallback={<PageLoading />}>
@@ -75,8 +75,8 @@ const HomeComponent: React.FC<Props> = () => {
           </Card>
         </Suspense>
       </React.Fragment>
-      <TablePendapatan id_cabang={String(cabang)} />
-      <TablePengeluaran id_cabang={String(cabang)} />
+      <TablePendapatan id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
+      <TablePengeluaran id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
     </GridContent>
   );
 };

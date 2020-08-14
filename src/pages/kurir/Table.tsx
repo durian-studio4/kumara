@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Table, Button, Row } from 'antd';
+import { Table, Button, Row, Tag } from 'antd';
 import styles from './index.less';
 
 import PageError from '@/components/PageError';
@@ -34,9 +34,9 @@ const TableKurir: React.FC<Props> = ({
     () => [
       {
         align: 'center',
-        title: 'No',
-        dataIndex: 'id',
-        ...getColumnSearchProps('id'),
+        title: 'Tanggal',
+        dataIndex: 'tanggal',
+        ...getColumnSearchProps('tanggal'),
       },
       {
         align: 'center',
@@ -54,20 +54,14 @@ const TableKurir: React.FC<Props> = ({
       },
       {
         align: 'center',
-        render: ({ id, status_pengiriman }: any) => (
-          <Button onClick={() => handleEditDetail(id)} type="primary" disabled={status_pengiriman}>
-            Detail Tujuan
-          </Button>
-        ),
-      },
-      {
-        align: 'center',
-        title: 'Detail Pengiriman',
+        title: 'Detail Barang',
         dataIndex: 'barang',
         render: (props: any) => {
-          return props.map((item, i) => {
-            return <div key={i}>{item.nama_barang}</div>;
-          });
+          return props.map((item, i) => (
+            <Tag color="blue" key={i}>
+              {item.nama_barang}
+            </Tag>
+          ));
         },
       },
       {
@@ -98,6 +92,14 @@ const TableKurir: React.FC<Props> = ({
             disabled={!status_pengiriman}
           >
             Print
+          </Button>
+        ),
+      },
+      {
+        align: 'center',
+        render: ({ id, status_pengiriman }: any) => (
+          <Button onClick={() => handleEditDetail(id)} type="primary" disabled={status_pengiriman}>
+            Detail Tujuan
           </Button>
         ),
       },

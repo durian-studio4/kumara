@@ -40,6 +40,10 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
           <Row style={{ marginTop: '1em' }}>
             <Table data={data} />
           </Row>
+          <Row style={{ marginTop: '0.5em' }}>
+            <p>Keterangan :</p>
+            <p>{data.keterangan}</p>
+          </Row>
         </div>
       )}
       <Row style={{ marginTop: '1em' }} justify="space-between">

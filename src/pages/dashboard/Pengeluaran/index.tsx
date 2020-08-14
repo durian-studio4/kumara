@@ -27,7 +27,7 @@ const PengeluaranComponent: React.FC<Props> = () => {
   const [date, setDate] = useState([firstDay, lastDay]);
 
   const onChangeDate = (date: any, dateString: any) => {
-    setDate(dateString);
+    setDate([format(date[0]._d, 'dd-MM-yyyy'), format(date[1]._d, 'dd-MM-yyyy')]);
   };
 
   return (
@@ -42,7 +42,7 @@ const PengeluaranComponent: React.FC<Props> = () => {
         <DatePicker handleChange={onChangeDate} />
       </div>
       <ChartPengeluaran id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
-      <TablePengeluaran id_cabang={String(cabang)} date={date} />
+      <TablePengeluaran id_cabang={String(cabang)} kategori={String(kategori)} />
     </GridContent>
   );
 };

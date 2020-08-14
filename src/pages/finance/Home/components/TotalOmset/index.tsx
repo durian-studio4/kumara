@@ -8,9 +8,9 @@ import PageError from '@/components/PageError';
 import PageLoading from '@/components/PageLoading';
 
 interface Props {
-  date: string[];
   id_cabang: string;
-  id_kategori: string;
+  id_kategori: number;
+  date: string[];
 }
 
 const TotalOmset: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
@@ -19,7 +19,7 @@ const TotalOmset: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(
-        `${REACT_APP_ENV}/admin/v1/dashboard/total?id_cabang=${id_cabang}&kategori=${id_kategori}`,
+        `${REACT_APP_ENV}/admin/v1/dashboard/total?id_cabang=${id_cabang}&kategori=${id_kategori}&start_date=${date[0]}&end_date=${date[1]}`,
       );
     }, 0);
     return () => clearTimeout(timeOut);

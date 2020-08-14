@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Col } from 'antd';
 import { FormattedMessage } from 'umi';
-import styles from '../index.less';
+import styles from '../../index.less';
 
 import useFetch from '@/hooks/useFetch';
 import PageError from '@/components/PageError';

@@ -11,7 +11,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import styles from '../index.less';
+import styles from '../../index.less';
 
 import useFetch from '@/hooks/useFetch';
 import PageLoading from '@/components/PageLoading';

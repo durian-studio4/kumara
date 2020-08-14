@@ -9,9 +9,9 @@ import useFetch from '@/hooks/useFetch';
 import PageError from '@/components/PageError';
 
 interface Props {
-  date: string[];
   id_cabang: string;
-  id_kategori: string;
+  id_kategori: number;
+  date: string[];
 }
 
 const Setoran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
@@ -20,7 +20,7 @@ const Setoran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(
-        `${REACT_APP_ENV}/admin/v1/finance/dashboard/setoran?kategori=${id_kategori}&id_cabang=${id_cabang}`,
+        `${REACT_APP_ENV}/admin/v1/finance/dashboard/setoran?kategori=${id_kategori}&id_cabang=${id_cabang}&start_date=${date[0]}&end_date=${date[1]}`,
       );
     }, 0);
     return () => clearTimeout(timeOut);

@@ -14,10 +14,10 @@ const SelectKategori: React.FC<Props> = ({ handleChange, disabled }) => {
       id: 0,
       value: 'Hari',
     },
-    {
-      id: 1,
-      value: 'Minggu',
-    },
+    // {
+    //   id: 1,
+    //   value: 'Minggu',
+    // },
     {
       id: 2,
       value: 'Bulan',

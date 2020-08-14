@@ -10,9 +10,11 @@ interface Props {
   loading: boolean;
   status: number;
   error: any;
+  onDelete: (id: string) => void;
+  onSelesai: (id: string) => void;
 }
 
-const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
+const TableComponent: React.FC<Props> = ({ data, loading, status, error, onDelete, onSelesai }) => {
   const [getColumnSearchProps] = useFilterColumn();
 
   const columns = useMemo(
@@ -53,41 +55,15 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
       },
       {
         align: 'center',
-        title: 'Status Pembayaran',
-        key: 'status_pembayaran',
-        render: (props: any) => (
-          <>
-            {props.status_pembayaran === 0 ? (
-              <Row justify="space-around">
-                <Button
-                  className={styles.button}
-                  id={props.id}
-                  // onClick={handleVisibleConfirm}
-                  type="primary"
-                >
-                  Selesai
-                </Button>
-                <Button
-                  className={styles.button}
-                  // onClick={() => cancel(props.id)}
-                  type="primary"
-                  danger
-                >
-                  Batal
-                </Button>
-              </Row>
-            ) : null}
-            {props.status_pembayaran === 1 ? (
-              <p className={styles.p} style={{ color: '#1890ff' }}>
-                Selesai
-              </p>
-            ) : null}
-            {props.status_pembayaran === 2 ? (
-              <p className={styles.p} style={{ color: '#ff4d4f' }}>
-                Batal
-              </p>
-            ) : null}
-          </>
+        render: ({ id }: any) => (
+          <Row justify="space-around">
+            <Button onClick={() => onSelesai(id)} className={styles.button} type="primary">
+              Selesai
+            </Button>
+            <Button onClick={() => onDelete(id)} className={styles.button} type="primary" danger>
+              Delete
+            </Button>
+          </Row>
         ),
       },
     ],

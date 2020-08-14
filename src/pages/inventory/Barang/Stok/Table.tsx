@@ -13,9 +13,17 @@ interface Props {
   status: number;
   error: any;
   handleVisible: (id: string) => void;
+  handleVisibleEdit: (id: string) => void;
 }
 
-const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleVisible }) => {
+const TableComponent: React.FC<Props> = ({
+  data,
+  loading,
+  status,
+  error,
+  handleVisible,
+  handleVisibleEdit,
+}) => {
   const [getColumnSearchProps] = useFilterColumn();
 
   const columns = useMemo(
@@ -81,11 +89,18 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
           </Button>
         ),
       },
+      {
+        align: 'center',
+        render: ({ id }: any) => (
+          <Button onClick={() => handleVisibleEdit(id)} className={styles.button} type="primary">
+            Edit
+          </Button>
+        ),
+      },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-
   if (error) {
     return <PageError status={status} />;
   }

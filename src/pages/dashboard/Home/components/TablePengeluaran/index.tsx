@@ -1,26 +1,33 @@
 import React, { useMemo, useEffect } from 'react';
 import { Table } from 'antd';
-import styles from '../index.less';
+import styles from '../../index.less';
 
 import useFetch from '@/hooks/useFetch';
 import PageError from '@/components/PageError';
 
 interface Props {
   id_cabang: string;
+  id_kategori: string;
+  date: string[];
 }
 
-const TablePengeluaran: React.FC<Props> = ({ id_cabang }) => {
+const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   const [data, status, loading, error, fetchList] = useFetch();
+
+  const detail = data && data.detail;
+  const total = data.total ? Array(data.total) : [];
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      fetchList(`${REACT_APP_ENV}/admin/v1/dashboard/kategori/pengeluaran?id_cabang=${id_cabang}`);
+      fetchList(
+        `${REACT_APP_ENV}/admin/v1/dashboard/kategori/pengeluaran?id_cabang=${id_cabang}&kategori=${id_kategori}&start_date=${date[0]}&end_date=${date[1]}`,
+      );
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_cabang]);
+  }, [id_cabang, date, id_kategori]);
 
-  const columns = useMemo(
+  const columnsDetail = useMemo(
     () => [
       {
         align: 'center',
@@ -50,6 +57,30 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang }) => {
     [],
   );
 
+  const columnsTotal = useMemo(
+    () => [
+      {
+        align: 'center',
+        title: 'Operational',
+        key: 'operational',
+        dataIndex: 'operational',
+      },
+      {
+        align: 'center',
+        title: 'Tagihan Suplier',
+        key: 'tagihan_suplier',
+        dataIndex: 'tagihan_suplier',
+      },
+      {
+        align: 'center',
+        title: 'Tagihan Toko',
+        key: 'tagihan_toko',
+        dataIndex: 'tagihan_toko',
+      },
+    ],
+    [],
+  );
+
   if (Boolean(error)) {
     return (
       <div>
@@ -62,7 +93,8 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang }) => {
     <div>
       <p className={styles.title}>Kategori Pengeluaran</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+        <Table columns={columnsDetail} dataSource={detail} loading={Boolean(loading)} />;
+        <Table columns={columnsTotal} dataSource={total} loading={Boolean(loading)} />;
       </div>
     </div>
   );

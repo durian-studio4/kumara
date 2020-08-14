@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { history } from 'umi';
-import { Button, Input, Checkbox } from 'antd';
+import { Button, Input, Checkbox, Row } from 'antd';
 import Cookie from 'js-cookie';
 import styles from './index.less';
 
@@ -79,7 +79,7 @@ const HomeComponent: React.FC<Props> = () => {
   return (
     <div>
       <p className={styles.title}>Point of Sales</p>
-      <div className={styles.row}>
+      <Row>
         <div className={styles.box3}>
           <div className={styles.group}>
             <label className={styles.label} htmlFor="pembeli">
@@ -128,7 +128,7 @@ const HomeComponent: React.FC<Props> = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </Row>
       <Add
         visible={visible}
         onCreate={tambahPembeli}

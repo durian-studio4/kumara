@@ -60,10 +60,22 @@ const SelectAllComponent: React.FC<Props> = ({ address, initial, handleChange, d
               key={data.id}
               id={data.id}
               value={
-                data.satuan || data.type || data.nama_barang || data.name || data.type_pembayaran
+                data.satuan ||
+                data.type ||
+                data.nama_barang ||
+                data.name ||
+                data.type_pembayaran ||
+                data.role ||
+                data.nama_cabang
               }
             >
-              {data.satuan || data.type || data.nama_barang || data.name || data.type_pembayaran}
+              {data.satuan ||
+                data.type ||
+                data.nama_barang ||
+                data.name ||
+                data.type_pembayaran ||
+                data.role ||
+                data.nama_cabang}
             </Option>
           );
         })}

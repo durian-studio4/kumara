@@ -3,6 +3,7 @@ import { connect, ConnectProps } from 'umi';
 import { ConnectState } from '@/models/connect';
 
 import Avatar from './AvatarDropdown';
+import Notification from './Notifikasi';
 import styles from './index.less';
 
 export type SiderTheme = 'light' | 'dark';
@@ -27,6 +28,7 @@ const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = (props) => {
 
   return (
     <div className={className}>
+      <Notification />
       <Avatar menu />
     </div>
   );

@@ -24,7 +24,7 @@ interface Props {
 
 const ChartKurir: React.FC<Props> = ({ data, loading, status, isError }) => {
   if (status !== 200 || isError) {
-    return <PageError status={status} />;
+    return <PageError />;
   }
 
   return (

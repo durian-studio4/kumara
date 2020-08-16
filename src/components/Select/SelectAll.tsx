@@ -66,7 +66,8 @@ const SelectAllComponent: React.FC<Props> = ({ address, initial, handleChange, d
                 data.name ||
                 data.type_pembayaran ||
                 data.role ||
-                data.nama_cabang
+                data.nama_cabang ||
+                data.nama_expedisi
               }
             >
               {data.satuan ||
@@ -75,7 +76,8 @@ const SelectAllComponent: React.FC<Props> = ({ address, initial, handleChange, d
                 data.name ||
                 data.type_pembayaran ||
                 data.role ||
-                data.nama_cabang}
+                data.nama_cabang ||
+                data.nama_expedisi}
             </Option>
           );
         })}

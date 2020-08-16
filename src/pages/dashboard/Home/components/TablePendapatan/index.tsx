@@ -111,12 +111,8 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
     [],
   );
 
-  if (Boolean(error)) {
-    return (
-      <div>
-        <PageError status={status} />
-      </div>
-    );
+  if (Boolean(error) || status !== 200) {
+    return <PageError />;
   }
 
   return (

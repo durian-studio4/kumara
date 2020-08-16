@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Row, Button, Input } from 'antd';
+import { Modal, Row, Button, Input, DatePicker } from 'antd';
 import { format } from 'date-fns';
 import styles from '../index.less';
 
-import Select from '@/components/Select/SelectAll';
+import SelectSatuan from '@/components/Select/SelectSatuan';
 import Suplier from '@/components/AutoComplete/AutoSuplier';
 
 import useAutoComplete from '@/hooks/useAutoComplete';
 import useSelect from '@/hooks/useSelect';
 import useNumber from '@/hooks/useNumber';
-import useDate from '@/hooks/useDate';
 
 // import PageError from '@/components/PageError'
 
@@ -21,6 +20,7 @@ interface Props {
   onCancel: () => void;
   onLoading: boolean;
   id_confirm: number;
+  barang_confirm: string;
 }
 
 const isEmpty = (obj: any) => {
@@ -34,11 +34,11 @@ const UpdateComponent: React.FC<Props> = ({
   onCreate,
   onCancel,
   onLoading,
+  barang_confirm,
   id_confirm,
 }) => {
   const [updateDisabled, setUpdateDisabled] = useState(false);
-
-  const [expired_date, onChangeExpired, onClearExpired] = useDate(initialDate);
+  const [expired_date, setDate] = useState(initialDate);
 
   const [total, onChangeTotal, onClearTotal] = useNumber('');
   const [qty, onChangeQty, onClearQty] = useNumber('');
@@ -55,10 +55,14 @@ const UpdateComponent: React.FC<Props> = ({
     return setUpdateDisabled(false);
   }, [DataJSON]);
 
+  const onChangeDate = (date: any, dateString: any) => {
+    setDate(dateString);
+  };
+
   const onClearState = () => {
-    onClearExpired();
     onClearQty();
     onClearTotal();
+    setDate(initialDate);
     id_suplier.clearText();
     DataJSON = {};
     onCancel();
@@ -129,8 +133,8 @@ const UpdateComponent: React.FC<Props> = ({
             <label className={styles.label} htmlFor="satuan">
               Satuan Barang
             </label>
-            <Select
-              address={`${REACT_APP_ENV}/admin/v1/master/barang/satuanBarang`}
+            <SelectSatuan
+              address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang_confirm}`}
               handleChange={changeSatuan}
             />
           </div>
@@ -152,6 +156,7 @@ const UpdateComponent: React.FC<Props> = ({
           <div className={styles.group}>
             <label className={styles.label}>Expired</label>
             {/* <DateControl selected={Date.parse(expired_date)} onChange={onChangeExpired} /> */}
+            <DatePicker style={{ width: '100%' }} onChange={onChangeDate} />
           </div>
         </div>
       </div>

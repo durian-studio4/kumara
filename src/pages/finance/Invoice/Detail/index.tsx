@@ -125,7 +125,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
 
   return (
     <Modal visible={visible} width={700} title="Invoice" closable={false} footer={null}>
-      {status !== 200 || error ? <PageError status={status} /> : null}
+      {status !== 200 || error ? <PageError /> : null}
       {loading ? (
         <PageLoading />
       ) : (

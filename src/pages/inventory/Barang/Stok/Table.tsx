@@ -101,8 +101,8 @@ const TableComponent: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
-  if (error) {
-    return <PageError status={status} />;
+  if (error || status !== 200) {
+    return <PageError />;
   }
 
   return (

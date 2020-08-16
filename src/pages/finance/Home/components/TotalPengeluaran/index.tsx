@@ -37,7 +37,7 @@ const TotalPengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
   }, [id_cabang, id_kategori, date]);
 
   if (status_chart !== 200 || error_chart) {
-    return <PageError status={status} />;
+    return <PageError />;
   }
 
   return (

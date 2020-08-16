@@ -18,6 +18,7 @@ message.config({
 const KonsinyasiComponent: React.FC<Props> = () => {
   const [name, setName] = useState('');
   const [id_update, setIdUpdate] = useState(0);
+  const [id, setId] = useState('');
   const [visible_update, setVisibleUpdate] = useState(false);
 
   const [data_list, status_list, loading_list, error_list, fetchList, postList] = useFetch();
@@ -44,13 +45,15 @@ const KonsinyasiComponent: React.FC<Props> = () => {
     setName(e.target.value);
   };
 
-  const handleVisibleUpdate = (id: string) => {
-    setIdUpdate(Number(id));
+  const handleVisibleUpdate = (id_update: string, id: string) => {
+    setIdUpdate(String(id_update));
     setVisibleUpdate(!visible_update);
+    setId(id);
   };
 
   const handleClearUpdate = () => {
     setIdUpdate(0);
+    setId(0);
     setVisibleUpdate(!visible_update);
   };
 
@@ -111,6 +114,7 @@ const KonsinyasiComponent: React.FC<Props> = () => {
         <Detail
           visible={visible_update}
           id_barang={id_update}
+          id_id={id}
           onLoadButton={Boolean(loading_list)}
           onConfirmOrder={confirmPenerima}
           onBatalOrder={batalOrder}

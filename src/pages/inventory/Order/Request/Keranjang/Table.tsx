@@ -29,7 +29,7 @@ const TableComponent: React.FC<Props> = ({
   return (
     <Card style={{ marginTop: '2em' }}>
       <p className={styles.title}>Daftar barang yang akan diorder</p>
-      {isError_data ? <PageError status={status} /> : null}
+      {isError_data || status !== 200 ? <PageError /> : null}
       {isLoading_data ? (
         <PageLoading />
       ) : (
@@ -38,6 +38,7 @@ const TableComponent: React.FC<Props> = ({
             <tr>
               <th>No.</th>
               <th>Nama Barang</th>
+              <th>Satuan Barang</th>
               <th>Unit</th>
               <th>Harga</th>
               <th>Jumlah</th>
@@ -50,6 +51,7 @@ const TableComponent: React.FC<Props> = ({
                 <tr key={i}>
                   <td>{item.no}</td>
                   <td>{item.nama_barang}</td>
+                  <td>{item.satuan_barang}</td>
                   <td>{item.qty}</td>
                   <td>{item.harga}</td>
                   <td>{item.jumlah}</td>

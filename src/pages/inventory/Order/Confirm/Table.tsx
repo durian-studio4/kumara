@@ -12,7 +12,7 @@ interface Props {
   status: number;
   error: any;
   onPenerima: (id: string) => void;
-  handleVisibleUpdate: (id: string) => void;
+  handleVisibleUpdate: (id: string, order: string) => void;
 }
 
 const TableComponent: React.FC<Props> = ({
@@ -25,12 +25,26 @@ const TableComponent: React.FC<Props> = ({
 }) => {
   const [getColumnSearchProps] = useFilterColumn();
 
+  let data_array = [];
+
+  for (let key in data) {
+    data_array.push({
+      id_order: key,
+      id: data[key][0].id,
+      nama_suplier: data[key][0].nama_suplier,
+      tanggal: data[key][0].tanggal,
+      total: data[key][0].total,
+    });
+  }
+
   const columns = useMemo(
     () => [
       {
         align: 'center',
-        title: 'No',
+        title: 'Id',
         dataIndex: 'id',
+        defaultSortOrder: 'ascend',
+        sorter: (a, b) => a.id - b.id,
       },
       {
         align: 'center',
@@ -53,8 +67,12 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id }: any) => (
-          <Button type="primary" className={styles.button} onClick={() => handleVisibleUpdate(id)}>
+        render: ({ id_order, id }: any) => (
+          <Button
+            type="primary"
+            className={styles.button}
+            onClick={() => handleVisibleUpdate(id_order, id)}
+          >
             Detail
           </Button>
         ),
@@ -66,7 +84,7 @@ const TableComponent: React.FC<Props> = ({
           <Popconfirm
             title="Apakah Anda Ingin Confirm?"
             onConfirm={() => {
-              onPenerima(props.id);
+              onPenerima(props.id_order);
             }}
             okText="Yes"
             cancelText="No"
@@ -81,13 +99,13 @@ const TableComponent: React.FC<Props> = ({
     [],
   );
 
-  if (error) {
-    return <PageError status={status} />;
+  if (error || status !== 200) {
+    return <PageError />;
   }
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} loading={loading} dataSource={data} />;
+      <Table columns={columns} loading={loading} dataSource={data_array} />;
     </div>
   );
 };

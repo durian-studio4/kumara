@@ -33,7 +33,7 @@ const SelectCabang: React.FC<Props> = ({ handleChange, address = '', initial, di
     try {
       const wait = await fetch(param, {
         headers: {
-          Authorization: Cookie.get('token'),
+          Authorization: String(Cookie.get('token')),
         },
       });
       const json = await wait.json();

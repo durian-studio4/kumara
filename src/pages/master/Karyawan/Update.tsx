@@ -120,7 +120,7 @@ const UpdateComponent: React.FC<Props> = ({
       closable={false}
       footer={null}
     >
-      {status !== 200 || isError ? <PageError status={status} /> : null}
+      {status !== 200 || isError ? <PageError /> : null}
       {isLoading ? (
         <PageLoading />
       ) : (

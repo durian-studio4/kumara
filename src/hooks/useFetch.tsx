@@ -12,26 +12,18 @@ function App() {
 
   const handleFetch = async (url: string) => {
     setLoading(true);
-    if (token) {
-      try {
-        const fetching = await fetch(url, {
-          headers: {
-            Authorization: String(token),
-          },
-        });
-        const json = await fetching.json();
-        const result = await json;
-        setData(result.data);
-        setStatus(result.status_code);
-        setLoading(false);
-        setIsError(false);
-      } catch (err) {
-        setLoading(false);
-        setIsError(true);
-      }
-    } else {
+    try {
+      const fetching = await request.get(url, {
+        headers: {
+          Authorization: String(token),
+        },
+      });
       setLoading(false);
-      return false;
+      setData(fetching.data);
+    } catch (err) {
+      setStatus(err.response.status);
+      setIsError(true);
+      setLoading(false);
     }
   };
 

@@ -6,6 +6,7 @@ import styles from '../../index.less';
 import Table from './Table';
 
 import useFetch from '@/hooks/useFetch';
+import PageError from '@/components/PageError';
 
 interface Props {
   date: string[];
@@ -26,13 +27,17 @@ const Setoran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_kategori, id_cabang, date]);
 
+  if (error || status !== 200) {
+    return <PageError />;
+  }
+
   return (
     <Col sm={12} xs={24} style={{ marginBottom: 24 }}>
-      <div className={styles.title} style={{ marginBottom: '2rem' }}>
-        <FormattedMessage id="setoran" defaultMessage="Setoran" />
-      </div>
       <div style={{ overflow: 'auto' }}>
-        <Table data={data} isLoading={Boolean(loading)} status={Number(status)} isError={error} />
+        <div className={styles.title} style={{ marginBottom: '2rem' }}>
+          <FormattedMessage id="setoran" defaultMessage="Setoran" />
+        </div>
+        <Table data={data} isLoading={Boolean(loading)} />
       </div>
     </Col>
   );

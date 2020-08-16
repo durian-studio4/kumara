@@ -35,7 +35,7 @@ const Penjualan: React.FC<Props> = () => {
       <div className={styles.title} style={{ marginBottom: '2rem' }}>
         <FormattedMessage id="penjualan" defaultMessage="Penjualan" />
       </div>
-      {error ? <PageError status={status} /> : null}
+      {error || status !== 200 ? <PageError /> : null}
       {loading ? (
         <PageLoading />
       ) : (

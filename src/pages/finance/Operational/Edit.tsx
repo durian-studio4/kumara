@@ -41,7 +41,7 @@ const EditComponent: React.FC<Props> = ({
       width={400}
       footer={null}
     >
-      {status !== 200 || error ? <PageError status={status} /> : null}
+      {status !== 200 || error ? <PageError /> : null}
       {loading ? (
         <PageLoading />
       ) : (

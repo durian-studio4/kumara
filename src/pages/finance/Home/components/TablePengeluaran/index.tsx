@@ -54,7 +54,7 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
   );
 
   if (status !== 200 || error) {
-    return <PageError status={status} />;
+    return <PageError />;
   }
 
   return (

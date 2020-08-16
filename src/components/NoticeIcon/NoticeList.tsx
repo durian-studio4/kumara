@@ -1,4 +1,4 @@
-import { Avatar, List } from 'antd';
+import { notification, List } from 'antd';
 
 import React from 'react';
 import classNames from 'classnames';
@@ -22,6 +22,23 @@ export interface NoticeIconTabProps {
   list: NoticeIconData[];
   onViewMore?: (e: any) => void;
 }
+
+interface OpenNotification {
+  judul: string;
+  deskripsi: string;
+}
+
+const openNotification = ({ judul, deskripsi }: OpenNotification) => {
+  notification.open({
+    message: judul,
+    description: deskripsi,
+    placement: 'bottomRight',
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
+
 const NoticeList: React.SFC<NoticeIconTabProps> = ({
   data = [],
   onClick,
@@ -59,7 +76,7 @@ const NoticeList: React.SFC<NoticeIconTabProps> = ({
             <List.Item
               className={itemCls}
               key={item.key || i}
-              onClick={() => onClick && onClick(item)}
+              onClick={() => openNotification({ judul: item.judul, deskripsi: item.deskripsi })}
             >
               <div className={styles.meta}>
                 <div className={styles.title}>{item.judul}</div>

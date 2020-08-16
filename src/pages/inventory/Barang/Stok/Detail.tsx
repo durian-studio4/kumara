@@ -32,7 +32,7 @@ const DetailComponent: React.FC<Props> = ({ id_produk, visible, onCancel }) => {
       closable={false}
       footer={null}
     >
-      {status !== 200 || isError ? <PageError status={status} /> : null}
+      {status !== 200 || isError ? <PageError /> : null}
       {isLoading ? (
         <PageLoading />
       ) : (

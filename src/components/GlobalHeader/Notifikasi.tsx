@@ -1,9 +1,5 @@
 import React, { useEffect } from 'react';
 import { Tag, message } from 'antd';
-import groupBy from 'lodash/groupBy';
-import moment from 'moment';
-import { NoticeItem } from '@/models/global';
-import { CurrentUser } from '@/models/user';
 import styles from './index.less';
 
 import NoticeIcon from '../NoticeIcon';
@@ -25,7 +21,7 @@ const GlobalHeaderRight: React.FC<Props> = () => {
   return (
     <NoticeIcon
       className={styles.action}
-      // count={currentUser && currentUser.unreadCount}
+      // count={data_list.length || 0}
       // onItemClick={(item) => {
       //   this.changeReadState(item as NoticeItem);
       // }}

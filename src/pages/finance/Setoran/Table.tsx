@@ -53,7 +53,7 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
   return (
     <Card style={{ height: '50%', width: '45%' }}>
       <p className={styles.title}>Riwayat Setoran</p>
-      {Boolean(error) ? <PageError status={status} /> : null}
+      {Boolean(error) || status !== 200 ? <PageError /> : null}
       <div style={{ overflow: 'auto' }}>
         <Table columns={columns} dataSource={data} loading={loading} />;
       </div>

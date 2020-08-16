@@ -1,16 +1,12 @@
 import React, { useMemo } from 'react';
 import { Table } from 'antd';
 
-import PageError from '@/components/PageError';
-
 interface Props {
   data: any;
-  status: number;
   isLoading: boolean;
-  isError: any;
 }
 
-const TableComponent: React.FC<Props> = ({ data, status, isError, isLoading }) => {
+const TableComponent: React.FC<Props> = ({ data, isLoading }) => {
   const columns = useMemo(
     () => [
       {
@@ -34,14 +30,6 @@ const TableComponent: React.FC<Props> = ({ data, status, isError, isLoading }) =
     ],
     [],
   );
-
-  if (Boolean(isError)) {
-    return (
-      <div>
-        <PageError status={status} />
-      </div>
-    );
-  }
 
   return (
     <div style={{ overflow: 'auto' }}>

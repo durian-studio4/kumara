@@ -8,20 +8,21 @@ import PageError from '@/components/PageError';
 interface Props {
   id_cabang: string;
   kategori: string;
+  date: string[];
 }
 
-const TablePengeluaran: React.FC<Props> = ({ id_cabang, kategori }) => {
+const TablePengeluaran: React.FC<Props> = ({ id_cabang, kategori, date }) => {
   const [data, status, loading, error, fetchList] = useFetch();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(
-        `${REACT_APP_ENV}/admin/v1/dashboard/kategori/pengeluaran?id_cabang=${id_cabang}&kategori=${kategori}`,
+        `${REACT_APP_ENV}/admin/v1/dashboard/kategori/pengeluaran?id_cabang=${id_cabang}&kategori=${kategori}&start_date=${date[0]}&end_date=${date[1]}`,
       );
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_cabang, kategori]);
+  }, [id_cabang, kategori, date]);
 
   const columns = useMemo(
     () => [
@@ -53,15 +54,15 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, kategori }) => {
     [],
   );
 
-  if (Boolean(error)) {
-    return <PageError status={status} />;
+  if (Boolean(error) || status !== 200) {
+    return <PageError />;
   }
 
   return (
     <div>
       <p className={styles.title}>Kategori Pengeluaran</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />;
+        <Table columns={columns} dataSource={data.detail} loading={Boolean(loading)} />;
       </div>
     </div>
   );

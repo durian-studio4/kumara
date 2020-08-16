@@ -12,7 +12,7 @@ function App() {
       const posting = await request.post(url, {
         data,
         headers: {
-          'Content-Type': 'Aplication/json',
+          'Content-Type': 'Application/json',
           Authorization: String(Cookie.get('token')),
         },
       });

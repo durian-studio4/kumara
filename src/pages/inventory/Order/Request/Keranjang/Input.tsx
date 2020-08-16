@@ -74,7 +74,7 @@ const InputComponent: React.FC<Props> = ({ onCreate }) => {
   return (
     <Card>
       <p className={styles.title}>Input Barang</p>
-      {status !== 200 || error ? <PageError status={status} /> : null}
+      {status !== 200 || error ? <PageError /> : null}
       <Row>
         <div className={styles.box3}>
           <div className={styles.group}>

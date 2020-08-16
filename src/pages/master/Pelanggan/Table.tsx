@@ -95,8 +95,8 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
     [],
   );
 
-  if (error) {
-    return <PageError status={status} />;
+  if (error || status !== 200) {
+    return <PageError />;
   }
 
   return (

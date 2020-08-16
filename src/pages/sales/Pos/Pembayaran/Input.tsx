@@ -122,6 +122,7 @@ const InputComponent: React.FC<Props> = ({
 
   const onClearState = () => {
     setKeterangan('');
+    onClearType();
     onClearJumlahPb();
     onClearTempo();
   };
@@ -207,7 +208,7 @@ const InputComponent: React.FC<Props> = ({
   }
 
   if (statusPembayaran !== 200 || isError) {
-    return <PageError status={statusPembayaran} />;
+    return <PageError />;
   }
 
   return (

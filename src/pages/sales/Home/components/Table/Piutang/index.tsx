@@ -50,8 +50,8 @@ const TablePiutang: React.FC<Props> = () => {
     [],
   );
 
-  if (error) {
-    return <PageError status={status} />;
+  if (error || status !== 200) {
+    return <PageError />;
   }
 
   return (

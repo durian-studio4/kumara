@@ -12,7 +12,6 @@ interface Props {
   status: number;
   loading: boolean;
   isError: any;
-  handleVisibleAdd: () => void;
   handleEditDetail: (id: string) => void;
   handleUpdateDetail: (id: string) => void;
   handleDownloadDetail: ({ id, sales }: ExcelProps) => void;
@@ -23,12 +22,25 @@ const TableKurir: React.FC<Props> = ({
   status,
   loading,
   isError,
-  handleVisibleAdd,
   handleEditDetail,
   handleUpdateDetail,
   handleDownloadDetail,
 }) => {
   const [getColumnSearchProps] = useFilterColumn();
+
+  let data_array = [];
+
+  for (let key in data) {
+    data_array.push({
+      id: data[key].id,
+      tanggal: data[key].tanggal,
+      nama_sales: data[key].nama_sales,
+      alamat: data[key].pembeli.alamat,
+      barang: data[key].barang,
+      ongkir: data[key].ongkir,
+      status_pengiriman: data[key].status_pengiriman,
+    });
+  }
 
   const columns = useMemo(
     () => [
@@ -47,10 +59,8 @@ const TableKurir: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Alamat Tujuan',
-        dataIndex: 'pembeli.alamat',
-        // render: ({ pembeli }: any) => {
-        //   <p>{pembeli && pembeli.alamat}</p>;
-        // },
+        dataIndex: 'alamat',
+        ...getColumnSearchProps('alamat'),
       },
       {
         align: 'center',
@@ -109,19 +119,16 @@ const TableKurir: React.FC<Props> = ({
   );
 
   if (status !== 200 || isError) {
-    return <PageError status={status} />;
+    return <PageError />;
   }
 
   return (
     <div style={{ marginTop: '2em' }}>
       <Row justify="space-between">
         <p className={styles.title}>List Pengiriman Hari Ini</p>
-        <p className={styles.title_add} onClick={handleVisibleAdd}>
-          + Tambah
-        </p>
       </Row>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={loading} />
+        <Table columns={columns} dataSource={data_array} loading={loading} />
       </div>
     </div>
   );

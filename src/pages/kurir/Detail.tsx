@@ -4,7 +4,7 @@ import styles from './index.less';
 
 //----------HOOKS
 import useFetch from '@/hooks/useFetch';
-
+import PageError from '@/components/PageError';
 import PageLoading from '@/components/PageLoading';
 
 interface Props {
@@ -40,7 +40,7 @@ const DetailComponent: React.FC<Props> = ({ id, visible, onCancel, onCreate, onL
       title="Detail Tujuan Pengiriman"
     >
       <Row>
-        {status !== 200 || isError ? <h1>Something went wrong!</h1> : null}
+        {status !== 200 || isError ? <PageError /> : null}
         {isLoading ? (
           <PageLoading />
         ) : (

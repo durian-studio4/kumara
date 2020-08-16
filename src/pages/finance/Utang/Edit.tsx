@@ -116,7 +116,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
 
   return (
     <Modal visible={visible} title="Edit Daftar Utang" width={1000} closable={false} footer={null}>
-      {status_list !== 200 || error_list ? <PageError status={status_list} /> : null}
+      {status_list !== 200 || error_list ? <PageError /> : null}
       {loading_list ? (
         <PageLoading />
       ) : (

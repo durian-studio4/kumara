@@ -28,7 +28,7 @@ const PendapatanComponent: React.FC<Props> = () => {
   const [date, setDate] = useState([firstDay, lastDay]);
 
   const onChangeDate = (date: any, dateString: any) => {
-    setDate([format(date[0]._d, 'dd-MM-yyyy'), format(date[1]._d, 'dd-MM-yyyy')]);
+    setDate([dateString[0] || '', dateString[1] || '']);
   };
 
   return (
@@ -40,12 +40,12 @@ const PendapatanComponent: React.FC<Props> = () => {
           address={`${REACT_APP_ENV}/admin/v1/pengaturan/cabang/get`}
           handleChange={onChangeCabang}
         />
-        <DatePicker handleChange={onChangeDate} />
+        <DatePicker handleChange={onChangeDate} id_kategori={String(kategori)} />
       </div>
       <Row>
         <ChartPendapatan id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
       </Row>
-      <TablePendapatan id_cabang={String(cabang)} kategori={String(kategori)} />
+      <TablePendapatan id_cabang={String(cabang)} kategori={String(kategori)} date={date} />
     </GridContent>
   );
 };

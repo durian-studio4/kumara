@@ -29,7 +29,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
 
   return (
     <Modal visible={visible} title="Invoice" width={700} onCancel={onCancel} footer={null}>
-      {status !== 200 || error ? <PageError status={status} /> : null}
+      {status !== 200 || error ? <PageError /> : null}
       {loading ? (
         <PageLoading />
       ) : (

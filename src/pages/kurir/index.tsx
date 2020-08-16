@@ -7,10 +7,13 @@ import ChartKurir from './Chart';
 import TableKurir from './Table';
 import UpdateKurir from './Update';
 import DetailKurir from './Detail';
-import AddKurir from './Add';
+
+import AddResi from './AddResi';
+import TableResi from './TableResi';
 
 import useFetch from '@/hooks/useFetch';
 import useCreate from '@/hooks/useCreate';
+import useCreateResi from './hooks/useCreate';
 
 interface Props {}
 
@@ -34,10 +37,11 @@ const KurirComponent: React.FC<Props> = () => {
   const [visible_add, setVisibleAdd] = useState(false);
 
   const [data_chart, status_chart, loading_chart, error_chart, fetchChart] = useFetch();
-
+  const [data_resi, status_resi, loading_resi, error_resi, fetchResi] = useFetch();
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
 
   const [loading_update, status_update, postUpdate] = useCreate();
+  const [loading_resiCreate, status_resiCreate, resiCreate] = useCreateResi();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -45,7 +49,15 @@ const KurirComponent: React.FC<Props> = () => {
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [status_update, status_resiCreate]);
+
+  useEffect(() => {
+    const timeOut = setTimeout(() => {
+      fetchResi(`${REACT_APP_ENV}/admin/v1/kurir/resi/list`);
+    }, 0);
+    return () => clearTimeout(timeOut);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status_update, status_resiCreate]);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -53,7 +65,7 @@ const KurirComponent: React.FC<Props> = () => {
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status_update]);
+  }, [status_update, status_resiCreate]);
 
   const handleVisibleAdd = () => setVisibleAdd(!visible_add);
 
@@ -72,20 +84,6 @@ const KurirComponent: React.FC<Props> = () => {
   const handleClearState = () => {
     setUpdate(!visible_update);
     setIdUpdate(0);
-  };
-
-  const updateDetailPengiriman = () => {
-    postUpdate(
-      `${REACT_APP_ENV}/admin/v1/kurir/${id_detail}/pengiriman`,
-      JSON.stringify({
-        status_pengiriman: 1,
-      }),
-      handleVisibleDetail,
-    );
-  };
-
-  const updatePengiriman = ({ json, clear }: UpdateProps) => {
-    postUpdate(`${REACT_APP_ENV}/admin/v1/kurir/${id_update}/pengiriman`, json, clear);
   };
 
   const downloadExcel = async ({ id, sales }: ExcelProps) => {
@@ -109,6 +107,24 @@ const KurirComponent: React.FC<Props> = () => {
     }
   };
 
+  const updateDetailPengiriman = () => {
+    postUpdate(
+      `${REACT_APP_ENV}/admin/v1/kurir/${id_detail}/pengiriman`,
+      JSON.stringify({
+        status_pengiriman: 1,
+      }),
+      handleVisibleDetail,
+    );
+  };
+
+  const updatePengiriman = ({ json, clear }: UpdateProps) => {
+    postUpdate(`${REACT_APP_ENV}/admin/v1/kurir/${id_update}/pengiriman`, json, clear);
+  };
+
+  const createResi = ({ json, clear }: UpdateProps) => {
+    resiCreate(`${REACT_APP_ENV}/admin/v1/kurir/resi`, json, clear);
+  };
+
   return (
     <GridContent>
       <p className={styles.title}>Kurir</p>
@@ -123,13 +139,26 @@ const KurirComponent: React.FC<Props> = () => {
         status={Number(status_list)}
         loading={Boolean(loading_list)}
         isError={error_list}
-        handleVisibleAdd={handleVisibleAdd}
         handleEditDetail={handleDetail}
         handleUpdateDetail={handleUpdate}
         handleDownloadDetail={downloadExcel}
       />
+      <TableResi
+        data={data_resi}
+        status={Number(status_resi)}
+        loading={Boolean(loading_resi)}
+        isError={error_resi}
+        handleVisibleAdd={handleVisibleAdd}
+      />
 
-      {visible_add ? <AddKurir visible={visible_add} onCancel={handleVisibleAdd} /> : null}
+      {visible_add ? (
+        <AddResi
+          visible={visible_add}
+          onLoadButton={Boolean(loading_resiCreate)}
+          onCreate={createResi}
+          onCancel={handleVisibleAdd}
+        />
+      ) : null}
 
       {visible_update ? (
         <UpdateKurir

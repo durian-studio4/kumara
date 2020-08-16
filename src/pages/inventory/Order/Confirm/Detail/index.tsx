@@ -2,11 +2,6 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Table, Modal, Button, Row } from 'antd';
 import styles from '../index.less';
 
-// import { Container, Title } from "css/page-styles"
-// import { ModalWrapper, div } from "css/Form/styles"
-// import { Edit } from "components/Inventory/styles"
-// import { Button } from "css/Button/styles"
-
 //---------CUSTOM
 import useFetch from '@/hooks/useFetch';
 import PageError from '@/components/PageError';
@@ -24,6 +19,7 @@ interface Props {
 
 export interface UpdateOrder {
   url: string;
+  id: string;
   json: {};
   clear: () => void;
 }
@@ -31,6 +27,7 @@ export interface UpdateOrder {
 const DetailComponent: React.FC<Props> = ({
   visible,
   id_barang,
+  id,
   onCancel,
   onLoadButton,
   onConfirmOrder,
@@ -40,6 +37,7 @@ const DetailComponent: React.FC<Props> = ({
 
   const [visible_confirm, setVisibleConfirm] = useState(false);
   const [id_confirm, setIdConfirm] = useState(0);
+  const [barang_confirm, setBarangConfirm] = useState('');
 
   const [rerender, setRerender] = useState(0);
 
@@ -51,14 +49,17 @@ const DetailComponent: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_barang, rerender]);
 
-  const handleVisibleConfirm = (id: string) => {
+  const handleVisibleConfirm = (id: string, barang: string) => {
     setIdConfirm(Number(id));
+    setBarangConfirm(barang);
     setVisibleConfirm(!visible_confirm);
   };
 
   const handleClearVisibleConfirm = () => {
     setVisibleConfirm(false);
     setRerender(Date.now());
+    setIdConfirm(0);
+    setBarangConfirm('');
   };
 
   const updateOrder = ({ url, json, clear }: UpdateOrder) => {
@@ -81,7 +82,10 @@ const DetailComponent: React.FC<Props> = ({
         align: 'center',
         title: 'Qty Conf',
         render: (props: any) => (
-          <span className={styles.span} onClick={() => handleVisibleConfirm(props.id)}>
+          <span
+            className={styles.span}
+            onClick={() => handleVisibleConfirm(props.id, props.nama_barang)}
+          >
             {props.qty_confirm}
           </span>
         ),
@@ -104,9 +108,14 @@ const DetailComponent: React.FC<Props> = ({
   return (
     <Modal visible={visible} title="Confirm Order" onCancel={onCancel} footer={null} width={800}>
       <div className={styles.modal_body}>
-        {status !== 200 || error ? <PageError status={status} /> : null}
+        {status !== 200 || error ? <PageError /> : null}
         {data ? (
-          <Table columns={columns} loading={Boolean(loading)} rowKey="id" dataSource={[data]} />
+          <Table
+            columns={columns}
+            loading={Boolean(loading)}
+            rowKey="id"
+            dataSource={data.detail}
+          />
         ) : null}
       </div>
       <Row justify="end">
@@ -128,13 +137,16 @@ const DetailComponent: React.FC<Props> = ({
           Confirm Order
         </Button>
       </Row>
-      <Update
-        visible={visible_confirm}
-        id_confirm={id_confirm}
-        onCreate={updateOrder}
-        onCancel={handleClearVisibleConfirm}
-        onLoading={Boolean(loading)}
-      />
+      {visible_confirm ? (
+        <Update
+          visible={visible_confirm}
+          id_confirm={id_confirm}
+          barang_confirm={barang_confirm}
+          onCreate={updateOrder}
+          onCancel={handleClearVisibleConfirm}
+          onLoading={Boolean(loading)}
+        />
+      ) : null}
     </Modal>
   );
 };

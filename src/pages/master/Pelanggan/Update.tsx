@@ -163,7 +163,7 @@ const UpdateComponent: React.FC<Props> = ({
       width={600}
       title="Edit Data Pelanggan"
     >
-      {status !== 200 || isError ? <PageError status={status} /> : null}
+      {status !== 200 || isError ? <PageError /> : null}
       {isLoading ? (
         <PageLoading />
       ) : (

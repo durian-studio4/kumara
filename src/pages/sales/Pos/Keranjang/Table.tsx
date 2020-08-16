@@ -26,7 +26,7 @@ const TableComponent: React.FC<Props> = ({
   return (
     <Card style={{ marginTop: '2em' }}>
       <p className={styles.title}>Keranjang Belanja</p>
-      {status !== 200 || isError_data ? <PageError status={status} /> : null}
+      {status !== 200 || isError_data ? <PageError /> : null}
       {isLoading_data ? (
         <PageLoading />
       ) : (

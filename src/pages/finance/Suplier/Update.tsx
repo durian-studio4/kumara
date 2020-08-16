@@ -60,13 +60,13 @@ const UpdateComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
-        title: 'Expired Date',
-        dataIndex: 'expired_date',
+        title: 'Nama Barang',
+        dataIndex: 'nama_barang',
       },
       {
         align: 'center',
-        title: 'Total',
-        dataIndex: 'total',
+        title: 'Expired Date',
+        dataIndex: 'expired_date',
       },
     ],
     [],

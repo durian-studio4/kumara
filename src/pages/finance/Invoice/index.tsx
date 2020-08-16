@@ -10,7 +10,6 @@ import DetailComponent from './Detail';
 import SelectPajak from '@/components/Select/SelectPajak';
 
 import useFetch from '@/hooks/useFetch';
-import useDate from '@/hooks/useDate';
 import useSelect from '@/hooks/useSelect';
 
 interface Props {}
@@ -29,8 +28,8 @@ const SetoranComponent: React.FC<Props> = () => {
 
   const [pajak, changePajak] = useSelect('2');
   const [{ invoice, pembeli }, setState] = useState(initialState);
-  const [tanggal_start, changeTanggalStart] = useDate(initialDate);
-  const [tanggal_end, changeTanggalEnd] = useDate(initialDate);
+  const [tanggal_start, setTanggalStart] = useState(initialDate);
+  const [tanggal_end, setTanggalEnd] = useState(initialDate);
 
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
 
@@ -42,15 +41,19 @@ const SetoranComponent: React.FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pajak]);
 
-  useEffect(() => {
-    // changeTanggalEnd(tanggal_start);
-  }, [tanggal_start]);
-
   const handleVisibleExport = () => setVisibleExport(!visible_export);
 
   const handleVisibleDetail = (id: string) => {
     setVisibleDetail(!visible_detail);
     setIdParams(Number(id));
+  };
+
+  const onChangeTanggalStart = (date: any, dateString: any) => {
+    setTanggalStart(dateString);
+  };
+
+  const onChangeTanggalEnd = (date: any, dateString: any) => {
+    setTanggalEnd(dateString);
   };
 
   const handleState = (e: any) => {
@@ -85,11 +88,11 @@ const SetoranComponent: React.FC<Props> = () => {
       <ExportComponent
         invoice={invoice}
         pembeli={pembeli}
+        visible={visible_export}
         tanggal_start={tanggal_start}
         tanggal_end={tanggal_end}
-        visible={visible_export}
-        handleTanggalStart={changeTanggalStart}
-        handleTanggalEnd={changeTanggalEnd}
+        handleTanggalStart={onChangeTanggalStart}
+        handleTanggalEnd={onChangeTanggalEnd}
         handleVisible={handleVisibleExport}
         handleState={handleState}
         handleClearState={handleClearState}

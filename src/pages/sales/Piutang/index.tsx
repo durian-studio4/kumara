@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GridContent } from '@ant-design/pro-layout';
+import { Button, Row } from 'antd';
+import Cookie from 'js-cookie';
 import styles from './index.less';
 
 import TablePiutang from './Table';
@@ -9,6 +11,8 @@ import ConfirmPiutang from './Confirm';
 import useFetch from '@/hooks/useFetch';
 import useSelect from '@/hooks/useSelect';
 import useCreate from '@/hooks/useCreate';
+
+import DatePicker from '@/pages/dashboard/Home/components/DatePicker';
 
 interface Props {}
 
@@ -36,6 +40,9 @@ const PiutangComponent: React.FC<Props> = ({}) => {
   const [visibleUpdate, setVisibleUpdate] = useState(false);
   const [id_row_confirm, setIdConfirm] = useState(0);
   const [id_row_update, setIdUpdate] = useState(0);
+
+  const [date, setDate] = useState(['', '']);
+  const [loading_excel, setLoadingExcel] = useState(false);
 
   const [keterangan, setKeterangan] = useState('');
   const [nama_bank, changeTypeBank] = useSelect('0');
@@ -79,6 +86,10 @@ const PiutangComponent: React.FC<Props> = ({}) => {
 
   const handleKeteranganChange = (e: { target: HTMLInputElement }) => setKeterangan(e.target.value);
 
+  const onChangeDate = (date: any, dateString: any) => {
+    setDate([dateString[0] || '', dateString[1] || '']);
+  };
+
   const acceptPiutang = () => {
     fetchPost(
       `${REACT_APP_ENV}/admin/v1/finance/transfer/${id_row_confirm}/update`,
@@ -96,9 +107,48 @@ const PiutangComponent: React.FC<Props> = ({}) => {
     );
   };
 
+  const downloadExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const fetching = await fetch(
+        `${REACT_APP_ENV}/admin/v1/finance/piutang/excel?start_date=${date[0]}&end_date=${date[1]}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: String(Cookie.get('token')),
+          },
+        },
+      );
+      const blob = await fetching.blob();
+      const result = blob;
+      let elm = document.createElement('a');
+      elm.href = window.URL.createObjectURL(result);
+      elm.download = `${date[0]}.xls`;
+      document.body.appendChild(elm);
+      elm.click();
+      document.body.removeChild(elm);
+      setDate(['', '']);
+      setLoadingExcel(false);
+    } catch (error) {
+      setLoadingExcel(false);
+    }
+  };
+
   return (
     <GridContent>
       <p className={styles.title}>Piutang Sales</p>
+      <Row style={{ marginBottom: '2em' }}>
+        <DatePicker handleChange={onChangeDate} />
+        <Button
+          type="primary"
+          className={styles.button_convert}
+          onClick={downloadExcel}
+          disabled={!Boolean(date[0]) && !Boolean(date[1])}
+        >
+          {loading_excel && 'Downloading excel...'}
+          {!loading_excel && 'Convert to Excel'}
+        </Button>
+      </Row>
       <TablePiutang
         data={data_list}
         loading={Boolean(loading_list)}

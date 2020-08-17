@@ -27,7 +27,7 @@ function Footer() {
             Hormat kami,
           </p>
           <p className={styles.p} style={{ textAlign: 'center' }}>
-            Arga Medica
+            Kumara Medica
           </p>
         </div>
       </div>

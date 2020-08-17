@@ -166,10 +166,20 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
           </Fragment>
         ) : (
           <Fragment>
-            <Button onClick={onCancel} type="default" style={{ width: '45%' }}>
+            <Button
+              onClick={onCancel}
+              type="default"
+              className={styles.button}
+              style={{ width: '45%' }}
+            >
               Kembali
             </Button>
-            <Button onClick={handleVisibleEdit} type="default" style={{ width: '45%' }}>
+            <Button
+              onClick={handleVisibleEdit}
+              type="default"
+              className={styles.button}
+              style={{ width: '45%' }}
+            >
               Edit
             </Button>
           </Fragment>
@@ -178,6 +188,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
       <Row justify="center">
         <Button
           onClick={() => downloadExcel('1')}
+          className={styles.button}
           disabled={loading_download}
           type="primary"
           style={{ width: '100%' }}
@@ -186,6 +197,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
         </Button>
         <Button
           onClick={() => downloadExcel('2')}
+          className={styles.button}
           disabled={loading_download}
           type="primary"
           style={{ width: '100%' }}

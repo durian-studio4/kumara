@@ -35,6 +35,8 @@ const TableComponent: React.FC<Props> = ({
       nama_barang: data[key][0].nama_barang,
       satuan_barang: data[key][0].satuan_barang,
       total: data[key][0].total,
+      confirm_sales: data[key][0].confirm_sales,
+      confirm_finance: data[key][0].confirm_finance,
     });
   }
 

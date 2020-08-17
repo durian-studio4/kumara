@@ -14,7 +14,7 @@ const HeaderComponent: React.FC<Props> = ({ data }) => {
             PT.Anugrah Tiga Berlian
           </p>
           <p className={styles.p} style={{ textAlign: 'center' }}>
-            Arga Medica
+            Kumara Medica
           </p>
           <p className={styles.p} style={{ textAlign: 'center' }}>
             Jl. Pramuka No. 11 Palmeriam-Matraman-Jakarta-Timur

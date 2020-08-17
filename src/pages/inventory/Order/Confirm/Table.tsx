@@ -34,6 +34,7 @@ const TableComponent: React.FC<Props> = ({
       nama_suplier: data[key][0].nama_suplier,
       tanggal: data[key][0].tanggal,
       total: data[key][0].total,
+      confirm_sales: data[key][0].confirm_sales,
     });
   }
 
@@ -84,7 +85,7 @@ const TableComponent: React.FC<Props> = ({
           <Popconfirm
             title="Apakah Anda Ingin Confirm?"
             onConfirm={() => {
-              onPenerima(props.id_order);
+              onPenerima(props.id);
             }}
             okText="Yes"
             cancelText="No"

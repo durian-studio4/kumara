@@ -58,7 +58,7 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
   }
 
   return (
-    <div>
+    <div style={{ marginTop: '1em' }}>
       <p className={styles.title}>Kategori Pengeluaran</p>
       <div style={{ overflow: 'auto' }}>
         <Table columns={columns} dataSource={data.detail} loading={Boolean(isLoading)} />

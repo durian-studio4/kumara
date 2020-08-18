@@ -17,7 +17,7 @@ message.config({
 
 const KonsinyasiComponent: React.FC<Props> = () => {
   const [name, setName] = useState('');
-  const [id_update, setIdUpdate] = useState(0);
+  const [id_update, setIdUpdate] = useState('');
   const [id, setId] = useState('');
   const [visible_update, setVisibleUpdate] = useState(false);
 
@@ -46,7 +46,7 @@ const KonsinyasiComponent: React.FC<Props> = () => {
   };
 
   const handleVisibleUpdate = (id_update: string, id: string) => {
-    setIdUpdate(String(id_update));
+    setIdUpdate(id_update);
     setVisibleUpdate(!visible_update);
     setId(id);
   };
@@ -57,7 +57,7 @@ const KonsinyasiComponent: React.FC<Props> = () => {
     setVisibleUpdate(!visible_update);
   };
 
-  const confirmPenerima = (id: string) => {
+  const confirmPenerima = (id: number) => {
     postList(
       `${REACT_APP_ENV}/admin/v1/inventory/order/${id}/update`,
       JSON.stringify({ confirm_sales: 1 }),
@@ -114,7 +114,7 @@ const KonsinyasiComponent: React.FC<Props> = () => {
         <Detail
           visible={visible_update}
           id_barang={id_update}
-          id_id={id}
+          id={id}
           onLoadButton={Boolean(loading_list)}
           onConfirmOrder={confirmPenerima}
           onBatalOrder={batalOrder}

@@ -111,7 +111,7 @@ const PiutangComponent: React.FC<Props> = ({}) => {
     setLoadingExcel(true);
     try {
       const fetching = await fetch(
-        `${REACT_APP_ENV}/admin/v1/finance/piutang/excel?start_date=${date[0]}&end_date=${date[1]}`,
+        `${REACT_APP_ENV}/admin/v1/sales/piutang/excel/?start_date=${date[0]}&end_date=${date[1]}`,
         {
           headers: {
             'Content-Type': 'application/json',

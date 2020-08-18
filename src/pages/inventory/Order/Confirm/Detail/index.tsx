@@ -11,6 +11,7 @@ import Update from './Update';
 interface Props {
   visible: boolean;
   id_barang: number;
+  id: number;
   onCancel: () => void;
   onLoadButton: boolean;
   onConfirmOrder: (id: string) => void;
@@ -27,8 +28,8 @@ export interface UpdateOrder {
 const DetailComponent: React.FC<Props> = ({
   visible,
   id_barang,
-  id,
   onCancel,
+  id,
   onLoadButton,
   onConfirmOrder,
   onBatalOrder,
@@ -131,7 +132,7 @@ const DetailComponent: React.FC<Props> = ({
         <Button
           className={styles.button}
           disabled={onLoadButton}
-          onClick={() => onConfirmOrder(String(id_barang))}
+          onClick={() => onConfirmOrder(id)}
           type="primary"
         >
           Confirm Order

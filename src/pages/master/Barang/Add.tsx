@@ -327,7 +327,7 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
         </Col>
       </div>
       <Row justify="end">
-        {onError ? <p style={{ color: 'red' }}>{onError}</p> : null}
+        {/* {onError ? <p style={{ color: 'red' }}>{onError}</p> : null} */}
         <Button
           className={styles.button}
           disabled={onLoadButton}

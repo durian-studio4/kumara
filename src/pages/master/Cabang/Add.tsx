@@ -151,7 +151,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onError, o
         </Col>
       </div>
       <Row justify="end">
-        {onError ? <p style={{ color: 'red' }}>{onError}</p> : null}
+        {/* {onError ? <p style={{ color: 'red' }}>{onError}</p> : null} */}
         <Button
           className={styles.button}
           onClick={onClearState}

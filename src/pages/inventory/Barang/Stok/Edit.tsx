@@ -29,6 +29,7 @@ const EditComponent: React.FC<Props> = ({
   const [data, status_list, loading_list, error_list, fetchList] = useFetch();
 
   const [qty_display, setQtyDisplay] = useState('');
+  const [qty_gudang, setQtyGudang] = useState('');
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -38,7 +39,20 @@ const EditComponent: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const onChangeState = (e: { target: HTMLInputElement }) => {
+  useEffect(() => {
+    if (data) {
+      setQtyDisplay(data.qty_display);
+      setQtyGudang(data.qty_gudang);
+    }
+  }, [data]);
+
+  const onChangeDisplay = (e: { target: HTMLInputElement }) => {
+    const { value } = e.target;
+
+    setQtyDisplay(value);
+  };
+
+  const onChangeGudang = (e: { target: HTMLInputElement }) => {
     const { value } = e.target;
 
     // if (qty_display >= String(data.qty_gudang)) {
@@ -47,7 +61,7 @@ const EditComponent: React.FC<Props> = ({
     //   setQtyDisplay(value);
     // }
 
-    setQtyDisplay(value);
+    setQtyGudang(value);
   };
 
   const onClearState = () => {
@@ -85,8 +99,9 @@ const EditComponent: React.FC<Props> = ({
                     className={styles.input}
                     type="text"
                     id="qty_gudang"
-                    value={data.qty_gudang}
-                    disabled={true}
+                    value={qty_gudang}
+                    onChange={onChangeGudang}
+                    placeholder="Isi Qty Gudang"
                   />
                 </div>
               </div>
@@ -100,7 +115,7 @@ const EditComponent: React.FC<Props> = ({
                     type="text"
                     id="qty_display"
                     value={qty_display}
-                    onChange={onChangeState}
+                    onChange={onChangeDisplay}
                     placeholder="Isi Qty Display"
                   />
                 </div>

@@ -105,7 +105,7 @@ const AddComponent: React.FC<Props> = ({ visible, onError, onLoadButton, onCreat
               className={styles.input}
               type="text"
               id="no_id"
-              placeholder="112334556789"
+              placeholder="Isi ID"
               value={String(no_id).replace(/[^-0-9]/g, '')}
               onChange={handleChangeState}
             />
@@ -120,7 +120,7 @@ const AddComponent: React.FC<Props> = ({ visible, onError, onLoadButton, onCreat
               className={styles.input}
               type="text"
               id="name"
-              placeholder="112334556789"
+              placeholder="Isi Name"
               value={name}
               onChange={handleChangeState}
             />
@@ -135,7 +135,7 @@ const AddComponent: React.FC<Props> = ({ visible, onError, onLoadButton, onCreat
               className={styles.input}
               type="email"
               id="email"
-              placeholder="leikos@gmail.com"
+              placeholder="Isi Email"
               value={email}
               onChange={handleChangeState}
             />
@@ -150,7 +150,7 @@ const AddComponent: React.FC<Props> = ({ visible, onError, onLoadButton, onCreat
               className={styles.input}
               type="text"
               id="username"
-              placeholder="kuetabby"
+              placeholder="Isi Username"
               value={username}
               onChange={handleChangeState}
             />

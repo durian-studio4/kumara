@@ -25,6 +25,22 @@ const TableRetur: React.FC<Props> = ({
   handleVisibleConfirm,
 }) => {
   const [getColumnSearchProps] = useFilterColumn();
+
+  let data_array = [];
+
+  for (let key in data) {
+    data_array.push({
+      id: data[key].id,
+      tanggal: data[key].tanggal,
+      pembeli: data[key].pembeli.name,
+      tempo: data[key].tempo,
+      total_harga: data[key].total_harga,
+      invoice: data[key].invoice,
+      nama_sales: data[key].nama_sales,
+      status_pembayaran: data[key].status_pembayaran,
+    });
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -37,9 +53,9 @@ const TableRetur: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Nama Pembeli',
-        key: 'pembeli.name',
-        dataIndex: 'pembeli.name',
-        ...getColumnSearchProps('pembeli.name'),
+        key: 'pembeli',
+        dataIndex: 'pembeli',
+        ...getColumnSearchProps('pembeli'),
       },
       {
         align: 'center',
@@ -125,7 +141,7 @@ const TableRetur: React.FC<Props> = ({
     <div>
       <p className={styles.title}>List Pembayaran Tempo</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={loading} />
+        <Table columns={columns} dataSource={data_array} loading={loading} />
       </div>
     </div>
   );

@@ -36,13 +36,13 @@ const KonsinyasiComponent: React.FC<Props> = () => {
   const deleteKonsinyasi = (id: string) => {
     const JSONData = JSON.stringify({ done: 'done' });
     const clear = () => console.log('clear');
-    postList(`${REACT_APP_ENV}/admin/v1/inventory/konsiyansi/${id}/delete`, JSONData, clear);
+    postList(`${REACT_APP_ENV}/admin/v1/inventory/konsinyasi/${id}/delete`, JSONData, clear);
   };
 
   const selesaiKonsinyasi = (id: string) => {
     const JSONData = JSON.stringify({ done: 'done' });
     const clear = () => console.log('clear');
-    postList(`${REACT_APP_ENV}/admin/v1/inventory/konsiyansi/${id}`, JSONData, clear);
+    postList(`${REACT_APP_ENV}/admin/v1/inventory/konsinyasi/${id}`, JSONData, clear);
   };
 
   return (

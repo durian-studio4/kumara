@@ -19,6 +19,17 @@ const TablePiutang: React.FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  let data_array = [];
+
+  for (let key in data) {
+    data_array.push({
+      id: data[key].id,
+      pembeli: data[key].pembeli.name,
+      barang: data[key].barang,
+      nama_sales: data[key].nama_sales,
+    });
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -29,7 +40,7 @@ const TablePiutang: React.FC<Props> = () => {
       {
         align: 'center',
         title: 'Nama Pembeli',
-        dataIndex: 'pembeli.name',
+        dataIndex: 'pembeli',
       },
       {
         align: 'center',
@@ -60,7 +71,7 @@ const TablePiutang: React.FC<Props> = () => {
         <FormattedMessage id="piutang-sales" defaultMessage="Piutang Sales" />
       </div>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />
+        <Table columns={columns} dataSource={data_array} loading={Boolean(loading)} />
       </div>
     </div>
   );

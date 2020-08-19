@@ -80,8 +80,8 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id }: any) => (
-          <Button type="primary" onClick={() => handleVisibleUpdate(id)}>
+        render: ({ id_order }: any) => (
+          <Button type="primary" onClick={() => handleVisibleUpdate(id_order)}>
             Detail
           </Button>
         ),

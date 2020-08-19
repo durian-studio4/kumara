@@ -7,7 +7,7 @@ interface Props {
   visible: boolean;
   onConfirmOrder: ({ url, json, clear }: Suplier) => void;
   onCancel: () => void;
-  id_confirm: number;
+  id_confirm: string;
 }
 
 const ConfirmComponent: React.FC<Props> = ({ visible, onConfirmOrder, onCancel, id_confirm }) => {

@@ -85,7 +85,7 @@ const TableComponent: React.FC<Props> = ({
           <Popconfirm
             title="Apakah Anda Ingin Confirm?"
             onConfirm={() => {
-              onPenerima(props.id);
+              onPenerima(props.id_order);
             }}
             okText="Yes"
             cancelText="No"

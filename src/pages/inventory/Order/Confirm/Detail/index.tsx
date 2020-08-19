@@ -10,8 +10,8 @@ import Update from './Update';
 
 interface Props {
   visible: boolean;
-  id_barang: number;
-  id: number;
+  id_update: string;
+  id: string;
   onCancel: () => void;
   onLoadButton: boolean;
   onConfirmOrder: (id: string) => void;
@@ -27,7 +27,7 @@ export interface UpdateOrder {
 
 const DetailComponent: React.FC<Props> = ({
   visible,
-  id_barang,
+  id_update,
   onCancel,
   id,
   onLoadButton,
@@ -44,11 +44,11 @@ const DetailComponent: React.FC<Props> = ({
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/${id_barang}/select`);
+      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/select`);
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_barang, rerender]);
+  }, [id_update, rerender]);
 
   const handleVisibleConfirm = (id: string, barang: string) => {
     setIdConfirm(Number(id));
@@ -132,7 +132,7 @@ const DetailComponent: React.FC<Props> = ({
         <Button
           className={styles.button}
           disabled={onLoadButton}
-          onClick={() => onConfirmOrder(id)}
+          onClick={() => onConfirmOrder(id_update)}
           type="primary"
         >
           Confirm Order

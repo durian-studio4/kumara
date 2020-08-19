@@ -7,6 +7,7 @@ import ConfirmComponent from './Confirm';
 import UpdateComponent from './Update';
 
 import useFetch from '@/hooks/useFetch';
+import useCreate from '@/hooks/useCreate';
 
 interface Props {}
 
@@ -21,10 +22,11 @@ const SetoranComponent: React.FC<Props> = () => {
   const [visible_confirm, setVisibleConfirm] = useState(false);
   const [visible_update, setVisibleUpdate] = useState(false);
 
-  const [id_update, setIdUpdate] = useState(0);
-  const [id_confirm, setIdConfirm] = useState(0);
+  const [id_update, setIdUpdate] = useState('');
+  const [id_confirm, setIdConfirm] = useState('');
 
-  const [data_list, status_list, loading_list, error_list, fetchList, postList] = useFetch();
+  const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
+  const [loading_update, time_update, postUpdate] = useCreate();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -32,7 +34,7 @@ const SetoranComponent: React.FC<Props> = () => {
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [time_update]);
 
   const filtering = useCallback(() => {
     fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/list?filter=${name}`);
@@ -46,7 +48,7 @@ const SetoranComponent: React.FC<Props> = () => {
   };
 
   const handleVisibleUpdate = (id: string) => {
-    setIdUpdate(Number(id));
+    setIdUpdate(id);
     setVisibleUpdate(!visible_update);
   };
 
@@ -57,12 +59,12 @@ const SetoranComponent: React.FC<Props> = () => {
   };
 
   const handleClearConfirm = () => {
-    setIdConfirm(0);
+    setIdConfirm('');
     setVisibleConfirm(false);
   };
 
   const handleClearUpdate = () => {
-    setIdUpdate(0);
+    setIdUpdate('');
     setVisibleUpdate(false);
   };
 
@@ -71,11 +73,11 @@ const SetoranComponent: React.FC<Props> = () => {
   };
 
   const confirmOrder = ({ url, json, clear }: Suplier) => {
-    postList(url, json, clear);
+    postUpdate(url, json, clear);
   };
 
   const cancelOrder = ({ url, json, clear }: Suplier) => {
-    postList(url, json, clear);
+    postUpdate(url, json, clear);
   };
 
   return (
@@ -114,10 +116,11 @@ const SetoranComponent: React.FC<Props> = () => {
       {visible_update ? (
         <UpdateComponent
           visible={visible_update}
-          id_suplier={id_update}
+          id_update={id_update}
           onConfirmOrder={confirmOrder}
           onCancelOrder={cancelOrder}
           onCancel={handleClearUpdate}
+          onLoadButton={Boolean(loading_update)}
         />
       ) : null}
     </div>

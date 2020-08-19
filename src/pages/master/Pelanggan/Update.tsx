@@ -357,7 +357,7 @@ const UpdateComponent: React.FC<Props> = ({
         </div>
       )}
       <Row justify="end">
-        {onError ? <p style={{ color: 'red' }}>{onError}</p> : null}
+        {/* {onError ? <p style={{ color: 'red' }}>{onError}</p> : null} */}
         <Button
           disabled={isDisabled || Boolean(onLoadButton)}
           onClick={updatePelanggan}

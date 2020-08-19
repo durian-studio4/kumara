@@ -53,7 +53,7 @@ export default {
   menu: {
     locale: false,
   },
-  title: 'KUMARA MEDICAL',
+  title: 'KUMARA',
   pwa: true,
   iconfontUrl: '',
 } as DefaultSettings;

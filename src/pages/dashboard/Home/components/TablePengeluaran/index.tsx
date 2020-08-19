@@ -89,8 +89,8 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
     <div>
       <p className={styles.title}>Kategori Pengeluaran</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columnsDetail} dataSource={detail} loading={Boolean(loading)} />;
-        <Table columns={columnsTotal} dataSource={total} loading={Boolean(loading)} />;
+        <Table columns={columnsDetail} dataSource={detail} loading={Boolean(loading)} />
+        <Table columns={columnsTotal} dataSource={total} loading={Boolean(loading)} />
       </div>
     </div>
   );

@@ -7,16 +7,18 @@ import useFetch from '@/hooks/useFetch';
 import { Suplier } from './index';
 interface Props {
   visible: boolean;
-  id_suplier: number;
+  id_update: string;
   onCancelOrder: ({ url, json, clear }: Suplier) => void;
   onConfirmOrder: ({ url, json, clear }: Suplier) => void;
   onCancel: () => void;
+  onLoadButton: boolean;
 }
 
 const UpdateComponent: React.FC<Props> = ({
   visible,
-  id_suplier,
+  id_update,
   onCancelOrder,
+  onLoadButton,
   onConfirmOrder,
   onCancel,
 }) => {
@@ -24,15 +26,15 @@ const UpdateComponent: React.FC<Props> = ({
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/barang/${id_suplier}/select`);
+      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/select`);
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_suplier]);
+  }, [id_update]);
 
   const confirmOrder = () => {
     onConfirmOrder({
-      url: `${REACT_APP_ENV}/admin/v1/finance/order/${id_suplier}/update`,
+      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/konfirmasi-finance`,
       json: JSON.stringify({ confirm_finance: 1 }),
       clear: onCancel,
     });
@@ -40,7 +42,7 @@ const UpdateComponent: React.FC<Props> = ({
 
   const cancelOrder = () => {
     onCancelOrder({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_suplier}/batal`,
+      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/batal`,
       json: JSON.stringify({}),
       clear: onCancel,
     });
@@ -51,12 +53,12 @@ const UpdateComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Qty Req',
-        dataIndex: 'qty_gudang',
+        dataIndex: 'qty_req',
       },
       {
         align: 'center',
         title: 'Qty Conf',
-        dataIndex: 'qty_display',
+        dataIndex: 'qty_confirm',
       },
       {
         align: 'center',
@@ -76,7 +78,9 @@ const UpdateComponent: React.FC<Props> = ({
     <Modal visible={visible} title="Detail Suplier" onCancel={onCancel} footer={null} width={600}>
       <div className={styles.modal_body}>
         {status !== 200 || error ? <h1>Something went wrong</h1> : null}
-        {data ? <Table columns={columns} loading={Boolean(loading)} dataSource={[data]} /> : null}
+        {data ? (
+          <Table columns={columns} loading={Boolean(loading)} dataSource={data.detail} />
+        ) : null}
       </div>
       <Button
         style={{ width: '100%' }}
@@ -84,6 +88,7 @@ const UpdateComponent: React.FC<Props> = ({
         type="primary"
         danger
         id="cancel"
+        disabled={onLoadButton}
         onClick={cancelOrder}
       >
         Cancel Order
@@ -93,6 +98,7 @@ const UpdateComponent: React.FC<Props> = ({
         className={styles.button}
         type="primary"
         id="confirm"
+        disabled={onLoadButton}
         onClick={confirmOrder}
       >
         Confirm Order

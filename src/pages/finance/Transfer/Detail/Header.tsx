@@ -13,7 +13,7 @@ const HeaderComponent: React.FC<Props> = ({ data }) => {
           <p className={styles.p} style={{ textAlign: 'center' }}>
             PT.Anugrah Tiga Berlian
           </p>
-          <p style={{ textAlign: 'center' }}>Kumara Medical</p>
+          <p style={{ textAlign: 'center' }}>KUMARA</p>
           <p style={{ textAlign: 'center' }}>Jl. Pramuka No. 11 Palmeriam-Matraman-Jakarta-Timur</p>
           <p style={{ textAlign: 'center' }}>Tel.0812 9000 9921 Fax. 021-85916797</p>
         </div>

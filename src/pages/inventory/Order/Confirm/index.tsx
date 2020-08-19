@@ -6,6 +6,7 @@ import Table from './Table';
 import Detail from './Detail';
 
 import useFetch from '@/hooks/useFetch';
+import useCreate from '@/hooks/useCreate';
 
 interface Props {}
 
@@ -15,13 +16,14 @@ message.config({
   maxCount: 1,
 });
 
-const KonsinyasiComponent: React.FC<Props> = () => {
+const ConfirmComponent: React.FC<Props> = () => {
   const [name, setName] = useState('');
   const [id_update, setIdUpdate] = useState('');
   const [id, setId] = useState('');
   const [visible_update, setVisibleUpdate] = useState(false);
 
-  const [data_list, status_list, loading_list, error_list, fetchList, postList] = useFetch();
+  const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
+  const [loading_update, time_update, postUpdate] = useCreate();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -29,7 +31,7 @@ const KonsinyasiComponent: React.FC<Props> = () => {
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [time_update]);
 
   const filtering = useCallback(() => {
     fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/list?filter=${name}`);
@@ -52,14 +54,14 @@ const KonsinyasiComponent: React.FC<Props> = () => {
   };
 
   const handleClearUpdate = () => {
-    setIdUpdate(0);
-    setId(0);
+    setIdUpdate('');
+    setId('');
     setVisibleUpdate(!visible_update);
   };
 
-  const confirmPenerima = (id: number) => {
-    postList(
-      `${REACT_APP_ENV}/admin/v1/inventory/order/${id}/update`,
+  const confirmPenerima = (id: string) => {
+    postUpdate(
+      `${REACT_APP_ENV}/admin/v1/inventory/order/${id}/konfirmasi`,
       JSON.stringify({ confirm_sales: 1 }),
       Confirm,
     );
@@ -67,9 +69,9 @@ const KonsinyasiComponent: React.FC<Props> = () => {
   };
 
   const batalOrder = () => {
-    postList(
+    postUpdate(
       `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/batal`,
-      JSON.stringify(null),
+      JSON.stringify({ confirm_sales: 0 }),
       handleClearUpdate,
     );
   };
@@ -113,9 +115,9 @@ const KonsinyasiComponent: React.FC<Props> = () => {
       {visible_update ? (
         <Detail
           visible={visible_update}
-          id_barang={id_update}
+          id_update={id_update}
           id={id}
-          onLoadButton={Boolean(loading_list)}
+          onLoadButton={Boolean(loading_update)}
           onConfirmOrder={confirmPenerima}
           onBatalOrder={batalOrder}
           onCancel={handleClearUpdate}
@@ -125,4 +127,4 @@ const KonsinyasiComponent: React.FC<Props> = () => {
   );
 };
 
-export default KonsinyasiComponent;
+export default ConfirmComponent;

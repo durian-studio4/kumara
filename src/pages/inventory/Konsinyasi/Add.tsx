@@ -125,7 +125,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
         <div className={styles.col}>
           <div className={styles.box10}>
             <div className={styles.group}>
-              <label className={styles.label} htmlFor="total_harga">
+              <label className={styles.label} htmlFor="total">
                 Total Harga
               </label>
               <Input

@@ -27,14 +27,14 @@ const TableComponent: React.FC<Props> = ({
 
   let data_array = [];
 
-  for (let key in data) {
+  for (let key in data.item) {
     data_array.push({
       id_order: key,
-      id: data[key][0].id,
-      nama_suplier: data[key][0].nama_suplier,
-      tanggal: data[key][0].tanggal,
-      total: data[key][0].total,
-      confirm_sales: data[key][0].confirm_sales,
+      id: data.item[key][0].id,
+      nama_suplier: data.item[key][0].nama_suplier,
+      tanggal: data.item[key][0].tanggal,
+      total: data.item[key][0].total,
+      confirm_sales: data.item[key][0].confirm_sales,
     });
   }
 

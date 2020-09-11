@@ -27,6 +27,20 @@ const TableComponent: React.FC<Props> = ({
 }) => {
   const [getColumnSearchProps] = useFilterColumn();
 
+  let data_array = [];
+
+  for (let key in data) {
+    data_array.push({
+      id: data[key].id,
+      tanggal: data[key].tanggal,
+      nama_pembeli: data[key].pembeli.name,
+      invoice: data[key].invoice,
+      nama_sales: data[key].nama_sales,
+      nama_bank: data[key].nama_bank,
+      status_pembayaran: data[key].status_pembayaran,
+    });
+  }
+
   const columns = useMemo(
     () => [
       {
@@ -39,9 +53,9 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Nama Pembeli',
-        key: 'pembeli.name',
-        dataIndex: 'pembeli.name',
-        ...getColumnSearchProps('pembeli.name'),
+        key: 'nama_pembeli',
+        dataIndex: 'nama_pembeli',
+        ...getColumnSearchProps('nama_pembeli'),
       },
       {
         align: 'center',
@@ -110,7 +124,7 @@ const TableComponent: React.FC<Props> = ({
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data} loading={loading} />;
+      <Table columns={columns} dataSource={data_array} loading={loading} />;
     </div>
   );
 };

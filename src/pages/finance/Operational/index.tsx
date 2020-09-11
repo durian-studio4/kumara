@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row } from 'antd';
+import { Row, Button } from 'antd';
+import Cookie from 'js-cookie';
 import styles from './index.less';
 
 import InputComponent from './Input';
@@ -8,6 +9,8 @@ import EditComponent from './Edit';
 
 import useFetch from '@/hooks/useFetch';
 import useNumber from '@/hooks/useNumber';
+
+import DatePicker from '@/pages/dashboard/Home/components/DatePicker';
 
 interface Props {}
 
@@ -19,6 +22,9 @@ const OperationalComponent: React.FC<Props> = () => {
 
   const [visible, setVisible] = useState(false);
   const [id_row, setId] = useState(0);
+
+  const [date, setDate] = useState(['', '']);
+  const [loading_excel, setLoadingExcel] = useState(false);
 
   const [
     data_pengeluaran,
@@ -62,6 +68,10 @@ const OperationalComponent: React.FC<Props> = () => {
     setState(value);
   };
 
+  const onChangeDate = (date: any, dateString: any) => {
+    setDate([dateString[0] || '', dateString[1] || '']);
+  };
+
   const handleClearState = () => {
     setState('');
     onClearTotal();
@@ -81,9 +91,47 @@ const OperationalComponent: React.FC<Props> = () => {
     );
   };
 
+  const downloadExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const fetching = await fetch(
+        `${REACT_APP_ENV}/admin/v1/finance/pengeluaran/excel/?start_date=${date[0]}&end_date=${date[1]}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: String(Cookie.get('token')),
+          },
+        },
+      );
+      const blob = await fetching.blob();
+      const result = blob;
+      let elm = document.createElement('a');
+      elm.href = window.URL.createObjectURL(result);
+      elm.download = `${date[0]}.xls`;
+      document.body.appendChild(elm);
+      elm.click();
+      document.body.removeChild(elm);
+      setLoadingExcel(false);
+    } catch (error) {
+      setLoadingExcel(false);
+    }
+  };
+
   return (
     <div>
       <p className={styles.title}>Operational</p>
+      <Row style={{ marginBottom: '1em' }}>
+        <DatePicker handleChange={onChangeDate} />
+        <Button
+          type="primary"
+          className={styles.button_convert}
+          onClick={downloadExcel}
+          disabled={!Boolean(date[0]) && !Boolean(date[1])}
+        >
+          {loading_excel && 'Downloading excel...'}
+          {!loading_excel && 'Convert to Excel'}
+        </Button>
+      </Row>
       <Row justify="space-between">
         <TableComponent
           data={data_pengeluaran}

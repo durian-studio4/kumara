@@ -40,7 +40,7 @@ const KonsinyasiComponent: React.FC<Props> = () => {
   };
 
   const selesaiKonsinyasi = (id: string) => {
-    const JSONData = JSON.stringify({ done: 'done' });
+    const JSONData = JSON.stringify({ status: 1 });
     const clear = () => console.log('clear');
     postList(`${REACT_APP_ENV}/admin/v1/inventory/konsinyasi/${id}`, JSONData, clear);
   };

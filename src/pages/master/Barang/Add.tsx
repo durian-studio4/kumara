@@ -161,10 +161,10 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
   };
 
   const onCreateBarang = () => {
-    // const data = new FormData();
+    // const form_data = new FormData();
 
-    // for (let [key, value] of Object.entries(DataJSON)) {
-    //   data.append(key, value);
+    // for (let [key, value] of Object.entries(ObjectData)) {
+    //   form_data.append(key, value);
     // }
 
     onCreate({

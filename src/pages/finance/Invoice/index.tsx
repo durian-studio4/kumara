@@ -16,18 +16,12 @@ interface Props {}
 
 const initialDate = format(new Date(), 'yyyy-MM-dd');
 
-const initialState = {
-  invoice: '',
-  pembeli: '',
-};
-
 const SetoranComponent: React.FC<Props> = () => {
   const [visible_export, setVisibleExport] = useState(false);
   const [visible_detail, setVisibleDetail] = useState(false);
   const [idParams, setIdParams] = useState(0);
 
   const [pajak, changePajak] = useSelect('2');
-  const [{ invoice, pembeli }, setState] = useState(initialState);
   const [tanggal_start, setTanggalStart] = useState(initialDate);
   const [tanggal_end, setTanggalEnd] = useState(initialDate);
 
@@ -56,13 +50,6 @@ const SetoranComponent: React.FC<Props> = () => {
     setTanggalEnd(dateString);
   };
 
-  const handleState = (e: any) => {
-    const { id, value } = e.target;
-    setState((prevState) => ({ ...prevState, [id]: value }));
-  };
-
-  const handleClearState = () => setState({ ...initialState });
-
   const handleClearVisibleDetail = () => {
     setVisibleDetail(!visible_detail);
     setIdParams(0);
@@ -86,16 +73,12 @@ const SetoranComponent: React.FC<Props> = () => {
       />
 
       <ExportComponent
-        invoice={invoice}
-        pembeli={pembeli}
         visible={visible_export}
         tanggal_start={tanggal_start}
         tanggal_end={tanggal_end}
         handleTanggalStart={onChangeTanggalStart}
         handleTanggalEnd={onChangeTanggalEnd}
         handleVisible={handleVisibleExport}
-        handleState={handleState}
-        handleClearState={handleClearState}
       />
 
       {visible_detail ? (

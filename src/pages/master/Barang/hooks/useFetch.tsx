@@ -34,7 +34,7 @@ function App() {
       const posting = await request.post(url, {
         data,
         headers: {
-          'Content-Type': 'multipart/form-data"',
+          'Content-Type': 'multipart/form-data',
           Authorization: String(Cookie.get('token')),
         },
       });

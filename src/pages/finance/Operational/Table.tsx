@@ -23,7 +23,9 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
         align: 'center',
         title: 'Tanggal',
         key: 'tanggal',
+        defaultSortOrder: 'ascend',
         dataIndex: 'tanggal',
+        sorter: (a, b) => a.id - b.id,
       },
       {
         align: 'center',

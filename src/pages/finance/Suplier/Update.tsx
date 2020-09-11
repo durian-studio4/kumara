@@ -8,6 +8,7 @@ import { Suplier } from './index';
 interface Props {
   visible: boolean;
   id_update: string;
+  id_order: string;
   onCancelOrder: ({ url, json, clear }: Suplier) => void;
   onConfirmOrder: ({ url, json, clear }: Suplier) => void;
   onCancel: () => void;
@@ -17,6 +18,7 @@ interface Props {
 const UpdateComponent: React.FC<Props> = ({
   visible,
   id_update,
+  id_order,
   onCancelOrder,
   onLoadButton,
   onConfirmOrder,
@@ -26,7 +28,7 @@ const UpdateComponent: React.FC<Props> = ({
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/select`);
+      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/${id_order}/select`);
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps

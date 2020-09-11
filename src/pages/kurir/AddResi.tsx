@@ -4,11 +4,12 @@ import { format } from 'date-fns';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-import SelectAll from '@/components/Select/SelectAll';
-
 import useSelect from '@/hooks/useSelect';
 
 import { UpdateProps } from './index';
+
+const { TextArea } = Input;
+
 interface Props {
   visible: boolean;
   onCreate: ({ json, clear }: UpdateProps) => void;
@@ -24,15 +25,14 @@ const initialState = {
   nama: '',
   no_resi: '',
   total_ongkir: '',
+  ekspedisi: '',
 };
 
 const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButton }) => {
-  const [{ nama, no_resi, total_ongkir }, setState] = useState(initialState);
+  const [{ nama, no_resi, total_ongkir, ekspedisi }, setState] = useState(initialState);
   const [date, setDate] = useState(initialDate);
   const [file_img, setFileImg] = useState('');
   const [isDisabled, setDisabled] = useState(false);
-
-  const [id_ekspedisi, handleChangeEkspedisi, onClearEkspedisi] = useSelect('');
 
   useEffect(() => {
     if (!nama) {
@@ -44,11 +44,11 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
     if (!total_ongkir) {
       setDisabled(true);
     }
-    if (!id_ekspedisi) {
+    if (!ekspedisi) {
       setDisabled(true);
     }
     setDisabled(false);
-  }, [nama, no_resi, total_ongkir, id_ekspedisi]);
+  }, [nama, no_resi, total_ongkir, ekspedisi]);
 
   const onChangeDate = (date: any, dateString: any) => {
     setDate(dateString);
@@ -72,7 +72,6 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
     setState({ ...initialState });
     setDate(initialDate);
     setFileImg('');
-    onClearEkspedisi();
     onCancel();
   };
 
@@ -81,7 +80,7 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
     nama,
     no_resi,
     total_ongkir,
-    id_ekspedisi,
+    ekspedisi,
     // file_img,
   });
 
@@ -141,9 +140,11 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
               <label className={styles.label} htmlFor="ekspedisi">
                 Ekspedisi
               </label>
-              <SelectAll
-                address={`${REACT_APP_ENV}/admin/v1/sales/expedisi`}
-                handleChange={handleChangeEkspedisi}
+              <TextArea
+                id="ekspedisi"
+                placeholder="Isi Ekspedisi"
+                onChange={onChangeState}
+                value={ekspedisi}
               />
             </div>
           </div>

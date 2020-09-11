@@ -51,10 +51,10 @@ const TableComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
-        title: 'Nama Barang',
-        key: 'nama_barang',
-        dataIndex: 'nama_barang',
-        ...getColumnSearchProps('nama_barang'),
+        title: 'Satuan Barang',
+        key: 'satuan_display',
+        dataIndex: 'satuan_display',
+        ...getColumnSearchProps('satuan_display'),
       },
       {
         align: 'center',
@@ -71,13 +71,13 @@ const TableComponent: React.FC<Props> = ({
         render: (props: Date) => <span>{props ? format(props, 'dd/MM/yyyy') : null}</span>,
         ...getColumnSearchProps('expired_date'),
       },
-      {
-        align: 'center',
-        title: 'Satuan Stock',
-        key: 'stok_minimum',
-        dataIndex: 'stok_minimum',
-        ...getColumnSearchProps('stok_minimum'),
-      },
+      // {
+      //   align: 'center',
+      //   title: 'Satuan Stock',
+      //   key: 'stok_minimum',
+      //   dataIndex: 'stok_minimum',
+      //   ...getColumnSearchProps('stok_minimum'),
+      // },
       {
         align: 'center',
         title: 'PPN',

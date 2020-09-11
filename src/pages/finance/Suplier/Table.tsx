@@ -26,17 +26,17 @@ const TableComponent: React.FC<Props> = ({
 
   let data_array = [];
 
-  for (let key in data) {
+  for (let key in data.item) {
     data_array.push({
       id_order: key,
-      id: data[key][0].id,
-      tanggal: data[key][0].tanggal,
-      nama_suplier: data[key][0].nama_suplier,
-      nama_barang: data[key][0].nama_barang,
-      satuan_barang: data[key][0].satuan_barang,
-      total: data[key][0].total,
-      confirm_sales: data[key][0].confirm_sales,
-      confirm_finance: data[key][0].confirm_finance,
+      id: data.item[key][0].id,
+      tanggal: data.item[key][0].tanggal,
+      nama_suplier: data.item[key][0].nama_suplier,
+      nama_barang: data.item[key][0].nama_barang,
+      satuan_barang: data.item[key][0].satuan_barang,
+      total: data.item[key][0].total,
+      confirm_sales: data.item[key][0].confirm_sales,
+      confirm_finance: data.item[key][0].confirm_finance,
     });
   }
 
@@ -80,8 +80,8 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id_order }: any) => (
-          <Button type="primary" onClick={() => handleVisibleUpdate(id_order)}>
+        render: ({ id, id_order }: any) => (
+          <Button type="primary" onClick={() => handleVisibleUpdate(id, id_order)}>
             Detail
           </Button>
         ),
@@ -101,7 +101,7 @@ const TableComponent: React.FC<Props> = ({
         render: (props: any) => (
           <Checkbox
             checked={props.confirm_finance}
-            disabled={props.confirm_finance}
+            disabled={true}
             id={String(props.id)}
             onClick={handleVisibleConfirm}
           />

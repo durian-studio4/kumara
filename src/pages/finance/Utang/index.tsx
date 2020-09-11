@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Input, Button } from 'antd';
+import Cookie from 'js-cookie';
 import styles from './index.less';
 
 import TableComponent from './Table';
@@ -8,6 +9,8 @@ import EditComponent from './Edit';
 import UpdateComponent from './Update';
 
 import useFetch from '@/hooks/useFetch';
+
+import DatePicker from '@/pages/dashboard/Home/components/DatePicker';
 
 interface Props {}
 
@@ -24,6 +27,9 @@ const UtangTokoComponent: React.FC<Props> = () => {
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [id_row, setIdRow] = useState(0);
   const [id_edit, setIdEdit] = useState(0);
+
+  const [date, setDate] = useState(['', '']);
+  const [loading_excel, setLoadingExcel] = useState(false);
 
   const [data_list, status_list, isLoading_list, error_list, fetchList, postList] = useFetch();
 
@@ -48,6 +54,10 @@ const UtangTokoComponent: React.FC<Props> = () => {
 
   const onChangeState = (e: { target: HTMLInputElement }) => {
     setName(e.target.value);
+  };
+
+  const onChangeDate = (date: any, dateString: any) => {
+    setDate([dateString[0] || '', dateString[1] || '']);
   };
 
   const handleVisible = () => setVisible(!visible);
@@ -92,6 +102,33 @@ const UtangTokoComponent: React.FC<Props> = () => {
     );
   };
 
+  const downloadExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const fetching = await fetch(
+        `${REACT_APP_ENV}/admin/v1/finance/utang/excel/?start_date=${date[0]}&end_date=${date[1]}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: String(Cookie.get('token')),
+          },
+        },
+      );
+      const blob = await fetching.blob();
+      const result = blob;
+      let elm = document.createElement('a');
+      elm.href = window.URL.createObjectURL(result);
+      elm.download = `${date[0]}.xls`;
+      document.body.appendChild(elm);
+      elm.click();
+      document.body.removeChild(elm);
+      setDate(['', '']);
+      setLoadingExcel(false);
+    } catch (error) {
+      setLoadingExcel(false);
+    }
+  };
+
   return (
     <div>
       <p className={styles.title}>Utang Toko</p>
@@ -114,6 +151,18 @@ const UtangTokoComponent: React.FC<Props> = () => {
         <p className={styles.title_add} onClick={handleVisible}>
           + Tambah
         </p>
+      </Row>
+      <Row style={{ marginBottom: '1em' }}>
+        <DatePicker handleChange={onChangeDate} />
+        <Button
+          type="primary"
+          className={styles.button_convert}
+          onClick={downloadExcel}
+          disabled={!Boolean(date[0]) && !Boolean(date[1])}
+        >
+          {loading_excel && 'Downloading excel...'}
+          {!loading_excel && 'Convert to Excel'}
+        </Button>
       </Row>
       <TableComponent
         data={data_list}

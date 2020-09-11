@@ -55,15 +55,26 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onDelet
       },
       {
         align: 'center',
-        render: ({ id }: any) => (
-          <Row justify="space-around">
-            <Button onClick={() => onSelesai(id)} className={styles.button} type="primary">
-              Selesai
-            </Button>
-            <Button onClick={() => onDelete(id)} className={styles.button} type="primary" danger>
-              Delete
-            </Button>
-          </Row>
+        render: ({ id, status }: any) => (
+          <>
+            {status === 0 ? (
+              <Row justify="space-around">
+                <Button onClick={() => onSelesai(id)} className={styles.button} type="primary">
+                  Selesai
+                </Button>
+                <Button
+                  onClick={() => onDelete(id)}
+                  className={styles.button}
+                  type="primary"
+                  danger
+                >
+                  Delete
+                </Button>
+              </Row>
+            ) : null}
+            {status === 1 ? <p style={{ color: '#1890ff' }}>Selesai</p> : null}
+            {status === 2 ? <p style={{ color: '#ff4d4f' }}>Batal</p> : null}
+          </>
         ),
       },
     ],

@@ -33,7 +33,7 @@ const TableKurir: React.FC<Props> = ({
   for (let key in data) {
     data_array.push({
       id: data[key].id,
-      tanggal: data[key].tanggal,
+      // tanggal: data[key].tanggal,
       nama_sales: data[key].nama_sales,
       alamat: data[key].pembeli.alamat,
       barang: data[key].barang,
@@ -44,12 +44,12 @@ const TableKurir: React.FC<Props> = ({
 
   const columns = useMemo(
     () => [
-      {
-        align: 'center',
-        title: 'Tanggal',
-        dataIndex: 'tanggal',
-        ...getColumnSearchProps('tanggal'),
-      },
+      // {
+      //   align: 'center',
+      //   title: 'Tanggal',
+      //   dataIndex: 'tanggal',
+      //   ...getColumnSearchProps('tanggal'),
+      // },
       {
         align: 'center',
         title: 'Nama Sales',

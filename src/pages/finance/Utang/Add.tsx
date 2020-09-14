@@ -36,7 +36,7 @@ const AddComponent: React.FC<Props> = ({ visible, onError, onCancel, onCreate, o
     qty,
     harga,
     nama_barang,
-    id_suplier: id_suplier.text,
+    id_suplier: id_suplier.id,
     id_satuan_barang,
   });
 

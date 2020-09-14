@@ -4,15 +4,11 @@ import { format } from 'date-fns';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from './index.less';
 
-import useSelect from '@/hooks/useSelect';
-
-import { UpdateProps } from './index';
-
 const { TextArea } = Input;
 
 interface Props {
   visible: boolean;
-  onCreate: ({ json, clear }: UpdateProps) => void;
+  onCreate: ({ formData, clear }: any) => void;
   onCancel: () => void;
   onLoadButton: boolean;
 }
@@ -31,7 +27,7 @@ const initialState = {
 const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButton }) => {
   const [{ nama, no_resi, total_ongkir, ekspedisi }, setState] = useState(initialState);
   const [date, setDate] = useState(initialDate);
-  const [file_img, setFileImg] = useState('');
+  const [file_img, setFileImg] = useState([]);
   const [isDisabled, setDisabled] = useState(false);
 
   useEffect(() => {
@@ -60,18 +56,18 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
   };
 
   const onRemoveImage = () => {
-    setFileImg('');
+    setFileImg([]);
   };
 
   const onChangeImage = (file: any) => {
-    setFileImg(file);
+    setFileImg((state) => [...state, file]);
     return false;
   };
 
   const onClearState = () => {
     setState({ ...initialState });
     setDate(initialDate);
-    setFileImg('');
+    setFileImg([]);
     onCancel();
   };
 
@@ -81,12 +77,17 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
     no_resi,
     total_ongkir,
     ekspedisi,
-    // file_img,
+    file_img: JSON.stringify(file_img[0]),
   });
 
   const createResi = () => {
+    const formData = new FormData();
+
+    for (let [key, value] of Object.entries(DataJSON)) {
+      formData.append(key, value);
+    }
     onCreate({
-      json: DataJSON,
+      formData,
       clear: onClearState,
     });
   };
@@ -177,7 +178,7 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
                       type="primary"
                       id="upload"
                       className={styles.button}
-                      disabled={Boolean(file_img)}
+                      disabled={Boolean(file_img.length)}
                     >
                       <PlusOutlined />
                     </Button>

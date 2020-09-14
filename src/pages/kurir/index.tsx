@@ -9,6 +9,7 @@ import UpdateKurir from './Update';
 import DetailKurir from './Detail';
 
 import AddResi from './AddResi';
+import DetailResi from './DetailResi';
 import TableResi from './TableResi';
 
 import useFetch from '@/hooks/useFetch';
@@ -33,6 +34,9 @@ const KurirComponent: React.FC<Props> = () => {
 
   const [visible_detail, setDetail] = useState(false);
   const [id_detail, setIdDetail] = useState(0);
+
+  const [visible_resi, setResi] = useState(false);
+  const [id_resi, setIdResi] = useState('');
 
   const [visible_add, setVisibleAdd] = useState(false);
 
@@ -81,6 +85,16 @@ const KurirComponent: React.FC<Props> = () => {
     setIdDetail(Number(id));
   };
 
+  const handleVisibleResi = (id: string) => {
+    setResi(!visible_resi);
+    setIdResi(id);
+  };
+
+  const handleClearResi = () => {
+    setResi(!visible_resi);
+    setIdResi('');
+  };
+
   const handleClearState = () => {
     setUpdate(!visible_update);
     setIdUpdate(0);
@@ -121,8 +135,8 @@ const KurirComponent: React.FC<Props> = () => {
     postUpdate(`${REACT_APP_ENV}/admin/v1/kurir/${id_update}/pengiriman`, json, clear);
   };
 
-  const createResi = ({ json, clear }: UpdateProps) => {
-    resiCreate(`${REACT_APP_ENV}/admin/v1/kurir/resi`, json, clear);
+  const createResi = ({ formData, clear }: any) => {
+    resiCreate(`${REACT_APP_ENV}/admin/v1/kurir/resi`, formData, clear);
   };
 
   return (
@@ -148,6 +162,7 @@ const KurirComponent: React.FC<Props> = () => {
         status={Number(status_resi)}
         loading={Boolean(loading_resi)}
         isError={error_resi}
+        handleVisibleSelect={handleVisibleResi}
         handleVisibleAdd={handleVisibleAdd}
       />
 
@@ -158,6 +173,10 @@ const KurirComponent: React.FC<Props> = () => {
           onCreate={createResi}
           onCancel={handleVisibleAdd}
         />
+      ) : null}
+
+      {visible_resi ? (
+        <DetailResi visible={visible_resi} id={id_resi} onCancel={handleClearResi} />
       ) : null}
 
       {visible_update ? (

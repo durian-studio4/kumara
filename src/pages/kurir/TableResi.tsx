@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Table, Button, Row, Tag } from 'antd';
+import { format } from 'date-fns';
 import styles from './index.less';
 
 import PageError from '@/components/PageError';
@@ -11,9 +12,17 @@ interface Props {
   loading: boolean;
   isError: any;
   handleVisibleAdd: () => void;
+  handleVisibleSelect: (id: string) => void;
 }
 
-const TableResi: React.FC<Props> = ({ data, status, loading, isError, handleVisibleAdd }) => {
+const TableResi: React.FC<Props> = ({
+  data,
+  status,
+  loading,
+  isError,
+  handleVisibleAdd,
+  handleVisibleSelect,
+}) => {
   const [getColumnSearchProps] = useFilterColumn();
 
   let data_array = [];
@@ -34,6 +43,7 @@ const TableResi: React.FC<Props> = ({ data, status, loading, isError, handleVisi
         align: 'center',
         title: 'Tanggal Ekspedisi',
         dataIndex: 'tanggal',
+        render: (props: any) => <div>{format(new Date(props), 'dd-MM-yyyy')}</div>,
         ...getColumnSearchProps('tanggal'),
       },
       {
@@ -54,14 +64,15 @@ const TableResi: React.FC<Props> = ({ data, status, loading, isError, handleVisi
         dataIndex: 'total_ongkir',
         ...getColumnSearchProps('total_ongkir'),
       },
-      // {
-      //   align: 'center',
-      //   render: ({ id, status_pengiriman }: any) => (
-      //     <Button onClick={() => handleEditDetail(id)} type="primary" disabled={status_pengiriman}>
-      //       Detail Tujuan
-      //     </Button>
-      //   ),
-      // },
+      {
+        align: 'center',
+        title: 'Lihat Resi',
+        render: ({ id }: any) => (
+          <Button onClick={() => handleVisibleSelect(id)} type="primary">
+            Lihat
+          </Button>
+        ),
+      },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],

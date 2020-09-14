@@ -34,6 +34,7 @@ const TableComponent: React.FC<Props> = ({
         title: 'Tanggal',
         key: 'tanggal',
         render: (props: any) => <span>{props.tanggal}</span>,
+        ...getColumnSearchProps('tanggal'),
       },
       {
         align: 'center',

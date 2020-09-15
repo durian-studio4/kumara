@@ -1,110 +1,189 @@
-import React, { useEffect, useMemo } from 'react';
-import { Table, Modal, Button } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Modal, Row, Button, Input, DatePicker } from 'antd';
+import moment from 'moment';
+import { format } from 'date-fns';
 import styles from './index.less';
 
-import useFetch from '@/hooks/useFetch';
+import SelectSatuan from '@/components/Select/SelectSatuan';
+import Suplier from '@/components/AutoComplete/AutoSuplier';
 
-import { Suplier } from './index';
+import useAutoComplete from './hooks/useAutoComplete';
+import useSelect from '@/hooks/useSelect';
+// import useNumber from '@/hooks/useNumber';
+
+// import PageError from '@/components/PageError'
+
 interface Props {
   visible: boolean;
-  id_update: string;
-  id_order: string;
-  onCancelOrder: ({ url, json, clear }: Suplier) => void;
-  onConfirmOrder: ({ url, json, clear }: Suplier) => void;
+  onCreate: ({ url, json, clear }: any) => void;
   onCancel: () => void;
-  onLoadButton: boolean;
+  onLoading: boolean;
+  id_confirm: string;
+  barang_confirm: string;
+  data: any;
 }
+
+const initialDate = format(new Date(), 'dd-MM-yyyy');
+
+const isEmpty = (obj: any) => {
+  return Object.keys(obj).length === 0;
+};
+
+const initialState = {
+  total: '',
+  qty: '',
+};
 
 const UpdateComponent: React.FC<Props> = ({
   visible,
-  id_update,
-  id_order,
-  onCancelOrder,
-  onLoadButton,
-  onConfirmOrder,
+  onCreate,
   onCancel,
+  onLoading,
+  data,
+  barang_confirm,
+  id_confirm,
 }) => {
-  const [data, status, loading, error, fetchList] = useFetch();
+  const data_detail = data.detail && data.detail[0];
+
+  const [expired_date, setDate] = useState(initialDate);
+
+  // const [total, onChangeTotal, onClearTotal] = useNumber(data_detail.total);
+  // const [qty, onChangeQty, onClearQty] = useNumber(data_detail.qty_confirm);
+  const [{ total, qty }, setState] = useState(initialState);
+
+  const id_suplier = useAutoComplete({
+    idSelect: data_detail.id_suplier,
+    textSelect: data_detail.nama_suplier,
+  });
+
+  const [id_satuan_barang, changeSatuan] = useSelect(data_detail.id_satuan_barang);
+
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+
+  const DataJSON = {
+    id_satuan_barang,
+    total,
+    qty_confirm: qty,
+    id_suplier: id_suplier.id,
+    expired_date,
+  };
 
   useEffect(() => {
-    const timeOut = setTimeout(() => {
-      fetchList(`${REACT_APP_ENV}/admin/v1/inventory/order/${id_order}/select`);
-    }, 0);
-    return () => clearTimeout(timeOut);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_update]);
-
-  const confirmOrder = () => {
-    onConfirmOrder({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/konfirmasi-finance`,
-      json: JSON.stringify({ confirm_finance: 1 }),
-      clear: onCancel,
+    setState({
+      total: data_detail.total.split('Rp').join('').split('.').join('').trim(),
+      qty: data_detail.qty_confirm,
     });
+    setDate(data_detail.expired_date);
+  }, [data_detail]);
+
+  useEffect(() => {
+    if (isEmpty(DataJSON)) {
+      return setUpdateDisabled(true);
+    }
+    return setUpdateDisabled(false);
+  }, [DataJSON]);
+
+  const onChangeDate = (date: any, dateString: any) => {
+    setDate(dateString);
   };
 
-  const cancelOrder = () => {
-    onCancelOrder({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/batal`,
-      json: JSON.stringify({}),
-      clear: onCancel,
-    });
+  const onChangeState = (e: any) => {
+    const { id, value } = e.target;
+    setState((state) => ({ ...state, [id]: value }));
   };
 
-  const columns = useMemo(
-    () => [
-      {
-        align: 'center',
-        title: 'Qty Req',
-        dataIndex: 'qty_req',
-      },
-      {
-        align: 'center',
-        title: 'Qty Conf',
-        dataIndex: 'qty_confirm',
-      },
-      {
-        align: 'center',
-        title: 'Nama Barang',
-        dataIndex: 'nama_barang',
-      },
-      {
-        align: 'center',
-        title: 'Expired Date',
-        dataIndex: 'expired_date',
-      },
-    ],
-    [],
-  );
+  const onClearState = () => {
+    setState({ ...initialState });
+    setDate(initialDate);
+    id_suplier.clearText();
+    onCancel();
+  };
+
+  const updateOrder = () => {
+    onCreate({
+      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_confirm}/update`,
+      json: JSON.stringify(DataJSON),
+      clear: onClearState,
+    });
+  };
 
   return (
-    <Modal visible={visible} title="Detail Suplier" onCancel={onCancel} footer={null} width={600}>
+    <Modal visible={visible} title="Update Order" onCancel={onCancel} width={500} footer={null}>
+      {/* {status !== 200 || error ? <PageError /> : null} */}
       <div className={styles.modal_body}>
-        {status !== 200 || error ? <h1>Something went wrong</h1> : null}
-        {data ? (
-          <Table columns={columns} loading={Boolean(loading)} dataSource={data.detail} />
-        ) : null}
+        <div className={styles.box10}>
+          <div className={styles.group}>
+            <label className={styles.label} htmlFor="qty">
+              Qty
+            </label>
+            <Input
+              className={styles.input}
+              id="qty"
+              placeholder="0"
+              value={qty}
+              onChange={onChangeState}
+            />
+          </div>
+        </div>
+        <div className={styles.box10}>
+          <div className={styles.group}>
+            <label className={styles.label} htmlFor="total">
+              Harga
+            </label>
+            <Input
+              className={styles.input}
+              id="total"
+              placeholder="0"
+              value={total}
+              onChange={onChangeState}
+            />
+          </div>
+        </div>
+        <div className={styles.box10}>
+          <div className={styles.group}>
+            <label className={styles.label} htmlFor="satuan">
+              Satuan Barang
+            </label>
+            <SelectSatuan
+              address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang_confirm}`}
+              initial={data_detail.satuan_barang}
+              handleChange={changeSatuan}
+            />
+          </div>
+        </div>
+        <div className={styles.box10}>
+          <div className={styles.group}>
+            <label className={styles.label} htmlFor="id_suplier">
+              Suplier
+            </label>
+            <Suplier
+              id="id_suplier"
+              value={id_suplier.text}
+              onChange={id_suplier.changeText}
+              onSelect={id_suplier.selectText}
+            />
+          </div>
+        </div>
+        <div className={styles.box10}>
+          <div className={styles.group}>
+            <label className={styles.label}>Expired</label>
+            <DatePicker
+              style={{ width: '100%' }}
+              onChange={onChangeDate}
+              defaultValue={moment(data_detail.expired_date)}
+            />
+          </div>
+        </div>
       </div>
-      <Button
-        style={{ width: '100%' }}
-        className={styles.button}
-        type="primary"
-        danger
-        id="cancel"
-        disabled={onLoadButton}
-        onClick={cancelOrder}
-      >
-        Cancel Order
-      </Button>
-      <Button
-        style={{ width: '100%' }}
-        className={styles.button}
-        type="primary"
-        id="confirm"
-        disabled={onLoadButton}
-        onClick={confirmOrder}
-      >
-        Confirm Order
-      </Button>
+      <Row justify="space-between">
+        <Button onClick={onCancel} disabled={onLoading} type="primary" danger>
+          Batal
+        </Button>
+        <Button onClick={updateOrder} type="primary" disabled={updateDisabled || onLoading}>
+          {onLoading && 'Updating...'}
+          {!onLoading && 'Tambah'}
+        </Button>
+      </Row>
     </Modal>
   );
 };

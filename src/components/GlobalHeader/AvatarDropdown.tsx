@@ -40,7 +40,7 @@ class AvatarDropdown extends React.Component<GlobalHeaderRightProps> {
     return currentUser ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
-          <span className={styles.name}>{String(currentUser)}</span>
+          <span className={styles.name}>{JSON.parse(currentUser)}</span>
         </span>
       </HeaderDropdown>
     ) : (

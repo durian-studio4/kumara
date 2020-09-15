@@ -10,18 +10,10 @@ interface Props {
   loading: boolean;
   status: number;
   error: boolean;
-  handleVisibleConfirm: (id: any) => void;
-  handleVisibleUpdate: (id: any) => void;
+  handleVisibleUpdate: (id: string, id_order: string) => void;
 }
 
-const TableComponent: React.FC<Props> = ({
-  data,
-  status,
-  loading,
-  error,
-  handleVisibleConfirm,
-  handleVisibleUpdate,
-}) => {
+const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleVisibleUpdate }) => {
   const [getColumnSearchProps] = useFilterColumn();
 
   let data_array = [];
@@ -46,6 +38,8 @@ const TableComponent: React.FC<Props> = ({
         align: 'center',
         title: 'No',
         dataIndex: 'id',
+        defaultSortOrder: 'ascend',
+        sorter: (a, b) => a.id - b.id,
       },
       {
         align: 'center',
@@ -98,14 +92,7 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Finance',
-        render: (props: any) => (
-          <Checkbox
-            checked={props.confirm_finance}
-            disabled={true}
-            id={String(props.id)}
-            onClick={handleVisibleConfirm}
-          />
-        ),
+        render: (props: any) => <Checkbox checked={props.confirm_finance} disabled={true} />,
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps

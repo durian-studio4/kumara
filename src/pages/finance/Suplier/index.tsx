@@ -3,8 +3,7 @@ import { Button, Input } from 'antd';
 import styles from './index.less';
 
 import TableComponent from './Table';
-import ConfirmComponent from './Confirm';
-import UpdateComponent from './Update';
+import DetailComponent from './Detail';
 
 import useFetch from '@/hooks/useFetch';
 import useCreate from '@/hooks/useCreate';
@@ -19,12 +18,10 @@ export interface Suplier {
 
 const SetoranComponent: React.FC<Props> = () => {
   const [name, setName] = useState('');
-  const [visible_confirm, setVisibleConfirm] = useState(false);
   const [visible_update, setVisibleUpdate] = useState(false);
 
   const [id_order, setIdOrder] = useState('');
   const [id_update, setIdUpdate] = useState('');
-  const [id_confirm, setIdConfirm] = useState('');
 
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
   const [loading_update, time_update, postUpdate] = useCreate();
@@ -42,12 +39,6 @@ const SetoranComponent: React.FC<Props> = () => {
     setName('');
   }, [fetchList, name]);
 
-  const handleVisibleConfirm = (e: any) => {
-    const { id } = e.target;
-    setIdConfirm(id);
-    setVisibleConfirm(!visible_confirm);
-  };
-
   const handleVisibleUpdate = (id: string, id_order: string) => {
     setIdOrder(id_order);
     setIdUpdate(id);
@@ -58,11 +49,6 @@ const SetoranComponent: React.FC<Props> = () => {
     if (e.key.toLowerCase() === 'enter') {
       filtering();
     }
-  };
-
-  const handleClearConfirm = () => {
-    setIdConfirm('');
-    setVisibleConfirm(false);
   };
 
   const handleClearUpdate = () => {
@@ -105,19 +91,10 @@ const SetoranComponent: React.FC<Props> = () => {
         status={Number(status_list)}
         loading={Boolean(loading_list)}
         error={Boolean(error_list)}
-        handleVisibleConfirm={handleVisibleConfirm}
         handleVisibleUpdate={handleVisibleUpdate}
       />
-      {visible_confirm ? (
-        <ConfirmComponent
-          visible={visible_confirm}
-          onCancel={handleClearConfirm}
-          onConfirmOrder={confirmOrder}
-          id_confirm={id_confirm}
-        />
-      ) : null}
       {visible_update ? (
-        <UpdateComponent
+        <DetailComponent
           visible={visible_update}
           id_update={id_update}
           id_order={id_order}

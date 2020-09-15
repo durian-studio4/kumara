@@ -17,6 +17,8 @@ function App() {
 
   const clearText = () => {
     setText('');
+    setValues('');
+    setId(0);
   };
 
   return { text, id, values, changeText, selectText, clearText };

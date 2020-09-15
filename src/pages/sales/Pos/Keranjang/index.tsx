@@ -94,7 +94,7 @@ const KeranjangComponent: React.FC<Props> = () => {
   return (
     <div>
       <p className={styles.title}>Point of Sales</p>
-      <InputComponent onCreate={tambahBarang} />
+      <InputComponent onCreate={tambahBarang} onLoading={Boolean(data_loading)} />
       <PengirimanComponent
         ongkir={String(ongkir)}
         nama_ekspedisi={nama_ekspedisi}

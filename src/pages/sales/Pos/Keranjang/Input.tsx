@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Input, Row, Button, Card, Spin } from 'antd';
 import styles from './index.less';
 
@@ -10,21 +10,24 @@ import useNumber from '@/hooks/useNumber';
 import Barang from '@/components/AutoComplete/AutoBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
 
+import PageLoading from '@/components/PageLoading';
+
 import PageError from '@/components/PageError';
 
 import { TambahBarang } from './index';
 
 interface Props {
   onCreate: ({ json, clear }: TambahBarang) => void;
+  onLoading: boolean;
 }
 
-const InputComponent: React.FC<Props> = ({ onCreate }) => {
+const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
   const [isDisabled_add, setDisabledAdd] = useState(false);
 
-  const [data, status, loading, error, fetching] = useFetch();
+  const [data, status, loading, isError, fetching] = useFetch();
   const [data_harga, status_harga, loading_harga, error_harga, fetchingHarga] = useFetch();
 
-  const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect(1);
+  const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect('');
 
   const [harga, onChangeHarga, onClearHarga] = useNumber('');
   const [diskon, onChangeDiskon, onClearDiskon] = useNumber('0');
@@ -33,18 +36,26 @@ const InputComponent: React.FC<Props> = ({ onCreate }) => {
   const barang = useAutoComplete();
 
   useEffect(() => {
-    if (barang.values) {
-      fetching(`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`);
-    }
+    const timeOut = setTimeout(() => {
+      if (barang.values) {
+        fetching(
+          `${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`,
+        );
+      }
+    }, 0);
+    return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [barang.values]);
 
   useEffect(() => {
-    if (barang.values) {
-      fetchingHarga(
-        `${REACT_APP_ENV}/admin/v1/master/barang/hargacheck?nama_barang=${barang.values}&id_satuan_barang=${id_satuan_barang}`,
-      );
-    }
+    const timeOut = setTimeout(() => {
+      if (barang.values) {
+        fetchingHarga(
+          `${REACT_APP_ENV}/admin/v1/master/barang/hargacheck?nama_barang=${barang.values}&id_satuan_barang=${id_satuan_barang}`,
+        );
+      }
+    }, 0);
+    return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [barang.values, id_satuan_barang]);
 
@@ -103,109 +114,117 @@ const InputComponent: React.FC<Props> = ({ onCreate }) => {
     }
   };
 
+  console.log(isError, 'error');
+
   return (
     <Card>
       <p className={styles.title}>Input Barang</p>
-      {status !== 200 || error ? <PageError status={status} /> : null}
-      <Row>
-        <div className={styles.box3}>
-          <div className={styles.group}>
-            <label className={styles.label} htmlFor="barang">
-              Nama Barang
-            </label>
-            <Barang
-              id="barang"
-              value={barang.text}
-              onChange={barang.changeText}
-              onSelect={barang.selectText}
-            />
-          </div>
-        </div>
-        <div className={styles.box3}>
-          <div className={styles.group}>
-            <label className={styles.label}>Stok Gudang</label>
-            {loading ? (
-              <Spin />
-            ) : (
-              <Input className={styles.input} disabled={true} value={data.qty_gudang || 0} />
-            )}
-          </div>
-        </div>
-        <div className={styles.box3}>
-          <div className={styles.group}>
-            <label className={styles.label}>Stok Display</label>
-            {loading ? (
-              <Spin />
-            ) : (
-              <Input className={styles.input} disabled={true} value={data.qty_display || 0} />
-            )}
-          </div>
-        </div>
-      </Row>
-      <Row>
-        <div className={styles.box3}>
-          <Row justify="space-between">
-            <div className={styles.box5}>
+      {status !== 200 || isError ? <PageError status={status} /> : null}
+      {onLoading ? (
+        <PageLoading />
+      ) : (
+        <Fragment>
+          <Row>
+            <div className={styles.box3}>
               <div className={styles.group}>
-                <label className={styles.label} htmlFor="qty">
-                  Banyak Barang
+                <label className={styles.label} htmlFor="barang">
+                  Nama Barang
                 </label>
-                <Input
-                  className={styles.input}
-                  id="qty"
-                  placeholder="0"
-                  value={qty}
-                  onChange={onChangeQty}
+                <Barang
+                  id="barang"
+                  value={barang.text}
+                  onChange={barang.changeText}
+                  onSelect={barang.selectText}
                 />
               </div>
             </div>
-            {barang.values ? (
-              <div className={styles.box5}>
-                <div className={styles.group}>
-                  <label className={styles.label}>Satuan Barang</label>
-                  <SelectSatuan
-                    address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`}
-                    select_id="qty_barang"
-                    handleChange={onChangeSatuan}
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label}>Stok Gudang</label>
+                {loading ? (
+                  <Spin />
+                ) : (
+                  <Input
+                    className={styles.input}
+                    disabled={true}
+                    value={barang.values ? data.qty_gudang : 0}
                   />
-                </div>
+                )}
               </div>
-            ) : null}
+            </div>
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label}>Stok Display</label>
+                {loading ? (
+                  <Spin />
+                ) : (
+                  <Input
+                    className={styles.input}
+                    disabled={true}
+                    value={barang.values ? data.qty_display : 0}
+                  />
+                )}
+              </div>
+            </div>
           </Row>
-        </div>
-        <div className={styles.box3}>
-          <div className={styles.group}>
-            <label className={styles.label} htmlFor="harga">
-              Harga Satuan
-            </label>
-            <Input
-              className={styles.input}
-              bordercolor={
-                Number(harga) < Number(data_harga && data_harga.avg) ? '#be1e2d' : '#d9d9d9'
-              }
-              id="harga"
-              placeholder="0"
-              value={harga}
-              onChange={onChangeHarga}
-            />
-            {hargaAvg()}
-          </div>
-        </div>
-        <div className={styles.box3}>
-          <div className={styles.group}>
-            <label className={styles.label} htmlFor="diskon">
-              Diskon
-            </label>
-            <Input
-              className={styles.input}
-              id="diskon"
-              placeholder="0"
-              value={diskon}
-              onChange={onChangeDiskon}
-            />
-          </div>
-        </div>
-      </Row>
+          <Row>
+            <div className={styles.box3}>
+              <Row justify="space-between">
+                <div className={styles.box5}>
+                  <div className={styles.group}>
+                    <label className={styles.label} htmlFor="qty">
+                      Banyak Barang
+                    </label>
+                    <Input className={styles.input} id="qty" value={qty} onChange={onChangeQty} />
+                  </div>
+                </div>
+                {barang.values ? (
+                  <div className={styles.box5}>
+                    <div className={styles.group}>
+                      <label className={styles.label}>Satuan Barang</label>
+                      <SelectSatuan
+                        address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`}
+                        select_id="qty_barang"
+                        handleChange={onChangeSatuan}
+                      />
+                    </div>
+                  </div>
+                ) : null}
+              </Row>
+            </div>
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="harga">
+                  Harga Satuan
+                </label>
+                <Input
+                  className={styles.input}
+                  bordercolor={
+                    Number(harga) < Number(data_harga && data_harga.avg) ? '#be1e2d' : '#d9d9d9'
+                  }
+                  id="harga"
+                  value={harga}
+                  onChange={onChangeHarga}
+                />
+                {hargaAvg()}
+              </div>
+            </div>
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="diskon">
+                  Diskon
+                </label>
+                <Input
+                  className={styles.input}
+                  id="diskon"
+                  value={diskon}
+                  onChange={onChangeDiskon}
+                />
+              </div>
+            </div>
+          </Row>
+        </Fragment>
+      )}
       <Row
         justify="end"
         style={{

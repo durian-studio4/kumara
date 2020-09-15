@@ -38,14 +38,15 @@ function App() {
         },
       });
       const result = await posting.data;
-      setLoading(false);
       setIsError(false);
       setStatus(200);
       setData(result);
+      setLoading(false);
       clearState();
     } catch (error) {
+      setIsError(error.data.message);
+      setStatus(error.data.status);
       setLoading(false);
-      setIsError(true);
       clearState();
     }
   };

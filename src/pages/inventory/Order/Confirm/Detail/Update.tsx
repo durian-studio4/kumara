@@ -1,52 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Row, Button, Input, DatePicker } from 'antd';
+import moment from 'moment';
 import { format } from 'date-fns';
 import styles from '../index.less';
 
 import SelectSatuan from '@/components/Select/SelectSatuan';
 import Suplier from '@/components/AutoComplete/AutoSuplier';
 
-import useAutoComplete from '@/hooks/useAutoComplete';
+import useAutoComplete from '../hooks/useAutoComplete';
 import useSelect from '@/hooks/useSelect';
-import useNumber from '@/hooks/useNumber';
+// import useNumber from '@/hooks/useNumber';
 
 // import PageError from '@/components/PageError'
 
-import { UpdateOrder } from './index';
-
 interface Props {
   visible: boolean;
-  onCreate: ({ url, json, clear }: UpdateOrder) => void;
+  onCreate: ({ url, json, clear }: any) => void;
   onCancel: () => void;
   onLoading: boolean;
-  id_confirm: number;
+  id_confirm: string;
   barang_confirm: string;
+  data: any;
 }
+
+const initialDate = format(new Date(), 'dd-MM-yyyy');
 
 const isEmpty = (obj: any) => {
   return Object.keys(obj).length === 0;
 };
 
-const initialDate = format(new Date(), 'yyyy-MM-dd');
+const initialState = {
+  total: '',
+  qty: '',
+};
 
 const UpdateComponent: React.FC<Props> = ({
   visible,
   onCreate,
   onCancel,
   onLoading,
+  data,
   barang_confirm,
   id_confirm,
 }) => {
-  const [updateDisabled, setUpdateDisabled] = useState(false);
+  const data_detail = data.detail && data.detail[0];
+
   const [expired_date, setDate] = useState(initialDate);
 
-  const [total, onChangeTotal, onClearTotal] = useNumber('');
-  const [qty, onChangeQty, onClearQty] = useNumber('');
+  // const [total, onChangeTotal, onClearTotal] = useNumber(data_detail.total);
+  // const [qty, onChangeQty, onClearQty] = useNumber(data_detail.qty_confirm);
+  const [{ total, qty }, setState] = useState(initialState);
 
-  const id_suplier = useAutoComplete();
-  const [id_satuan_barang, changeSatuan] = useSelect('0');
+  const id_suplier = useAutoComplete({
+    idSelect: data_detail.id_suplier,
+    textSelect: data_detail.nama_suplier,
+  });
 
-  let DataJSON = {};
+  const [id_satuan_barang, changeSatuan] = useSelect(data_detail.id_satuan_barang);
+
+  const [updateDisabled, setUpdateDisabled] = useState(false);
+
+  const DataJSON = {
+    id_satuan_barang,
+    total,
+    qty_confirm: qty,
+    id_suplier: id_suplier.id,
+    expired_date,
+  };
+
+  useEffect(() => {
+    setState({
+      total: data_detail.total.split('Rp').join('').split('.').join('').trim(),
+      qty: data_detail.qty_confirm,
+    });
+    setDate(data_detail.expired_date);
+  }, [data_detail]);
 
   useEffect(() => {
     if (isEmpty(DataJSON)) {
@@ -59,12 +87,15 @@ const UpdateComponent: React.FC<Props> = ({
     setDate(dateString);
   };
 
+  const onChangeState = (e: any) => {
+    const { id, value } = e.target;
+    setState((state) => ({ ...state, [id]: value }));
+  };
+
   const onClearState = () => {
-    onClearQty();
-    onClearTotal();
+    setState({ ...initialState });
     setDate(initialDate);
     id_suplier.clearText();
-    DataJSON = {};
     onCancel();
   };
 
@@ -76,41 +107,21 @@ const UpdateComponent: React.FC<Props> = ({
     });
   };
 
-  if (id_satuan_barang) {
-    DataJSON['id_satuan_barang'] = id_satuan_barang;
-  }
-
-  if (total) {
-    DataJSON['total'] = total;
-  }
-
-  if (qty) {
-    DataJSON['qty_confirm'] = qty;
-  }
-
-  if (id_suplier.id) {
-    DataJSON['id_suplier'] = id_suplier.id;
-  }
-
-  if (expired_date) {
-    DataJSON['expired_date'] = expired_date;
-  }
-
   return (
     <Modal visible={visible} title="Update Order" onCancel={onCancel} width={500} footer={null}>
       {/* {status !== 200 || error ? <PageError /> : null} */}
       <div className={styles.modal_body}>
         <div className={styles.box10}>
           <div className={styles.group}>
-            <label className={styles.label} htmlFor="qty_confirm">
+            <label className={styles.label} htmlFor="qty">
               Qty
             </label>
             <Input
               className={styles.input}
-              id="qty_confirm"
+              id="qty"
               placeholder="0"
               value={qty}
-              onChange={onChangeQty}
+              onChange={onChangeState}
             />
           </div>
         </div>
@@ -124,7 +135,7 @@ const UpdateComponent: React.FC<Props> = ({
               id="total"
               placeholder="0"
               value={total}
-              onChange={onChangeTotal}
+              onChange={onChangeState}
             />
           </div>
         </div>
@@ -135,6 +146,7 @@ const UpdateComponent: React.FC<Props> = ({
             </label>
             <SelectSatuan
               address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang_confirm}`}
+              initial={data_detail.satuan_barang}
               handleChange={changeSatuan}
             />
           </div>
@@ -155,8 +167,11 @@ const UpdateComponent: React.FC<Props> = ({
         <div className={styles.box10}>
           <div className={styles.group}>
             <label className={styles.label}>Expired</label>
-            {/* <DateControl selected={Date.parse(expired_date)} onChange={onChangeExpired} /> */}
-            <DatePicker style={{ width: '100%' }} onChange={onChangeDate} />
+            <DatePicker
+              style={{ width: '100%' }}
+              onChange={onChangeDate}
+              defaultValue={moment(data_detail.expired_date)}
+            />
           </div>
         </div>
       </div>

@@ -220,7 +220,7 @@ export default defineConfig({
                   name: 'Piutang Toko',
                   icon: 'fileText',
                   path: '/finance/piutang',
-                  component: './finance/Piutang',
+                  component: './finance/PIutang',
                 },
                 {
                   name: 'Suplier',

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import request from 'umi-request';
 import Cookie from 'js-cookie';
 
 function App() {
@@ -9,21 +8,21 @@ function App() {
   const handlePost = async (url: string, data: any, clearState: () => void) => {
     setLoading(true);
     try {
-      const posting = await request.post(url, {
-        data,
+      const posting = await fetch(url, {
+        method: 'post',
+        body: data,
         headers: {
-          'Content-Type': 'multipart/form-data',
           Authorization: String(Cookie.get('token')),
         },
       });
-      const result = await posting;
+      const json = posting.json();
+      const result = await json;
       setLoading(false);
       setIsError(Date.now());
       clearState();
       return result;
     } catch (error) {
-      console.log(error, 'error');
-      console.log(error.response, 'error');
+      console.log(error.data, 'error');
       setLoading(false);
       // setIsError(error.response.message);
     }

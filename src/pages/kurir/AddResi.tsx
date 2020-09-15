@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Input, Row, DatePicker, Upload } from 'antd';
 import { format } from 'date-fns';
 import { PlusOutlined } from '@ant-design/icons';
+import { default as NumberFormat } from 'react-number-format';
 import styles from './index.less';
+
+import useNumber from './hooks/useNumber';
 
 const { TextArea } = Input;
 
 interface Props {
   visible: boolean;
-  onCreate: ({ formData, clear }: any) => void;
+  onCreate: ({ data, clear }: any) => void;
   onCancel: () => void;
   onLoadButton: boolean;
 }
@@ -20,31 +23,35 @@ interface Props {}
 const initialState = {
   nama: '',
   no_resi: '',
-  total_ongkir: '',
   ekspedisi: '',
 };
 
 const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButton }) => {
-  const [{ nama, no_resi, total_ongkir, ekspedisi }, setState] = useState(initialState);
+  const [{ nama, no_resi, ekspedisi }, setState] = useState(initialState);
   const [date, setDate] = useState(initialDate);
   const [file_img, setFileImg] = useState([]);
   const [isDisabled, setDisabled] = useState(false);
 
+  const [total_ongkir, onChangeOngkir, onClearOngkir] = useNumber('');
+
   useEffect(() => {
     if (!nama) {
-      setDisabled(true);
+      return setDisabled(true);
     }
     if (!no_resi) {
-      setDisabled(true);
+      return setDisabled(true);
     }
     if (!total_ongkir) {
-      setDisabled(true);
+      return setDisabled(true);
     }
     if (!ekspedisi) {
-      setDisabled(true);
+      return setDisabled(true);
     }
-    setDisabled(false);
-  }, [nama, no_resi, total_ongkir, ekspedisi]);
+    if (!file_img.length) {
+      return setDisabled(true);
+    }
+    return setDisabled(false);
+  }, [nama, no_resi, file_img, total_ongkir, ekspedisi]);
 
   const onChangeDate = (date: any, dateString: any) => {
     setDate(dateString);
@@ -67,18 +74,19 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
   const onClearState = () => {
     setState({ ...initialState });
     setDate(initialDate);
+    onClearOngkir('');
     setFileImg([]);
     onCancel();
   };
 
-  const DataJSON = JSON.stringify({
+  const DataJSON = {
     tanggal: date,
     nama,
     no_resi,
-    total_ongkir,
+    total_ongkir: String(total_ongkir),
     ekspedisi,
-    file_img: JSON.stringify(file_img[0]),
-  });
+    file_img: file_img[0],
+  };
 
   const createResi = () => {
     const formData = new FormData();
@@ -86,8 +94,9 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
     for (let [key, value] of Object.entries(DataJSON)) {
       formData.append(key, value);
     }
+
     onCreate({
-      formData,
+      data: formData,
       clear: onClearState,
     });
   };
@@ -155,13 +164,12 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
               <label className={styles.label} htmlFor="total_ongkir">
                 Total Ongkir
               </label>
-              <Input
-                className={styles.input}
-                type="number"
-                id="total_ongkir"
-                placeholder="Isi Ongkir"
+              <NumberFormat
+                className={styles.number}
+                thousandSeparator={true}
+                thousandsGroupStyle={['thousand']}
                 value={total_ongkir}
-                onChange={onChangeState}
+                onValueChange={onChangeOngkir}
               />
             </div>
           </div>

@@ -55,7 +55,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     qty,
     harga,
     nama_barang,
-    id_suplier: suplier.text,
+    id_suplier: suplier.id,
     id_satuan_barang,
   });
 

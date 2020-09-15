@@ -135,8 +135,8 @@ const KurirComponent: React.FC<Props> = () => {
     postUpdate(`${REACT_APP_ENV}/admin/v1/kurir/${id_update}/pengiriman`, json, clear);
   };
 
-  const createResi = ({ formData, clear }: any) => {
-    resiCreate(`${REACT_APP_ENV}/admin/v1/kurir/resi`, formData, clear);
+  const createResi = ({ data, clear }: any) => {
+    resiCreate(`${REACT_APP_ENV}/admin/v1/kurir/resi`, data, clear);
   };
 
   return (

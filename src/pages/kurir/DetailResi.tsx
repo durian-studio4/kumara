@@ -94,7 +94,7 @@ const DetailComponent: React.FC<Props> = ({ id, visible, onCancel }) => {
                 </label>
                 <div>
                   <img
-                    style={{ height: '30%', width: '30%' }}
+                    style={{ height: '50%', width: '100%' }}
                     src={data.file_img}
                     alt="foto-resi"
                   />

@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './index.less';
 import { Input, Card, Row, Button } from 'antd';
+import NumberFormat from 'react-number-format';
+import styles from './index.less';
 
 interface Props {
   onChangeState: (e: { target: HTMLInputElement }) => void;
@@ -47,12 +48,14 @@ const InputComponent: React.FC<Props> = ({
             <label className={styles.label} htmlFor="total">
               Jumlah Pengeluaran
             </label>
-            <Input
-              className={styles.input}
+            <NumberFormat
               id="total"
+              className={styles.number}
               placeholder="Isi Jumlah Pengeluaran"
+              thousandSeparator={true}
+              thousandsGroupStyle={['thousand']}
+              onValueChange={onChangeTotal}
               value={total}
-              onChange={onChangeTotal}
             />
           </div>
         </div>

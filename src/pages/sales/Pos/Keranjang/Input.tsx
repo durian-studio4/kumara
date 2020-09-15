@@ -1,11 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Input, Row, Button, Card, Spin } from 'antd';
+import { default as NumberFormat } from 'react-number-format';
 import styles from './index.less';
 
 import useAutoComplete from '@/hooks/useAutoComplete';
 import useFetch from '@/hooks/useFetch';
 import useSelect from '@/hooks/useSelect';
-import useNumber from '@/hooks/useNumber';
+import useNumber from '../../hooks/useNumber';
 
 import Barang from '@/components/AutoComplete/AutoBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
@@ -114,8 +115,6 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
     }
   };
 
-  console.log(isError, 'error');
-
   return (
     <Card>
       <p className={styles.title}>Input Barang</p>
@@ -175,7 +174,13 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                     <label className={styles.label} htmlFor="qty">
                       Banyak Barang
                     </label>
-                    <Input className={styles.input} id="qty" value={qty} onChange={onChangeQty} />
+                    <NumberFormat
+                      className={styles.number}
+                      thousandSeparator={true}
+                      thousandsGroupStyle={['thousand']}
+                      onValueChange={onChangeQty}
+                      value={qty}
+                    />
                   </div>
                 </div>
                 {barang.values ? (
@@ -197,14 +202,16 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                 <label className={styles.label} htmlFor="harga">
                   Harga Satuan
                 </label>
-                <Input
-                  className={styles.input}
-                  bordercolor={
-                    Number(harga) < Number(data_harga && data_harga.avg) ? '#be1e2d' : '#d9d9d9'
-                  }
-                  id="harga"
+                <NumberFormat
+                  style={{
+                    borderColor:
+                      Number(harga) < Number(data_harga && data_harga.avg) ? '#be1e2d' : '#d9d9d9',
+                  }}
+                  className={styles.number}
+                  thousandSeparator={true}
+                  thousandsGroupStyle={['thousand']}
+                  onValueChange={onChangeHarga}
                   value={harga}
-                  onChange={onChangeHarga}
                 />
                 {hargaAvg()}
               </div>

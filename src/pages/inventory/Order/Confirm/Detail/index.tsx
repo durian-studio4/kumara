@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, Fragment } from 'react';
 import { Table, Modal, Button, Row } from 'antd';
 import styles from '../index.less';
 
@@ -110,12 +110,18 @@ const DetailComponent: React.FC<Props> = ({
       <div className={styles.modal_body}>
         {status !== 200 || error ? <PageError /> : null}
         {data ? (
-          <Table
-            columns={columns}
-            loading={Boolean(loading)}
-            rowKey="id"
-            dataSource={data.detail}
-          />
+          <Fragment>
+            <Table
+              columns={columns}
+              loading={Boolean(loading)}
+              rowKey="id"
+              dataSource={data.detail}
+            />
+            <div style={{ textAlign: 'center' }}>
+              <p className={styles.p}>Total</p>
+              <p className={styles.p}>{data.total}</p>
+            </div>
+          </Fragment>
         ) : null}
       </div>
       <Row justify="end">

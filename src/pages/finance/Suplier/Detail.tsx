@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, Fragment } from 'react';
 import { Table, Modal, Button } from 'antd';
 import styles from './index.less';
 
@@ -60,7 +60,7 @@ const DetailComponent: React.FC<Props> = ({
 
   const confirmOrder = () => {
     onConfirmOrder({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/konfirmasi-finance`,
+      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_order}/konfirmasi-finance`,
       json: JSON.stringify({ confirm_finance: true }),
       clear: onCancel,
     });
@@ -68,7 +68,7 @@ const DetailComponent: React.FC<Props> = ({
 
   const cancelOrder = () => {
     onCancelOrder({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_update}/batal`,
+      url: `${REACT_APP_ENV}/admin/v1/inventory/order/${id_order}/batal`,
       json: JSON.stringify({}),
       clear: onCancel,
     });
@@ -117,7 +117,13 @@ const DetailComponent: React.FC<Props> = ({
       <div className={styles.modal_body}>
         {status !== 200 || error ? <h1>Something went wrong</h1> : null}
         {data ? (
-          <Table columns={columns} loading={Boolean(loading)} dataSource={data.detail} />
+          <Fragment>
+            <Table columns={columns} loading={Boolean(loading)} dataSource={data.detail} />
+            <div style={{ textAlign: 'center' }}>
+              <p className={styles.p}>Total</p>
+              <p className={styles.p}>{data.total}</p>
+            </div>
+          </Fragment>
         ) : null}
       </div>
       <Button

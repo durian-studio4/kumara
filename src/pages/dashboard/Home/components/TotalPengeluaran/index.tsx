@@ -16,6 +16,7 @@ import styles from '../../index.less';
 
 import useFetch from '@/hooks/useFetch';
 import PageLoading from '@/components/PageLoading';
+import PageError from '@/components/PageError';
 
 interface Props {
   date: string[];
@@ -37,7 +38,7 @@ const TotalPengeluaran: React.FC<Props> = ({ date, id_cabang, id_kategori }) => 
   }, [id_cabang, id_kategori, date]);
 
   if (status_chart !== 200 || error_chart) {
-    return <h1>Something went wrong</h1>;
+    return <PageError />;
   }
 
   return (

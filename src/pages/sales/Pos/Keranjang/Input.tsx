@@ -50,7 +50,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      if (barang.values) {
+      if (barang.values && id_satuan_barang) {
         fetchingHarga(
           `${REACT_APP_ENV}/admin/v1/master/barang/hargacheck?nama_barang=${barang.values}&id_satuan_barang=${id_satuan_barang}`,
         );
@@ -171,9 +171,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
               <Row justify="space-between">
                 <div className={styles.box5}>
                   <div className={styles.group}>
-                    <label className={styles.label} htmlFor="qty">
-                      Banyak Barang
-                    </label>
+                    <label className={styles.label}>Banyak Barang</label>
                     <NumberFormat
                       className={styles.number}
                       thousandSeparator={true}

@@ -69,14 +69,22 @@ const EditComponent: React.FC<Props> = ({
     setQtyDisplay('');
   };
 
-  const DataJSON = JSON.stringify({
-    qty_display,
-  });
-
-  const onEdit = () => {
+  const onEditGudang = () => {
     onCreate({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/update`,
-      json: DataJSON,
+      url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-gudang`,
+      json: JSON.stringify({
+        qty_gudang,
+      }),
+      clear: onClearState,
+    });
+  };
+
+  const onEditDisplay = () => {
+    onCreate({
+      url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-display`,
+      json: JSON.stringify({
+        qty_display,
+      }),
       clear: onClearState,
     });
   };
@@ -92,8 +100,19 @@ const EditComponent: React.FC<Props> = ({
             <Row>
               <div className={styles.box3}>
                 <div className={styles.group}>
+                  <label className={styles.label}>Qty Gudang</label>
+                  <Input
+                    className={styles.input}
+                    type="text"
+                    value={data.qty_gudang}
+                    disabled={true}
+                  />
+                </div>
+              </div>
+              <div className={styles.box3}>
+                <div className={styles.group}>
                   <label className={styles.label} htmlFor="qty_gudang">
-                    Qty Gudang
+                    Qty Gudang Input
                   </label>
                   <Input
                     className={styles.input}
@@ -107,8 +126,38 @@ const EditComponent: React.FC<Props> = ({
               </div>
               <div className={styles.box3}>
                 <div className={styles.group}>
+                  <label className={styles.label} htmlFor="simpan_gudang">
+                    Update Qty Gudang
+                  </label>
+                  <div className={styles.box10}>
+                    <Button
+                      id="simpan_gudang"
+                      disabled={Boolean(loading_list) || onLoading || !qty_gudang}
+                      onClick={onEditGudang}
+                      type="primary"
+                    >
+                      Simpan
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Row>
+            <Row>
+              <div className={styles.box3}>
+                <div className={styles.group}>
+                  <label className={styles.label}>Qty Display</label>
+                  <Input
+                    className={styles.input}
+                    type="text"
+                    value={data.qty_display}
+                    disabled={true}
+                  />
+                </div>
+              </div>
+              <div className={styles.box3}>
+                <div className={styles.group}>
                   <label className={styles.label} htmlFor="qty_display">
-                    Qty Display
+                    Qty Display Input
                   </label>
                   <Input
                     className={styles.input}
@@ -118,6 +167,23 @@ const EditComponent: React.FC<Props> = ({
                     onChange={onChangeDisplay}
                     placeholder="Isi Qty Display"
                   />
+                </div>
+              </div>
+              <div className={styles.box3}>
+                <div className={styles.group}>
+                  <label className={styles.label} htmlFor="simpan_display">
+                    Update Qty Display
+                  </label>
+                  <div className={styles.box10}>
+                    <Button
+                      id="simpan_display"
+                      disabled={Boolean(loading_list) || onLoading || !qty_display}
+                      onClick={onEditDisplay}
+                      type="primary"
+                    >
+                      Simpan
+                    </Button>
+                  </div>
                 </div>
               </div>
             </Row>
@@ -134,14 +200,6 @@ const EditComponent: React.FC<Props> = ({
           danger
         >
           Batal
-        </Button>
-        <Button
-          className={styles.button}
-          disabled={Boolean(loading_list) || onLoading}
-          onClick={onEdit}
-          type="primary"
-        >
-          Simpan
         </Button>
       </Row>
     </Modal>

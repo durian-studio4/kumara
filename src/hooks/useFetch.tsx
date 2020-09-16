@@ -19,11 +19,14 @@ function App() {
         },
       });
       setLoading(false);
+      setIsError(false);
+      setStatus(200);
       setData(fetching.data);
+      return fetching.data;
     } catch (err) {
-      setStatus(err.response.status);
-      setIsError(true);
       setLoading(false);
+      setIsError(true);
+      setStatus(err.response.status);
     }
   };
 
@@ -43,6 +46,7 @@ function App() {
       setData(result);
       setLoading(false);
       clearState();
+      return posting.data;
     } catch (error) {
       setIsError(error.data.message);
       setStatus(error.data.status);

@@ -91,6 +91,10 @@ const KeranjangComponent: React.FC<Props> = () => {
     );
   };
 
+  if (data_error || data_status !== 200) {
+    message.error(data_error);
+  }
+
   return (
     <div>
       <p className={styles.title}>Point of Sales</p>

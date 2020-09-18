@@ -51,7 +51,7 @@ const PembayaranComponent: React.FC<Props> = () => {
       setLoadingExport(false);
       let elem = document.createElement('a');
       elem.href = window.URL.createObjectURL(result);
-      elem.download = 'Invoice.xls';
+      elem.download = 'Invoice.xlsx';
       window.document.body.appendChild(elem);
       elem.click();
       window.document.body.removeChild(elem);

@@ -37,7 +37,7 @@ const ExportComponent: React.FC<Props> = ({
       const result = await blob;
       let elm = window.document.createElement('a');
       elm.href = window.URL.createObjectURL(result);
-      elm.download = `${tanggal_start}.xls`;
+      elm.download = `${tanggal_start}.xlsx`;
       document.body.appendChild(elm);
       elm.click();
       document.body.removeChild(elm);

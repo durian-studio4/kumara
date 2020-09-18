@@ -107,7 +107,7 @@ const OperationalComponent: React.FC<Props> = () => {
       const result = blob;
       let elm = document.createElement('a');
       elm.href = window.URL.createObjectURL(result);
-      elm.download = `${date[0]}.xls`;
+      elm.download = `${date[0]}.xlsx`;
       document.body.appendChild(elm);
       elm.click();
       document.body.removeChild(elm);

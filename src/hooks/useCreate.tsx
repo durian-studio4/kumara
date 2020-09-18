@@ -1,6 +1,13 @@
 import { useState } from 'react';
+import { message } from 'antd';
 import request from 'umi-request';
 import Cookie from 'js-cookie';
+
+message.config({
+  top: 100,
+  duration: 5,
+  maxCount: 1,
+});
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -22,9 +29,8 @@ function App() {
       clearState();
       return result;
     } catch (error) {
-      console.log(error, 'error');
-      console.log(error.response, 'error');
       setLoading(false);
+      message.error(error.data.message);
       // setIsError(error.response.message);
     }
   };

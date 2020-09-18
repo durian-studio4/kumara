@@ -58,7 +58,7 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
   const [itemCheckbox, setCheckboxState] = useState(initialCheckboxState);
   const [satuanBarang, setSatuanState] = useState(initialSatuanState);
   const [satuan_stock, setStok] = useState([]);
-  const [file_img, setFileImg] = useState('');
+  const [file_img, setFileImg] = useState([]);
 
   const [isDisabled, setDisabled] = useState(false);
   const [isToggleQty, setToggleQty] = useState(false);
@@ -77,7 +77,7 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
     brand,
     nama_barang,
     id_type_barang,
-    file_gambar: file_img,
+    file_gambar: file_img[0],
     include_ppn: Number(include_ppn),
     satuan_stock: JSON.stringify(satuan_stock_filtered),
   };
@@ -128,11 +128,11 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
   };
 
   const onRemoveImage = () => {
-    setFileImg('');
+    setFileImg([]);
   };
 
   const onChangeImage = (file: any) => {
-    setFileImg(file);
+    setFileImg((state) => [...state, file]);
     return false;
   };
 

@@ -4,7 +4,7 @@ import styles from './index.less';
 
 import useSelect from '@/hooks/useSelect';
 
-import Select from '@/components/Select/SelectAll';
+import SelectPeranan from '@/components/Select/SelectPeranan';
 
 import { CreateNotifikasi } from './index';
 
@@ -98,10 +98,7 @@ const AddComponent: React.FC<Props> = ({ visible, onError, onLoadButton, onCreat
             <label className={styles.label} htmlFor="role">
               Peranan
             </label>
-            <Select
-              address={`${REACT_APP_ENV}/admin/v1/pengaturan/role/get`}
-              handleChange={handleChangeRole}
-            />
+            <SelectPeranan handleChange={handleChangeRole} />
           </div>
         </div>
       </div>

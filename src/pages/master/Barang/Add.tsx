@@ -156,7 +156,7 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
     setCheckboxState({ ...initialCheckboxState });
     setQtyState({ ...initialQtyState });
     setToggleQty(!isToggleQty);
-    setFileImg('');
+    setFileImg([]);
     onCancel();
   };
 
@@ -317,7 +317,7 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
                   id="file"
                   type="primary"
                   className={styles.button}
-                  disabled={Boolean(file_img)}
+                  disabled={Boolean(file_img.length)}
                 >
                   Upload Foto Barang
                 </Button>

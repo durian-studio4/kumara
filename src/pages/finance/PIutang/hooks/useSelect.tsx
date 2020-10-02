@@ -6,7 +6,7 @@ function App(number: number) {
   useEffect(() => {
     const timeOut = setTimeout(() => {
       setAngka(number);
-    }, 0);
+    }, 100);
     return () => clearTimeout(timeOut);
   }, [number]);
 

@@ -41,7 +41,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
   );
 
   const [nama_barang, onChangeBarang, onClearBarang] = useSelect(data_list.nama_barang);
-  const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect(0);
+  const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect(data_list.id_satuan_barang);
 
   const suplier = useAutoComplete({
     idSelect: data_list.id_suplier,
@@ -199,7 +199,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
                   <SelectBarang
                     address={`${REACT_APP_ENV}/admin/v1/master/barang/listgroup`}
                     select_id="nama_barang"
-                    initial={data_list.nama_barang}
+                    initial={nama_barang}
                     handleChange={onChangeBarang}
                   />
                 </div>
@@ -242,6 +242,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
                     <SelectSatuan
                       address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${nama_barang}`}
                       select_id="qty_satuan"
+                      initial={data_list.satuan_barang}
                       handleChange={onChangeSatuan}
                     />
                   </div>

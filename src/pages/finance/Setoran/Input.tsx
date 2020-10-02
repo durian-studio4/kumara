@@ -2,6 +2,7 @@ import React from 'react';
 // import styles from './index.less';
 import styles from './index.less';
 import { Input, Card, Row, Button } from 'antd';
+import { default as NumberFormat } from 'react-number-format';
 
 interface Props {
   onChangeState: (e: { target: HTMLInputElement }) => void;
@@ -48,12 +49,12 @@ const InputComponent: React.FC<Props> = ({
             <label className={styles.label} htmlFor="jumlah_setoran">
               Jumlah Setoran
             </label>
-            <Input
-              className={styles.input}
-              id="jumlah_setoran"
-              placeholder="Isi Jumlah Setoran"
-              value={jumlah_setoran}
-              onChange={onChangeSetoran}
+            <NumberFormat
+              className={styles.number}
+              thousandSeparator={true}
+              thousandsGroupStyle={'thousand'}
+              onValueChange={onChangeSetoran}
+              value={String(jumlah_setoran)}
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, history } from 'umi';
+import { useParams, useHistory } from 'umi';
 import { message } from 'antd';
 import styles from './index.less'; // import Add from './Add';
 
@@ -30,6 +30,7 @@ const KeranjangComponent: React.FC<Props> = () => {
   const [ongkir, onChangeOngkir, onClearOngkir] = useNumber('');
 
   const id_params = useParams().id;
+  const history = useHistory();
 
   const [data_table, data_status, data_loading, data_error, fetchData, postData] = useFetch();
 

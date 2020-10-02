@@ -55,7 +55,7 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error }) => {
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} loading={loading} dataSource={data} />;
+      <Table columns={columns} loading={loading} dataSource={data.reverse()} />;
     </div>
   );
 };

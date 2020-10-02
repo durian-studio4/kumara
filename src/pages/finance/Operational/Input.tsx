@@ -53,7 +53,7 @@ const InputComponent: React.FC<Props> = ({
               className={styles.number}
               placeholder="Isi Jumlah Pengeluaran"
               thousandSeparator={true}
-              thousandsGroupStyle={['thousand']}
+              thousandsGroupStyle={'thousand'}
               onValueChange={onChangeTotal}
               value={total}
             />

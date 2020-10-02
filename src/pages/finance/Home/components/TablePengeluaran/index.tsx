@@ -14,6 +14,8 @@ interface Props {
 const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   const [data, status, isLoading, error, fetchList] = useFetch();
 
+  const detail = data.detail && data.detail.reverse();
+
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(
@@ -61,7 +63,7 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
     <div style={{ marginTop: '1em' }}>
       <p className={styles.title}>Kategori Pengeluaran</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data.detail} loading={Boolean(isLoading)} />
+        <Table columns={columns} dataSource={detail} loading={Boolean(isLoading)} />
       </div>
     </div>
   );

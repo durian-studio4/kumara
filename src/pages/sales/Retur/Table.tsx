@@ -59,7 +59,7 @@ const TableRetur: React.FC<Props> = ({ data, loading, status, error }) => {
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data} loading={loading} />;
+      <Table columns={columns} dataSource={data.reverse()} loading={loading} />;
     </div>
   );
 };

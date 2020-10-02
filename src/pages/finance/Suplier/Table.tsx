@@ -38,7 +38,6 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
         align: 'center',
         title: 'No',
         dataIndex: 'id',
-        defaultSortOrder: 'ascend',
         sorter: (a, b) => a.id - b.id,
       },
       {
@@ -110,7 +109,7 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
         <p className={styles.title_add}>Approve</p>
       </Row>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data_array} loading={loading} />
+        <Table columns={columns} dataSource={data_array.reverse()} loading={loading} />
       </div>
     </div>
   );

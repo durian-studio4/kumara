@@ -44,7 +44,6 @@ const TableComponent: React.FC<Props> = ({
         align: 'center',
         title: 'Id',
         dataIndex: 'id',
-        defaultSortOrder: 'ascend',
         sorter: (a, b) => a.id - b.id,
       },
       {
@@ -106,7 +105,7 @@ const TableComponent: React.FC<Props> = ({
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} loading={loading} dataSource={data_array} />;
+      <Table columns={columns} loading={loading} dataSource={data_array.reverse()} />;
     </div>
   );
 };

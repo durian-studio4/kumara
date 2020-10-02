@@ -31,7 +31,7 @@ const GlobalHeaderRight: React.FC<Props> = () => {
       onViewMore={() => message.info('Click on view more')}
       clearClose
     >
-      <NoticeIcon.Tab list={data_list} count={data_list} title="Notifikasi" />
+      <NoticeIcon.Tab list={data_list.reverse()} count={data_list} title="Notifikasi" />
     </NoticeIcon>
   );
 };

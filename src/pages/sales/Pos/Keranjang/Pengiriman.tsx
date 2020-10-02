@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input, Row, Button, Card } from 'antd';
+import { default as NumberFormat } from 'react-number-format';
 import styles from './index.less';
 
 interface Props {
@@ -45,12 +46,12 @@ const PengirimanComponent: React.FC<Props> = ({
         <div className={styles.box3}>
           <div className={styles.group}>
             <label className={styles.label}>Ongkos Kirim</label>
-            <Input
-              className={styles.input}
-              id="ongkir"
-              placeholder="Isi Ongkir"
-              value={ongkir}
-              onChange={onChangeOngkir}
+            <NumberFormat
+              className={styles.number}
+              thousandSeparator={true}
+              thousandsGroupStyle={'thousand'}
+              onValueChange={onChangeOngkir}
+              value={String(ongkir)}
             />
           </div>
         </div>

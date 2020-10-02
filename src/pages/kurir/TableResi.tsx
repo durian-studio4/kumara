@@ -33,7 +33,7 @@ const TableResi: React.FC<Props> = ({
       tanggal: data[key].tanggal,
       nama: data[key].nama,
       no_resi: data[key].no_resi,
-      total_ongkir: data[key].total_ongkir,
+      total_ongkir: data[key].total_ongkir.toLocaleString(),
     });
   }
 
@@ -91,7 +91,7 @@ const TableResi: React.FC<Props> = ({
         </p>
       </Row>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={loading} />
+        <Table columns={columns} dataSource={data_array.reverse()} loading={loading} />
       </div>
     </div>
   );

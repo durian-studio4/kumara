@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Row, Button, Input, DatePicker } from 'antd';
+import { default as NumberFormat } from 'react-number-format';
 import moment from 'moment';
 import { format } from 'date-fns';
 import styles from '../index.less';
@@ -9,7 +10,7 @@ import Suplier from '@/components/AutoComplete/AutoSuplier';
 
 import useAutoComplete from '../hooks/useAutoComplete';
 import useSelect from '@/hooks/useSelect';
-// import useNumber from '@/hooks/useNumber';
+import useNumber from '../hooks/useNumber';
 
 // import PageError from '@/components/PageError'
 
@@ -29,10 +30,10 @@ const isEmpty = (obj: any) => {
   return Object.keys(obj).length === 0;
 };
 
-const initialState = {
-  total: '',
-  qty: '',
-};
+// const initialState = {
+//   total: '',
+//   qty: '',
+// };
 
 const UpdateComponent: React.FC<Props> = ({
   visible,
@@ -47,9 +48,11 @@ const UpdateComponent: React.FC<Props> = ({
 
   const [expired_date, setDate] = useState(initialDate);
 
-  // const [total, onChangeTotal, onClearTotal] = useNumber(data_detail.total);
-  // const [qty, onChangeQty, onClearQty] = useNumber(data_detail.qty_confirm);
-  const [{ total, qty }, setState] = useState(initialState);
+  const [total, onChangeTotal, onClearTotal] = useNumber(
+    data_detail.harga.split('Rp').join('').split('.').join('').trim(),
+  );
+  const [qty, onChangeQty, onClearQty] = useNumber(data_detail.qty_confirm);
+  // const [{ total, qty }, setState] = useState(initialState);
 
   const id_suplier = useAutoComplete({
     idSelect: data_detail.id_suplier,
@@ -62,17 +65,17 @@ const UpdateComponent: React.FC<Props> = ({
 
   const DataJSON = {
     id_satuan_barang,
-    total,
+    harga: total,
     qty_confirm: qty,
     id_suplier: id_suplier.id,
     expired_date,
   };
 
   useEffect(() => {
-    setState({
-      total: data_detail.total.split('Rp').join('').split('.').join('').trim(),
-      qty: data_detail.qty_confirm,
-    });
+    // setState({
+    //   total: data_detail.harga.split('Rp').join('').split('.').join('').trim(),
+    //   qty: data_detail.qty_confirm,
+    // });
     setDate(data_detail.expired_date);
   }, [data_detail]);
 
@@ -87,13 +90,15 @@ const UpdateComponent: React.FC<Props> = ({
     setDate(dateString);
   };
 
-  const onChangeState = (e: any) => {
-    const { id, value } = e.target;
-    setState((state) => ({ ...state, [id]: value }));
-  };
+  // const onChangeState = (e: any) => {
+  //   const { id, value } = e.target;
+  //   setState((state) => ({ ...state, [id]: value }));
+  // };
 
   const onClearState = () => {
-    setState({ ...initialState });
+    // setState({ ...initialState });
+    onClearQty();
+    onClearTotal();
     setDate(initialDate);
     id_suplier.clearText();
     onCancel();
@@ -116,12 +121,12 @@ const UpdateComponent: React.FC<Props> = ({
             <label className={styles.label} htmlFor="qty">
               Qty
             </label>
-            <Input
-              className={styles.input}
-              id="qty"
-              placeholder="0"
-              value={qty}
-              onChange={onChangeState}
+            <NumberFormat
+              className={styles.number}
+              thousandSeparator={true}
+              thousandsGroupStyle={'thousand'}
+              onValueChange={onChangeQty}
+              value={String(qty)}
             />
           </div>
         </div>
@@ -130,12 +135,12 @@ const UpdateComponent: React.FC<Props> = ({
             <label className={styles.label} htmlFor="total">
               Harga
             </label>
-            <Input
-              className={styles.input}
-              id="total"
-              placeholder="0"
-              value={total}
-              onChange={onChangeState}
+            <NumberFormat
+              className={styles.number}
+              thousandSeparator={true}
+              thousandsGroupStyle={'thousand'}
+              onValueChange={onChangeTotal}
+              value={String(total)}
             />
           </div>
         </div>
@@ -170,7 +175,7 @@ const UpdateComponent: React.FC<Props> = ({
             <DatePicker
               style={{ width: '100%' }}
               onChange={onChangeDate}
-              defaultValue={moment(data_detail.expired_date)}
+              defaultValue={moment(data_detail.expired_date || initialDate)}
             />
           </div>
         </div>

@@ -56,7 +56,7 @@ const TableRetur: React.FC<Props> = () => {
       </div>
       {/* <p className={styles.title}>Retur Sales</p> */}
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={Boolean(loading)} />
+        <Table columns={columns} dataSource={data.reverse()} loading={Boolean(loading)} />
       </div>
     </div>
   );

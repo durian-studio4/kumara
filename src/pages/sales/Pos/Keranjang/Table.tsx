@@ -46,7 +46,7 @@ const TableComponent: React.FC<Props> = ({
           </thead>
           <tbody>
             {data.barang &&
-              data.barang.map((item, i) => (
+              data.barang.map((item: any, i: number) => (
                 <tr key={i}>
                   <td>{item.nama_barang}</td>
                   <td>{item.qty}</td>
@@ -74,6 +74,7 @@ const TableComponent: React.FC<Props> = ({
             </tr>
             <tr>
               <td style={{ fontWeight: 'bold' }}>Total</td>
+              <td />
               <td />
               <td />
               <td>{data.total_harga}</td>

@@ -23,6 +23,7 @@ const TableComponent: React.FC<Props> = ({
   remove,
 }) => {
   const [getColumnSearchProps] = useFilterColumn();
+
   const columns = useMemo(
     () => [
       {
@@ -88,7 +89,7 @@ const TableComponent: React.FC<Props> = ({
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data} loading={loading} />;
+      <Table columns={columns} dataSource={data.reverse()} loading={loading} />;
     </div>
   );
 };

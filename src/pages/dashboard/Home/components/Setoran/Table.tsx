@@ -33,7 +33,7 @@ const TableComponent: React.FC<Props> = ({ data, isLoading }) => {
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data} loading={isLoading} />;
+      <Table columns={columns} dataSource={data.reverse()} loading={isLoading} />;
     </div>
   );
 };

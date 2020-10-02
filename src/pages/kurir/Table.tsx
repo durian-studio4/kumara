@@ -128,7 +128,7 @@ const TableKurir: React.FC<Props> = ({
         <p className={styles.title}>List Pengiriman Hari Ini</p>
       </Row>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data_array} loading={loading} />
+        <Table columns={columns} dataSource={data_array.reverse()} loading={loading} />
       </div>
     </div>
   );

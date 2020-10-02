@@ -23,7 +23,6 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
         align: 'center',
         title: 'Tanggal',
         key: 'tanggal',
-        defaultSortOrder: 'ascend',
         dataIndex: 'tanggal',
         sorter: (a, b) => a.id - b.id,
       },
@@ -62,7 +61,7 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
     <Card style={{ height: '50%', width: '45%' }}>
       <p className={styles.title}>Pengeluaran Operational</p>
       <div style={{ overflow: 'auto' }}>
-        <Table columns={columns} dataSource={data} loading={loading} />
+        <Table columns={columns} dataSource={data.reverse()} loading={loading} />
       </div>
     </Card>
   );

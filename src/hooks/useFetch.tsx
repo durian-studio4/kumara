@@ -32,6 +32,8 @@ function App() {
 
   const handlePost = async (url: string, data: any, clearState: () => void) => {
     setLoading(true);
+    setIsError(false);
+    setStatus(200);
     try {
       const posting = await request.post(url, {
         data,

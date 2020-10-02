@@ -77,7 +77,7 @@ const KeranjangComponent: React.FC<Props> = () => {
   return (
     <div>
       <p className={styles.title}>Request Order</p>
-      <Input onCreate={createBarang} />
+      <Input onCreate={createBarang} onLoading={Boolean(data_loading)} />
       <Table
         data={data_table}
         status={Number(data_status)}

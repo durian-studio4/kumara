@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Modal, Row, Input, Button } from 'antd';
+import { default as NumberFormat } from 'react-number-format';
 import styles from './index.less';
 
 import useFetch from '@/hooks/useFetch';
@@ -61,12 +62,12 @@ const EditComponent: React.FC<Props> = ({
           <div className={styles.box10}>
             <div className={styles.group}>
               <label htmlFor="total">Total Perubahan</label>
-              <Input
-                className={styles.input}
-                id="total"
-                placeholder="Isi Total"
-                value={total}
-                onChange={onChangeTotal}
+              <NumberFormat
+                className={styles.number}
+                thousandSeparator={true}
+                thousandsGroupStyle={'thousand'}
+                onValueChange={onChangeTotal}
+                value={String(total)}
               />
             </div>
           </div>

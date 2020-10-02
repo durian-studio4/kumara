@@ -6,7 +6,7 @@ import InputComponent from './Input';
 import TableComponent from './Table';
 
 import useTambahSetoran from '@/hooks/useFetch';
-import useNumber from '@/hooks/useNumber';
+import useNumber from '../hooks/useNumber';
 
 interface Props {}
 

@@ -167,9 +167,9 @@ const AddComponent: React.FC<Props> = ({ onCreate, onCancel, visible, onLoadButt
               <NumberFormat
                 className={styles.number}
                 thousandSeparator={true}
-                thousandsGroupStyle={['thousand']}
-                value={total_ongkir}
+                thousandsGroupStyle={'thousand'}
                 onValueChange={onChangeOngkir}
+                value={String(total_ongkir)}
               />
             </div>
           </div>

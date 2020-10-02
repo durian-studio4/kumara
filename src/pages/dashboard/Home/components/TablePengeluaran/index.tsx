@@ -14,7 +14,7 @@ interface Props {
 const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
   const [data, status, loading, error, fetchList] = useFetch();
 
-  const detail = data && data.detail;
+  const detail = data.detail && data.detail.reverse();
   const total = data.total ? Array(data.total) : [];
 
   useEffect(() => {

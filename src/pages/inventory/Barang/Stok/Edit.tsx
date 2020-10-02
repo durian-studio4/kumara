@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Row, Button, Col, Input } from 'antd';
 import styles from './index.less';
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 
 import useFetch from '@/hooks/useFetch';
 
@@ -31,6 +32,9 @@ const EditComponent: React.FC<Props> = ({
   const [qty_display, setQtyDisplay] = useState('');
   const [qty_gudang, setQtyGudang] = useState('');
 
+  const [display_action, setDisplayAction] = useState('');
+  const [gudang_action, setGudangAction] = useState('');
+
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(`${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/select`);
@@ -38,13 +42,6 @@ const EditComponent: React.FC<Props> = ({
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-
-  useEffect(() => {
-    if (data) {
-      setQtyDisplay(data.qty_display);
-      setQtyGudang(data.qty_gudang);
-    }
-  }, [data]);
 
   const onChangeDisplay = (e: { target: HTMLInputElement }) => {
     const { value } = e.target;
@@ -67,26 +64,49 @@ const EditComponent: React.FC<Props> = ({
   const onClearState = () => {
     onCancel();
     setQtyDisplay('');
+    setQtyGudang('');
+    setDisplayAction('');
+    setGudangAction('');
   };
 
   const onEditGudang = () => {
-    onCreate({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-gudang`,
-      json: JSON.stringify({
-        qty_gudang,
-      }),
-      clear: onClearState,
-    });
+    if (gudang_action === 'add') {
+      onCreate({
+        url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-gudang?condition=add`,
+        json: JSON.stringify({
+          qty_gudang,
+        }),
+        clear: onClearState,
+      });
+    } else {
+      onCreate({
+        url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-gudang?condition=subtract`,
+        json: JSON.stringify({
+          qty_gudang,
+        }),
+        clear: onClearState,
+      });
+    }
   };
 
   const onEditDisplay = () => {
-    onCreate({
-      url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-display`,
-      json: JSON.stringify({
-        qty_display,
-      }),
-      clear: onClearState,
-    });
+    if (display_action === 'add') {
+      onCreate({
+        url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-display?condition=add`,
+        json: JSON.stringify({
+          qty_display,
+        }),
+        clear: onClearState,
+      });
+    } else {
+      onCreate({
+        url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/qty-display?condition=subtract`,
+        json: JSON.stringify({
+          qty_display,
+        }),
+        clear: onClearState,
+      });
+    }
   };
 
   return (
@@ -130,14 +150,34 @@ const EditComponent: React.FC<Props> = ({
                     Update Qty Gudang
                   </label>
                   <div className={styles.box10}>
-                    <Button
-                      id="simpan_gudang"
-                      disabled={Boolean(loading_list) || onLoading || !qty_gudang}
-                      onClick={onEditGudang}
-                      type="primary"
-                    >
-                      Simpan
-                    </Button>
+                    {!gudang_action ? (
+                      <Row>
+                        <Button
+                          className={styles.button_action}
+                          type="primary"
+                          onClick={() => setGudangAction('add')}
+                        >
+                          <PlusOutlined />
+                        </Button>
+                        <Button
+                          className={styles.button_action}
+                          type="primary"
+                          danger
+                          onClick={() => setGudangAction('subtract')}
+                        >
+                          <MinusOutlined />
+                        </Button>
+                      </Row>
+                    ) : (
+                      <Button
+                        id="simpan_gudang"
+                        disabled={Boolean(loading_list) || onLoading || !qty_gudang}
+                        onClick={onEditGudang}
+                        type="primary"
+                      >
+                        Simpan
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -175,14 +215,34 @@ const EditComponent: React.FC<Props> = ({
                     Update Qty Display
                   </label>
                   <div className={styles.box10}>
-                    <Button
-                      id="simpan_display"
-                      disabled={Boolean(loading_list) || onLoading || !qty_display}
-                      onClick={onEditDisplay}
-                      type="primary"
-                    >
-                      Simpan
-                    </Button>
+                    {!display_action ? (
+                      <Row>
+                        <Button
+                          className={styles.button_action}
+                          type="primary"
+                          onClick={() => setDisplayAction('add')}
+                        >
+                          <PlusOutlined />
+                        </Button>
+                        <Button
+                          className={styles.button_action}
+                          type="primary"
+                          danger
+                          onClick={() => setDisplayAction('subtract')}
+                        >
+                          <MinusOutlined />
+                        </Button>
+                      </Row>
+                    ) : (
+                      <Button
+                        id="simpan_display"
+                        disabled={Boolean(loading_list) || onLoading || !qty_display}
+                        onClick={onEditDisplay}
+                        type="primary"
+                      >
+                        Simpan
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>

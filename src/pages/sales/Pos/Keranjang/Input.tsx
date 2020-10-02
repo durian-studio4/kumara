@@ -12,7 +12,6 @@ import Barang from '@/components/AutoComplete/AutoBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
 
 import PageLoading from '@/components/PageLoading';
-
 import PageError from '@/components/PageError';
 
 import { TambahBarang } from './index';
@@ -105,11 +104,9 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
       }
       return (
         <div style={{ textAlign: 'center' }}>
-          <span>
-            {data_harga.avg
-              ? `Harga Rata-rata ${Math.floor(data_harga.avg).toLocaleString()}`
-              : null}
-          </span>
+          {data_harga.avg ? (
+            <span>{`Harga Rata-rata ${Math.floor(data_harga.avg).toLocaleString()}`}</span>
+          ) : null}
         </div>
       );
     }
@@ -175,9 +172,9 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                     <NumberFormat
                       className={styles.number}
                       thousandSeparator={true}
-                      thousandsGroupStyle={['thousand']}
+                      thousandsGroupStyle={'thousand'}
                       onValueChange={onChangeQty}
-                      value={qty}
+                      value={String(qty)}
                     />
                   </div>
                 </div>
@@ -207,11 +204,11 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                   }}
                   className={styles.number}
                   thousandSeparator={true}
-                  thousandsGroupStyle={['thousand']}
+                  thousandsGroupStyle={'thousand'}
                   onValueChange={onChangeHarga}
-                  value={harga}
+                  value={String(harga)}
                 />
-                {hargaAvg()}
+                {barang.values && id_satuan_barang ? hargaAvg() : null}
               </div>
             </div>
             <div className={styles.box3}>
@@ -219,11 +216,12 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                 <label className={styles.label} htmlFor="diskon">
                   Diskon
                 </label>
-                <Input
-                  className={styles.input}
-                  id="diskon"
-                  value={diskon}
-                  onChange={onChangeDiskon}
+                <NumberFormat
+                  className={styles.number}
+                  thousandSeparator={true}
+                  thousandsGroupStyle={'thousand'}
+                  onValueChange={onChangeDiskon}
+                  value={String(diskon)}
                 />
               </div>
             </div>

@@ -8,7 +8,7 @@ import TableComponent from './Table';
 import EditComponent from './Edit';
 
 import useFetch from '@/hooks/useFetch';
-import useNumber from '@/hooks/useNumber';
+import useNumber from '../hooks/useNumber';
 
 import DatePicker from '@/pages/dashboard/Home/components/DatePicker';
 
@@ -107,7 +107,7 @@ const OperationalComponent: React.FC<Props> = () => {
       const result = blob;
       let elm = document.createElement('a');
       elm.href = window.URL.createObjectURL(result);
-      elm.download = `${date[0]}.xlsx`;
+      elm.download = `Operational-${date[0]}.xlsx`;
       document.body.appendChild(elm);
       elm.click();
       document.body.removeChild(elm);

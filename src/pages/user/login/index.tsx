@@ -44,21 +44,6 @@ const Login: React.FC<LoginProps> = (props) => {
         setAuthority(response.data.role);
         setLogin(true);
         setLoading(false);
-
-        switch (response.data.role) {
-          case 'Owner':
-            return history.push('/');
-          case 'Inventory':
-            return history.push('/inventory/stok');
-          case 'Master':
-            return history.push('/master/karyawan');
-          case 'Kurir':
-            return history.push('/kurir');
-          case 'Sales':
-            return history.push('/sales');
-          default:
-            return false;
-        }
       })
       .catch((error) => {
         setError(error.data.message);

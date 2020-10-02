@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import { Modal, Row, Button, Col, Input } from 'antd';
 import styles from './index.less';
 
@@ -32,6 +32,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
 
   const [dataEdit, setDataEdit] = useState(initialState);
+  const [tanggal, setTanggal] = useState('');
   const [isDisabled, setDisabled] = useState(false);
 
   const [qty, onChangeQty, onClearQty] = useNumber(data_list.qty);
@@ -103,6 +104,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
         nama_pengambil: data_list.nama_pengambil,
         nama_sales: data_list.nama_sales,
       });
+      setTanggal(data_list.tanggal);
     }
   }, [data_list]);
 
@@ -152,7 +154,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
                     className={styles.input}
                     type="text"
                     id="tanggal"
-                    // value={format(data_list.tanggal, 'DD/MM/YYYY')}
+                    value={tanggal}
                     disabled={true}
                   />
                 </div>

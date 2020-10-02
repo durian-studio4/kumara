@@ -20,7 +20,7 @@ const NotifikasiComponent: React.FC<Props> = () => {
 
   const [isLoading_notif, isStatus_notif, postNotif] = useCreate();
 
-  const [data_list, status_list, isLoading_list, error_list, fetchList, postList] = useFetch();
+  const [data_list, status_list, isLoading_list, error_list, fetchList] = useFetch();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -40,7 +40,7 @@ const NotifikasiComponent: React.FC<Props> = () => {
   };
 
   const removeNotif = (id: string) => {
-    postList(
+    postNotif(
       `${REACT_APP_ENV}/admin/v1/notifikasi/${id}/delete`,
       JSON.stringify(null),
       handleClearState,

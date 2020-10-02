@@ -226,7 +226,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                   Diskon
                 </label>
                 <NumberFormat
-                  placeholder="Dalam Bentuk %"
+                  placeholder="%"
                   className={styles.number}
                   thousandSeparator={true}
                   thousandsGroupStyle={'thousand'}

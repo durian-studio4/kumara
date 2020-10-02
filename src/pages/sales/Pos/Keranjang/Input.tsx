@@ -30,7 +30,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
   const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect('');
 
   const [harga, onChangeHarga, onClearHarga] = useNumber('');
-  const [diskon, onChangeDiskon, onClearDiskon] = useNumber('0');
+  const [diskon, onChangeDiskon, onClearDiskon] = useNumber('');
   const [qty, onChangeQty, onClearQty] = useNumber('');
 
   const barang = useAutoComplete();
@@ -81,7 +81,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
     qty_barang: qty,
     harga,
     id_satuan_barang,
-    diskon,
+    diskon: !diskon ? 0 : diskon,
   });
 
   const handleClearState = () => {
@@ -226,6 +226,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                   Diskon
                 </label>
                 <NumberFormat
+                  placeholder="Dalam Bentuk %"
                   className={styles.number}
                   thousandSeparator={true}
                   thousandsGroupStyle={'thousand'}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Cookie from 'js-cookie';
 
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 
 const Option = Select.Option;
 
@@ -41,6 +41,14 @@ const SelectSatuanComponent: React.FC<Props> = ({ address, initial, handleChange
     }
   };
 
+  if (loading) {
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
+  }
+
   return (
     <Select
       labelInValue
@@ -51,7 +59,6 @@ const SelectSatuanComponent: React.FC<Props> = ({ address, initial, handleChange
       }}
       onChange={handleChange}
       disabled={disabled}
-      loading={loading}
     >
       {data &&
         data.map(({ id, satuan }) => (

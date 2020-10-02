@@ -60,6 +60,10 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
   }, [barang.values, id_satuan_barang]);
 
   useEffect(() => {
+    onClearSatuan();
+  }, [barang.values]);
+
+  useEffect(() => {
     if (!harga) {
       return setDisabledAdd(true);
     }
@@ -138,7 +142,9 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
               <div className={styles.group}>
                 <label className={styles.label}>Stok Gudang</label>
                 {loading ? (
-                  <Spin />
+                  <div>
+                    <Spin />
+                  </div>
                 ) : (
                   <Input
                     className={styles.input}
@@ -152,7 +158,9 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
               <div className={styles.group}>
                 <label className={styles.label}>Stok Display</label>
                 {loading ? (
-                  <Spin />
+                  <div>
+                    <Spin />
+                  </div>
                 ) : (
                   <Input
                     className={styles.input}
@@ -178,18 +186,19 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                     />
                   </div>
                 </div>
-                {barang.values ? (
-                  <div className={styles.box5}>
-                    <div className={styles.group}>
-                      <label className={styles.label}>Satuan Barang</label>
+                <div className={styles.box5}>
+                  <div className={styles.group}>
+                    <label className={styles.label}>Satuan Barang</label>
+                    {barang.values ? (
                       <SelectSatuan
                         address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`}
                         select_id="qty_barang"
+                        initial="Mohon Pilih"
                         handleChange={onChangeSatuan}
                       />
-                    </div>
+                    ) : null}
                   </div>
-                ) : null}
+                </div>
               </Row>
             </div>
             <div className={styles.box3}>

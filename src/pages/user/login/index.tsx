@@ -78,7 +78,7 @@ const Login: React.FC<LoginProps> = (props) => {
       case 'Kurir':
         return <Redirect to="/kurir" />;
       case 'Sales':
-        return <Redirect to="/sales" />;
+        return <Redirect to="/sales/home" />;
       default:
         return false;
     }

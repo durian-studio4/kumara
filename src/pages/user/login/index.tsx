@@ -60,6 +60,8 @@ const Login: React.FC<LoginProps> = (props) => {
         return <Redirect to="/inventory/stok" />;
       case 'Master':
         return <Redirect to="/master/karyawan" />;
+      case 'Finance':
+        return <Redirect to="/finance/home" />;
       case 'Kurir':
         return <Redirect to="/kurir" />;
       case 'Sales':

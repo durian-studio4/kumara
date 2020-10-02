@@ -7,12 +7,12 @@ import Table from './Table';
 import InputComponent from './Input';
 import PengirimanComponent from './Pengiriman';
 
-import useNumber from '@/hooks/useNumber';
+import useNumber from '../../hooks/useNumber';
 import useFetch from '@/hooks/useFetch';
 
 message.config({
   top: 100,
-  duration: 5,
+  duration: 3,
   maxCount: 1,
 });
 

@@ -25,6 +25,8 @@ const initialState = {
   username: '',
   email: '',
   no_id: '',
+  nama_cabang: '',
+  role: '',
 };
 
 const initialPassword = {
@@ -42,7 +44,7 @@ const UpdateComponent: React.FC<Props> = ({
 }) => {
   const [data, status, isLoading, isError, fetchList] = useFetch();
 
-  const [{ name, username, email, no_id }, setState] = useState(initialState);
+  const [{ name, username, email, no_id, nama_cabang, role }, setState] = useState(initialState);
 
   const [{ password, confirm_password }, setPasswordState] = useState(initialPassword);
 
@@ -57,7 +59,7 @@ const UpdateComponent: React.FC<Props> = ({
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id_update]);
 
   useMemo(() => {
     if (!password) {
@@ -73,9 +75,7 @@ const UpdateComponent: React.FC<Props> = ({
   }, [confirm_password, password]);
 
   useEffect(() => {
-    if (data) {
-      setState(data);
-    }
+    setState(data);
   }, [data]);
 
   const DataJSON = JSON.stringify({
@@ -225,7 +225,7 @@ const UpdateComponent: React.FC<Props> = ({
                   address={`${REACT_APP_ENV}/admin/v1/pengaturan/role/get`}
                   select_id="role"
                   handleChange={handleChangeRole}
-                  initial={data.role}
+                  initial={role}
                 />
               </div>
             </div>
@@ -238,7 +238,7 @@ const UpdateComponent: React.FC<Props> = ({
                   address={`${REACT_APP_ENV}/admin/v1/pengaturan/cabang/get`}
                   select_id="cabang"
                   handleChange={handleChangeCabang}
-                  initial={data.nama_cabang}
+                  initial={nama_cabang}
                 />
               </div>
             </div>

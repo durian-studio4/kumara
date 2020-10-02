@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Cookie from 'js-cookie';
 
-import { Select } from 'antd';
+import { Select, Spin } from 'antd';
 
 const Option = Select.Option;
 
@@ -41,6 +41,14 @@ const SelectAllComponent: React.FC<Props> = ({ address, initial, handleChange, d
     }
   };
 
+  if (loading) {
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
+  }
+
   return (
     <Select
       labelInValue
@@ -50,7 +58,6 @@ const SelectAllComponent: React.FC<Props> = ({ address, initial, handleChange, d
         minHeight: '2em',
       }}
       onChange={handleChange}
-      loading={loading}
       disabled={disabled}
     >
       {data &&

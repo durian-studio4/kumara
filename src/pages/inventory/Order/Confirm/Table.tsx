@@ -12,7 +12,7 @@ interface Props {
   status: number;
   error: any;
   onPenerima: (id: string) => void;
-  handleVisibleUpdate: (id: string, order: string) => void;
+  handleVisibleUpdate: (id: string, order: string, confirm: boolean) => void;
 }
 
 const TableComponent: React.FC<Props> = ({
@@ -67,11 +67,11 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id_order, id }: any) => (
+        render: ({ id_order, id, confirm_sales }: any) => (
           <Button
             type="primary"
             className={styles.button}
-            onClick={() => handleVisibleUpdate(id_order, id)}
+            onClick={() => handleVisibleUpdate(id_order, id, confirm_sales)}
           >
             Detail
           </Button>

@@ -23,6 +23,8 @@ const SetoranComponent: React.FC<Props> = () => {
   const [id_order, setIdOrder] = useState('');
   const [id_update, setIdUpdate] = useState('');
 
+  const [isConfirm, setIsConfirm] = useState(false);
+
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
   const [loading_update, time_update, postUpdate] = useCreate();
 
@@ -39,10 +41,11 @@ const SetoranComponent: React.FC<Props> = () => {
     setName('');
   }, [fetchList, name]);
 
-  const handleVisibleUpdate = (id: string, id_order: string) => {
+  const handleVisibleUpdate = (id: string, id_order: string, confirm: boolean) => {
     setIdOrder(id_order);
     setIdUpdate(id);
     setVisibleUpdate(!visible_update);
+    setIsConfirm(confirm);
   };
 
   const handleKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -54,6 +57,7 @@ const SetoranComponent: React.FC<Props> = () => {
   const handleClearUpdate = () => {
     setIdOrder('');
     setIdUpdate('');
+    setIsConfirm(false);
     setVisibleUpdate(false);
   };
 
@@ -98,6 +102,7 @@ const SetoranComponent: React.FC<Props> = () => {
           visible={visible_update}
           id_update={id_update}
           id_order={id_order}
+          isConfirm={isConfirm}
           onConfirmOrder={confirmOrder}
           onCancelOrder={cancelOrder}
           onCancel={handleClearUpdate}

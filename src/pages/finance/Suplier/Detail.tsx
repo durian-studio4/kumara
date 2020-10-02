@@ -12,6 +12,7 @@ interface Props {
   visible: boolean;
   id_update: string;
   id_order: string;
+  isConfirm: boolean;
   onCancelOrder: ({ url, json, clear }: Suplier) => void;
   onConfirmOrder: ({ url, json, clear }: Suplier) => void;
   onCancel: () => void;
@@ -22,6 +23,7 @@ const DetailComponent: React.FC<Props> = ({
   visible,
   id_update,
   id_order,
+  isConfirm,
   onCancelOrder,
   onLoadButton,
   onConfirmOrder,
@@ -126,27 +128,31 @@ const DetailComponent: React.FC<Props> = ({
           </Fragment>
         ) : null}
       </div>
-      <Button
-        style={{ width: '100%' }}
-        className={styles.button}
-        type="primary"
-        danger
-        id="cancel"
-        disabled={onLoadButton}
-        onClick={cancelOrder}
-      >
-        Cancel Order
-      </Button>
-      <Button
-        style={{ width: '100%' }}
-        className={styles.button}
-        type="primary"
-        id="confirm"
-        disabled={onLoadButton}
-        onClick={confirmOrder}
-      >
-        Confirm Order
-      </Button>
+      {isConfirm ? null : (
+        <>
+          <Button
+            style={{ width: '100%' }}
+            className={styles.button}
+            type="primary"
+            danger
+            id="cancel"
+            disabled={onLoadButton}
+            onClick={cancelOrder}
+          >
+            Cancel Order
+          </Button>
+          <Button
+            style={{ width: '100%' }}
+            className={styles.button}
+            type="primary"
+            id="confirm"
+            disabled={onLoadButton}
+            onClick={confirmOrder}
+          >
+            Confirm Order
+          </Button>
+        </>
+      )}
       {visible_confirm ? (
         <UpdateComponent
           data={data}

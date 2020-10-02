@@ -10,7 +10,7 @@ interface Props {
   loading: boolean;
   status: number;
   error: boolean;
-  handleVisibleUpdate: (id: string, id_order: string) => void;
+  handleVisibleUpdate: (id: string, id_order: string, confirm: boolean) => void;
 }
 
 const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleVisibleUpdate }) => {
@@ -73,8 +73,8 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id, id_order }: any) => (
-          <Button type="primary" onClick={() => handleVisibleUpdate(id, id_order)}>
+        render: ({ id, id_order, confirm_finance }: any) => (
+          <Button type="primary" onClick={() => handleVisibleUpdate(id, id_order, confirm_finance)}>
             Detail
           </Button>
         ),

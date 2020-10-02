@@ -13,6 +13,7 @@ interface Props {
   visible: boolean;
   id_update: string;
   id: string;
+  isConfirm: boolean;
   onCancel: () => void;
   onLoadButton: boolean;
   onConfirmOrder: (id: string) => void;
@@ -31,6 +32,7 @@ const DetailComponent: React.FC<Props> = ({
   id_update,
   onCancel,
   id,
+  isConfirm,
   onLoadButton,
   onConfirmOrder,
   onBatalOrder,
@@ -124,25 +126,27 @@ const DetailComponent: React.FC<Props> = ({
           </Fragment>
         ) : null}
       </div>
-      <Row justify="end">
-        <Button
-          className={styles.button}
-          disabled={onLoadButton}
-          onClick={onBatalOrder}
-          type="primary"
-          danger
-        >
-          Batal Order
-        </Button>
-        <Button
-          className={styles.button}
-          disabled={onLoadButton}
-          onClick={() => onConfirmOrder(id_update)}
-          type="primary"
-        >
-          Confirm Order
-        </Button>
-      </Row>
+      {isConfirm ? null : (
+        <Row justify="end">
+          <Button
+            className={styles.button}
+            disabled={onLoadButton}
+            onClick={onBatalOrder}
+            type="primary"
+            danger
+          >
+            Batal Order
+          </Button>
+          <Button
+            className={styles.button}
+            disabled={onLoadButton}
+            onClick={() => onConfirmOrder(id_update)}
+            type="primary"
+          >
+            Confirm Order
+          </Button>
+        </Row>
+      )}
       {visible_confirm ? (
         <Update
           data={data}

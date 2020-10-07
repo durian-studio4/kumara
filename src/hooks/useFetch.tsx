@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { message } from 'antd';
+import { useHistory } from 'umi';
 import request from 'umi-request';
 import Cookie from 'js-cookie';
 
@@ -10,6 +11,8 @@ message.config({
 });
 
 function App() {
+  const history = useHistory();
+
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(200);
   const [loading, setLoading] = useState(false);
@@ -35,6 +38,9 @@ function App() {
       setIsError(true);
       setStatus(err.response.status);
       message.error(err.data.message);
+      if (err.data && err.data.message === 'Wrong type token') {
+        history.push('/user/login');
+      }
     }
   };
 

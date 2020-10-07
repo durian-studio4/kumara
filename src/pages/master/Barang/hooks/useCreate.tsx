@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { message } from 'antd';
-import request from 'umi-request';
+import axios from 'axios';
 import Cookie from 'js-cookie';
 
 message.config({
@@ -16,27 +16,52 @@ function App() {
   const handlePost = async (url: string, data: any, clearState: () => void) => {
     setLoading(true);
     try {
-      const posting = await request.post(url, {
+      const posting = await axios({
+        method: 'post',
+        baseURL: url,
         data,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
           Authorization: String(Cookie.get('token')),
         },
       });
-      const result = await posting;
+      const result = await posting.data;
       setLoading(false);
       setIsError(Date.now());
       clearState();
       message.success('success');
       return result;
     } catch (error) {
+      message.error(error.response.data.message);
       setLoading(false);
-      message.error(error.data.message);
-      // setIsError(error.response.message);
     }
   };
 
-  return [loading, isError, handlePost];
+  const handleUpdate = async (url: string, data: any, clearState: () => void) => {
+    setLoading(true);
+    try {
+      const posting = await axios({
+        method: 'post',
+        baseURL: url,
+        data,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: String(Cookie.get('token')),
+        },
+      });
+      const result = await posting.data;
+      setLoading(false);
+      setIsError(Date.now());
+      clearState();
+      message.success('success');
+      return result;
+    } catch (error) {
+      message.error(error.response.data.message);
+      setLoading(false);
+    }
+  };
+
+  return [loading, isError, handlePost, handleUpdate];
 }
 
 export default App;

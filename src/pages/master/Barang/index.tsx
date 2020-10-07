@@ -27,9 +27,9 @@ const BarangComponent: React.FC<Props> = () => {
   const [visible, setVisible] = useState(false);
   const [update, setUpdate] = useState(false);
 
-  const [isLoading_barang, isStatus_barang, postBarang] = useCreate();
+  const [isLoading_barang, isStatus_barang, postBarang, updateBarang] = useCreate();
 
-  const [data_list, status_list, isLoading_list, error_list, fetchList, postList] = useFetch();
+  const [data_list, status_list, isLoading_list, error_list, fetchList] = useFetch();
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -72,11 +72,11 @@ const BarangComponent: React.FC<Props> = () => {
     const formData = new FormData();
     formData.append('include_ppn', value);
 
-    postList(`${REACT_APP_ENV}/admin/v1/master/barang/${id}/update`, formData, Confirm);
+    updateBarang(`${REACT_APP_ENV}/admin/v1/master/barang/${id}/update`, formData, Confirm);
   };
 
   const removeBarang = (id: string) => {
-    postList(
+    updateBarang(
       `${REACT_APP_ENV}/admin/v1/master/barang/${id}/delete`,
       JSON.stringify(null),
       handleClearState,

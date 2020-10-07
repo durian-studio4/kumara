@@ -54,6 +54,7 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
         align: 'center',
         title: 'Total',
         dataIndex: 'total',
+        render: (props) => <p>{props ? Number(props).toLocaleString() : null}</p>,
         ...getColumnSearchProps('total'),
       },
       {

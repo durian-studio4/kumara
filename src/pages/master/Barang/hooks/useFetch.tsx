@@ -1,5 +1,12 @@
 import { useState } from 'react';
+import { message } from 'antd';
 import Cookie from 'js-cookie';
+
+message.config({
+  top: 100,
+  duration: 5,
+  maxCount: 1,
+});
 
 function App() {
   const [data, setData] = useState([]);
@@ -45,8 +52,9 @@ function App() {
       setIsError(false);
       // setStatus(result.status_code || 200);
       // setData(result);
-      return result;
+      message.success('success');
       clearState();
+      return result;
     } catch (error) {
       clearState();
       setLoading(false);

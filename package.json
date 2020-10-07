@@ -61,6 +61,7 @@
     "@types/lodash.isequal": "^4.5.5",
     "@types/recharts": "^1.8.14",
     "antd": "^4.0.0",
+    "axios": "^0.20.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.15.0",
     "dva": "^2.4.0",

@@ -84,7 +84,7 @@ const TableComponent: React.FC<Props> = ({
         title: 'PPN',
         render: (props: any) => (
           <Popconfirm
-            title="Apakah Anda Ingin Confirm?"
+            title="Apakah Pakai PPN?"
             onConfirm={() => {
               update(props.id, '1');
             }}

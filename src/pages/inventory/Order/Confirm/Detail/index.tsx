@@ -40,6 +40,7 @@ const DetailComponent: React.FC<Props> = ({
 
   const [visible_confirm, setVisibleConfirm] = useState(false);
   const [id_confirm, setIdConfirm] = useState('');
+  const [key_confirm, setKeyConfirm] = useState('');
   const [barang_confirm, setBarangConfirm] = useState('');
 
   useEffect(() => {
@@ -50,8 +51,9 @@ const DetailComponent: React.FC<Props> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_update, status_update]);
 
-  const handleVisibleConfirm = (id: string, barang: string) => {
+  const handleVisibleConfirm = (id: string, key: string, barang: string) => {
     setIdConfirm(id);
+    setKeyConfirm(key);
     setBarangConfirm(barang);
     setVisibleConfirm(true);
   };
@@ -59,12 +61,27 @@ const DetailComponent: React.FC<Props> = ({
   const handleClearVisibleConfirm = () => {
     setVisibleConfirm(false);
     setIdConfirm('');
+    setKeyConfirm('');
     setBarangConfirm('');
   };
 
   const updateOrder = ({ url, json, clear }: any) => {
     postList(url, json, clear);
   };
+
+  let data_array = [];
+
+  for (let key in data.detail) {
+    data_array.push({
+      key,
+      id: data.detail[key].id,
+      nama_barang: data.detail[key].nama_barang,
+      expired_date: data.detail[key].expired_date,
+      qty_confirm: data.detail[key].qty_confirm,
+      qty_req: data.detail[key].qty_req,
+      total: data.detail[key].total.toLocaleString(),
+    });
+  }
 
   const columns = useMemo(
     () => [
@@ -84,7 +101,7 @@ const DetailComponent: React.FC<Props> = ({
         render: (props: any) => (
           <span
             className={styles.span}
-            onClick={() => handleVisibleConfirm(props.id, props.nama_barang)}
+            onClick={() => handleVisibleConfirm(props.id, props.key, props.nama_barang)}
           >
             {props.qty_confirm}
           </span>
@@ -115,7 +132,7 @@ const DetailComponent: React.FC<Props> = ({
               columns={columns}
               loading={Boolean(loading)}
               rowKey="id"
-              dataSource={data.detail}
+              dataSource={data_array}
             />
             <div style={{ textAlign: 'center' }}>
               <p className={styles.p}>Total</p>
@@ -150,6 +167,7 @@ const DetailComponent: React.FC<Props> = ({
           data={data}
           visible={visible_confirm}
           id_confirm={id_confirm}
+          key_confirm={key_confirm}
           barang_confirm={barang_confirm}
           onCreate={updateOrder}
           onCancel={handleClearVisibleConfirm}

@@ -53,7 +53,7 @@ const LoginComponent: React.FC<LoginProps> = (props) => {
   if (isLogin) {
     switch (role) {
       case 'Owner':
-        return <Redirect to="/" />;
+        return <Redirect to="/dashboard/home" />;
       case 'Inventory':
         return <Redirect to="/inventory/stok" />;
       case 'Master':

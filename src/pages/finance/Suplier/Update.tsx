@@ -20,6 +20,7 @@ interface Props {
   onCancel: () => void;
   onLoading: boolean;
   id_confirm: string;
+  key_confirm: string;
   barang_confirm: string;
   data: any;
 }
@@ -42,9 +43,10 @@ const UpdateComponent: React.FC<Props> = ({
   onLoading,
   data,
   barang_confirm,
+  key_confirm,
   id_confirm,
 }) => {
-  const data_detail = data.detail && data.detail[0];
+  const data_detail = data.detail && data.detail[key_confirm];
 
   const [expired_date, setDate] = useState(initialDate);
 

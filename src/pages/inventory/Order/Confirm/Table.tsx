@@ -33,7 +33,7 @@ const TableComponent: React.FC<Props> = ({
       id: Number(key) + 1,
       nama_suplier: data[key].nama_supplier,
       tanggal: data[key].tanggal,
-      total: data[key].total,
+      total: data[key].total.toLocaleString(),
       confirm_sales: data[key].confirm_sales,
     });
   }

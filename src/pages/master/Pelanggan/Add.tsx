@@ -31,10 +31,11 @@ const initialState = {
   npwp: '',
   email: '',
   phone: '',
+  code: '',
 };
 
 const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButton, onError }) => {
-  const [{ name, alamat, npwp, email, phone }, setState] = useState(initialState);
+  const [{ name, alamat, code, npwp, email, phone }, setState] = useState(initialState);
   const [isDisabled, setDisabled] = useState(false);
 
   const [id_pembeli_grup, onChangeGroup] = useSelect('1');
@@ -58,6 +59,10 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
     }
 
     if (!email) {
+      return setDisabled(true);
+    }
+
+    if (!code) {
       return setDisabled(true);
     }
 
@@ -86,12 +91,24 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
     }
 
     return setDisabled(false);
-  }, [alamat, email, kecamatan.id, kelurahan.id, kota.id, name, phone, provinsi.id, suplier.id]);
+  }, [
+    alamat,
+    code,
+    email,
+    kecamatan.id,
+    kelurahan.id,
+    kota.id,
+    name,
+    phone,
+    provinsi.id,
+    suplier.id,
+  ]);
 
   const DataJSON = JSON.stringify({
     name,
     alamat,
     npwp,
+    kode: code,
     email,
     phone,
     gender,
@@ -309,6 +326,21 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   id="kode"
                   disabled={true}
                   value={kode_pos.kode || 0}
+                />
+              </div>
+            </div>
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="code">
+                  Code
+                </label>
+                <Input
+                  className={styles.input}
+                  type="text"
+                  id="code"
+                  placeholder="Isi Code Pelanggan"
+                  value={code}
+                  onChange={handleChangeState}
                 />
               </div>
             </div>

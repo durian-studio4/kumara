@@ -33,10 +33,11 @@ const initialState = {
   npwp: '',
   email: '',
   phone: '',
+  kode: '',
 };
 
 const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButton, onError }) => {
-  const [{ name, alamat, npwp, email, phone }, setState] = useState(initialState);
+  const [{ name, kode, alamat, npwp, email, phone }, setState] = useState(initialState);
 
   const [isDisabled_supplier, setDisabled_supplier] = useState(false);
 
@@ -44,7 +45,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
   const kota = useAutoComplete();
   const kecamatan = useAutoComplete();
   const kelurahan = useAutoComplete();
-  const kode_pos = useKodePos(kecamatan.text);
+  const kode_pos = useKodePos(String(kecamatan.id));
 
   const [gender, onChangeGender] = useSelect('0');
   const [id_pembeli_grup, onChangeGroup] = useSelect('1');
@@ -55,10 +56,10 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
     if (name === '') {
       return setDisabled_supplier(true);
     }
-    if (alamat === '') {
+    if (kode === '') {
       return setDisabled_supplier(true);
     }
-    if (npwp === '') {
+    if (alamat === '') {
       return setDisabled_supplier(true);
     }
     if (email === '') {
@@ -80,12 +81,13 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
       return setDisabled_supplier(true);
     }
     return setDisabled_supplier(false);
-  }, [alamat, email, kecamatan.id, kelurahan.id, kota.id, name, npwp, phone, provinsi.id]);
+  }, [alamat, email, kode, kecamatan.id, kelurahan.id, kota.id, name, phone, provinsi.id]);
 
   const DataJSON = JSON.stringify({
     name,
     alamat,
     npwp,
+    kode,
     email,
     phone,
     gender,
@@ -117,7 +119,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
       onCancel={onClearState}
       title="Tambah Daftar Pembeli"
       footer={null}
-      width={600}
+      width={700}
     >
       <div className={styles.modal_body}>
         <Col>
@@ -254,7 +256,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   onChange={kota.changeText}
                   onSelect={kota.selectText}
                   onClear={kota.clearText}
-                  filter={provinsi.text}
+                  filter={provinsi.id}
                 />
               </div>
             </div>
@@ -269,7 +271,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   onChange={kecamatan.changeText}
                   onSelect={kecamatan.selectText}
                   onClear={kecamatan.clearText}
-                  filter={kota.text}
+                  filter={kota.id}
                 />
               </div>
             </div>
@@ -284,7 +286,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   onChange={kelurahan.changeText}
                   onSelect={kelurahan.selectText}
                   onClear={kelurahan.clearText}
-                  filter={kecamatan.text}
+                  filter={kecamatan.id}
                 />
               </div>
             </div>
@@ -301,6 +303,21 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   id="kode"
                   disabled={true}
                   value={kode_pos.kode || 0}
+                />
+              </div>
+            </div>
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="kode">
+                  Code
+                </label>
+                <Input
+                  className={styles.input}
+                  type="text"
+                  id="kode"
+                  placeholder="Isi Code Pelanggan"
+                  value={kode}
+                  onChange={onChangeState}
                 />
               </div>
             </div>

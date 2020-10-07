@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import request from 'umi-request';
 import Cookie from 'js-cookie';
-import { Redirect, useHistory } from 'umi';
+import { Redirect } from 'umi';
 import { setAuthority } from '@/utils/authority';
 import styles from './style.less';
 
@@ -11,9 +11,7 @@ const { UserName, Password, Submit } = LoginFrom;
 
 interface LoginProps {}
 
-const Login: React.FC<LoginProps> = (props) => {
-  const history = useHistory();
-
+const LoginComponent: React.FC<LoginProps> = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
@@ -39,7 +37,7 @@ const Login: React.FC<LoginProps> = (props) => {
         },
       })
       .then((response) => {
-        Cookie.set('token', response.data.token);
+        Cookie.set('token', response.data.token, { expires: 1 });
         setRole(response.data.role);
         setAuthority(response.data.role);
         setLogin(true);
@@ -112,4 +110,4 @@ const Login: React.FC<LoginProps> = (props) => {
   );
 };
 
-export default Login;
+export default LoginComponent;

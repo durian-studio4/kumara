@@ -10,7 +10,6 @@ import UpdateComponent from './Update';
 import { Suplier } from './index';
 interface Props {
   visible: boolean;
-  id_update: string;
   id_order: string;
   isConfirm: boolean;
   onCancelOrder: ({ url, json, clear }: Suplier) => void;
@@ -21,7 +20,6 @@ interface Props {
 
 const DetailComponent: React.FC<Props> = ({
   visible,
-  id_update,
   id_order,
   isConfirm,
   onCancelOrder,
@@ -42,7 +40,7 @@ const DetailComponent: React.FC<Props> = ({
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id_update, status_update]);
+  }, [id_order, status_update]);
 
   const handleVisibleConfirm = (id: string, barang: string) => {
     setIdConfirm(id);

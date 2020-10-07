@@ -6,7 +6,7 @@ import TableComponent from './Table';
 import AddComponent from './Add';
 
 import useFetch from './hooks/useFetch';
-import useCreate from '@/hooks/useCreate';
+import useCreate from './hooks/useCreate';
 
 message.config({
   top: 100,

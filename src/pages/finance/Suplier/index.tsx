@@ -21,7 +21,6 @@ const SetoranComponent: React.FC<Props> = () => {
   const [visible_update, setVisibleUpdate] = useState(false);
 
   const [id_order, setIdOrder] = useState('');
-  const [id_update, setIdUpdate] = useState('');
 
   const [isConfirm, setIsConfirm] = useState(false);
 
@@ -41,9 +40,8 @@ const SetoranComponent: React.FC<Props> = () => {
     setName('');
   }, [fetchList, name]);
 
-  const handleVisibleUpdate = (id: string, id_order: string, confirm: boolean) => {
+  const handleVisibleUpdate = (id_order: string, confirm: boolean) => {
     setIdOrder(id_order);
-    setIdUpdate(id);
     setVisibleUpdate(!visible_update);
     setIsConfirm(confirm);
   };
@@ -56,7 +54,6 @@ const SetoranComponent: React.FC<Props> = () => {
 
   const handleClearUpdate = () => {
     setIdOrder('');
-    setIdUpdate('');
     setIsConfirm(false);
     setVisibleUpdate(false);
   };
@@ -100,7 +97,6 @@ const SetoranComponent: React.FC<Props> = () => {
       {visible_update ? (
         <DetailComponent
           visible={visible_update}
-          id_update={id_update}
           id_order={id_order}
           isConfirm={isConfirm}
           onConfirmOrder={confirmOrder}

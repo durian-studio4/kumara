@@ -68,20 +68,6 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
 
   const [id_type_barang, changeTypeBarang] = useSelect('1');
 
-  let satuan_stock_filtered = Array.from(
-    new Set(satuan_stock.map((val) => JSON.stringify(val))),
-  ).map((val) => JSON.parse(val));
-
-  const DataJSON = {
-    sku,
-    brand,
-    nama_barang,
-    id_type_barang,
-    file_gambar: file_img[0],
-    include_ppn: Number(include_ppn),
-    satuan_stock: JSON.stringify(satuan_stock_filtered),
-  };
-
   useEffect(() => {
     handleSatuan({ itemCheckbox, setSatuan: setSatuanState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,7 +89,7 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
     if (!nama_barang) {
       return setDisabled(true);
     }
-    if (!file_img) {
+    if (!file_img.length) {
       return setDisabled(true);
     }
     return setDisabled(false);
@@ -160,18 +146,35 @@ const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCrea
     onCancel();
   };
 
-  const onCreateBarang = () => {
-    // const form_data = new FormData();
+  let satuan_stock_filtered = Array.from(
+    new Set(satuan_stock.map((val) => JSON.stringify(val))),
+  ).map((val) => JSON.parse(val));
 
-    // for (let [key, value] of Object.entries(ObjectData)) {
-    //   form_data.append(key, value);
-    // }
+  const DataJSON = {
+    sku,
+    brand,
+    nama_barang,
+    id_type_barang: String(id_type_barang),
+    include_ppn: String(Number(include_ppn)),
+    satuan_stock: JSON.stringify(satuan_stock_filtered),
+  };
+
+  const onCreateBarang = () => {
+    const formData = new FormData();
+
+    for (let [key, value] of Object.entries(DataJSON)) {
+      formData.append(key, value);
+    }
 
     onCreate({
-      formData: DataJSON,
+      formData,
       clear: onCloseVisible,
     });
   };
+
+  if (file_img.length) {
+    DataJSON['file_gambar'] = file_img[0];
+  }
 
   return (
     <Modal visible={visible} title="Input Detail Barang" closable={false} footer={null} width={700}>

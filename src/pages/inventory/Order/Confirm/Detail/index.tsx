@@ -12,7 +12,6 @@ import Update from './Update';
 interface Props {
   visible: boolean;
   id_update: string;
-  id: string;
   isConfirm: boolean;
   onCancel: () => void;
   onLoadButton: boolean;
@@ -31,7 +30,6 @@ const DetailComponent: React.FC<Props> = ({
   visible,
   id_update,
   onCancel,
-  id,
   isConfirm,
   onLoadButton,
   onConfirmOrder,

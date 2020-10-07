@@ -11,7 +11,7 @@ interface Props {
   onSelect?: (value: any, e: any) => void;
   onChange?: (value: string) => void;
   onClear?: () => void;
-  filter?: string;
+  filter?: any;
 }
 
 const KelurahanComponent: React.FC<Props> = ({

@@ -49,19 +49,11 @@ const TotalPengeluaran: React.FC<Props> = ({ date, id_cabang, id_kategori }) => 
       {loading_chart ? (
         <PageLoading />
       ) : (
-        <div style={{ height: 300 }}>
+        <div style={{ height: '300px' }}>
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart
-              data={data_chart}
-              margin={{
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-            >
+            <AreaChart data={data_chart}>
               <XAxis dataKey="bulan" />
-              <YAxis dataKey="pengeluaran" domain={[0, 'dataMax' > 5 ? 'dataMax' : 5]} />
+              <YAxis dataKey="pengeluaran" />
               <CartesianGrid />
               <Tooltip />
               <ReferenceLine x="Page C" stroke="lightblue" label="Min PAGE" />

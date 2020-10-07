@@ -20,7 +20,6 @@ const ConfirmComponent: React.FC<Props> = () => {
   const [name, setName] = useState('');
 
   const [id_update, setIdUpdate] = useState('');
-  const [id, setId] = useState('');
 
   const [visible_update, setVisibleUpdate] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
@@ -50,16 +49,14 @@ const ConfirmComponent: React.FC<Props> = () => {
     setName(e.target.value);
   };
 
-  const handleVisibleUpdate = (id_update: string, id: string, confirm: boolean) => {
+  const handleVisibleUpdate = (id_update: string, confirm: boolean) => {
     setIdUpdate(id_update);
     setVisibleUpdate(!visible_update);
     setIsConfirm(confirm);
-    setId(id);
   };
 
   const handleClearUpdate = () => {
     setIdUpdate('');
-    setId('');
     setIsConfirm(false);
     setVisibleUpdate(!visible_update);
   };
@@ -121,7 +118,6 @@ const ConfirmComponent: React.FC<Props> = () => {
         <Detail
           visible={visible_update}
           id_update={id_update}
-          id={id}
           isConfirm={isConfirm}
           onLoadButton={Boolean(loading_update)}
           onConfirmOrder={confirmPenerima}

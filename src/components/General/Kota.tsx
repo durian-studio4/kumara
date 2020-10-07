@@ -10,7 +10,7 @@ interface Props {
   onSelect: (value: any, e: any) => void;
   onChange: (value: string) => void;
   onClear: () => void;
-  filter: string;
+  filter: any;
 }
 
 const KotaComponent: React.FC<Props> = ({ value, id, onSelect, onChange, onClear, filter }) => {

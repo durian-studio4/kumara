@@ -62,11 +62,11 @@ export default defineConfig({
           Routes: ['src/pages/Authorized'],
           // authority: ['Owner'],
           routes: [
-            {
-              path: '/',
-              redirect: '/dashboard/home',
-              authority: ['Owner'],
-            },
+            // {
+            //   path: '/',
+            //   redirect: '/dashboard/home',
+            //   authority: ['Owner'],
+            // },
             {
               path: '/dashboard',
               name: 'Dashboard',
@@ -220,7 +220,7 @@ export default defineConfig({
                   name: 'Piutang Toko',
                   icon: 'fileText',
                   path: '/finance/piutang',
-                  component: './finance/PIutang',
+                  component: './finance/Piutang',
                 },
                 {
                   name: 'Suplier',

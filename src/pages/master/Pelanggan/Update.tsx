@@ -160,7 +160,7 @@ const UpdateComponent: React.FC<Props> = ({
       visible={visible}
       onCancel={handleClearState}
       footer={null}
-      width={600}
+      width={700}
       title="Edit Data Pelanggan"
     >
       {status !== 200 || isError ? <PageError /> : null}

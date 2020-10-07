@@ -28,6 +28,7 @@ interface InitialState {
   npwp: string;
   email: string;
   phone: string;
+  kode: string;
 }
 
 const initialState = {
@@ -36,10 +37,13 @@ const initialState = {
   npwp: '',
   email: '',
   phone: '',
+  kode: '',
 };
 
 const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButton, onError }) => {
-  const [{ name, alamat, npwp, email, phone }, setState] = useState<InitialState>(initialState);
+  const [{ name, alamat, npwp, kode, email, phone }, setState] = useState<InitialState>(
+    initialState,
+  );
 
   const [isDisabled, setDisabledSupplier] = useState(false);
 
@@ -57,6 +61,9 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
       return setDisabledSupplier(true);
     }
     if (npwp === '') {
+      return setDisabledSupplier(true);
+    }
+    if (kode === '') {
       return setDisabledSupplier(true);
     }
     if (email === '') {
@@ -78,12 +85,13 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
       return setDisabledSupplier(true);
     }
     return setDisabledSupplier(false);
-  }, [alamat, email, kecamatan.id, kelurahan.id, kota.id, name, npwp, phone, provinsi.id]);
+  }, [alamat, email, kode, kecamatan.id, kelurahan.id, kota.id, name, npwp, phone, provinsi.id]);
 
   const DataJSON = JSON.stringify({
     name,
     alamat,
     npwp,
+    kode,
     email,
     phone,
     id_kelurahan: kelurahan.id,
@@ -111,7 +119,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
       visible={visible}
       title="Tambah Daftar Suplier"
       footer={null}
-      width={600}
+      width={700}
       onCancel={onClearState}
     >
       <div className={styles.modal_body}>
@@ -267,6 +275,21 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   id="kode"
                   disabled={true}
                   value={kode_pos.kode || 0}
+                />
+              </div>
+            </div>
+            <div className={styles.box3}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="kode">
+                  Code
+                </label>
+                <Input
+                  className={styles.input}
+                  type="text"
+                  id="kode"
+                  placeholder="Isi Code Pelanggan"
+                  value={kode}
+                  onChange={onChangeState}
                 />
               </div>
             </div>

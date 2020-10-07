@@ -10,7 +10,7 @@ interface Props {
   loading: boolean;
   status: number;
   error: boolean;
-  handleVisibleUpdate: (id: string, id_order: string, confirm: boolean) => void;
+  handleVisibleUpdate: (id_order: string, confirm: boolean) => void;
 }
 
 const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleVisibleUpdate }) => {
@@ -18,17 +18,15 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
 
   let data_array = [];
 
-  for (let key in data.item) {
+  for (let key in data) {
     data_array.push({
-      id_order: key,
-      id: data.item[key][0].id,
-      tanggal: data.item[key][0].tanggal,
-      nama_suplier: data.item[key][0].nama_suplier,
-      nama_barang: data.item[key][0].nama_barang,
-      satuan_barang: data.item[key][0].satuan_barang,
-      total: data.item[key][0].total,
-      confirm_sales: data.item[key][0].confirm_sales,
-      confirm_finance: data.item[key][0].confirm_finance,
+      id_order: data[key].order_group,
+      id: Number(key) + 1,
+      tanggal: data[key].tanggal,
+      nama_suplier: data[key].nama_supplier,
+      total: data[key].total,
+      confirm_sales: data[key].confirm_sales,
+      confirm_finance: data[key].confirm_finance,
     });
   }
 
@@ -54,18 +52,6 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
       },
       {
         align: 'center',
-        title: 'Nama Barang',
-        dataIndex: 'nama_barang',
-        ...getColumnSearchProps('nama_barang'),
-      },
-      {
-        align: 'center',
-        title: 'Satuan Barang',
-        dataIndex: 'satuan_barang',
-        ...getColumnSearchProps('satuan_barang'),
-      },
-      {
-        align: 'center',
         title: 'Total',
         dataIndex: 'total',
         ...getColumnSearchProps('total'),
@@ -73,8 +59,8 @@ const TableComponent: React.FC<Props> = ({ data, status, loading, error, handleV
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id, id_order, confirm_finance }: any) => (
-          <Button type="primary" onClick={() => handleVisibleUpdate(id, id_order, confirm_finance)}>
+        render: ({ id_order, confirm_finance }: any) => (
+          <Button type="primary" onClick={() => handleVisibleUpdate(id_order, confirm_finance)}>
             Detail
           </Button>
         ),

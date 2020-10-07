@@ -12,7 +12,7 @@ interface Props {
   status: number;
   error: any;
   onPenerima: (id: string) => void;
-  handleVisibleUpdate: (id: string, order: string, confirm: boolean) => void;
+  handleVisibleUpdate: (order: string, confirm: boolean) => void;
 }
 
 const TableComponent: React.FC<Props> = ({
@@ -27,14 +27,14 @@ const TableComponent: React.FC<Props> = ({
 
   let data_array = [];
 
-  for (let key in data.item) {
+  for (let key in data) {
     data_array.push({
-      id_order: key,
-      id: data.item[key][0].id,
-      nama_suplier: data.item[key][0].nama_suplier,
-      tanggal: data.item[key][0].tanggal,
-      total: data.item[key][0].total,
-      confirm_sales: data.item[key][0].confirm_sales,
+      id_order: data[key].order_group,
+      id: Number(key) + 1,
+      nama_suplier: data[key].nama_supplier,
+      tanggal: data[key].tanggal,
+      total: data[key].total,
+      confirm_sales: data[key].confirm_sales,
     });
   }
 
@@ -67,11 +67,11 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         title: 'Detail Barang',
-        render: ({ id_order, id, confirm_sales }: any) => (
+        render: ({ id_order, confirm_sales }: any) => (
           <Button
             type="primary"
             className={styles.button}
-            onClick={() => handleVisibleUpdate(id_order, id, confirm_sales)}
+            onClick={() => handleVisibleUpdate(id_order, confirm_sales)}
           >
             Detail
           </Button>

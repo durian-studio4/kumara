@@ -1,6 +1,13 @@
 import { useState } from 'react';
+import { message } from 'antd';
 import request from 'umi-request';
 import Cookie from 'js-cookie';
+
+message.config({
+  top: 100,
+  duration: 5,
+  maxCount: 1,
+});
 
 function App() {
   const [data, setData] = useState([]);
@@ -27,6 +34,7 @@ function App() {
       setLoading(false);
       setIsError(true);
       setStatus(err.response.status);
+      message.error(err.data.message);
     }
   };
 
@@ -48,12 +56,14 @@ function App() {
       setData(result);
       setLoading(false);
       clearState();
+      message.success('success');
       return posting.data;
     } catch (error) {
       setIsError(error.data.message);
       setStatus(error.data.status);
       setLoading(false);
       clearState();
+      message.error(error.data.message);
     }
   };
 

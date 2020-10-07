@@ -24,7 +24,7 @@ function Kelurahan(filter: string) {
     setLoading(true);
     try {
       const fetching = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/admin/v1/general/kodepos?id_kecamatan=${text}`,
+        `${REACT_APP_ENV}/admin/v1/general/kodepos?id_kecamatan=${text}`,
       );
       const json = await fetching.json();
       const result = await json;

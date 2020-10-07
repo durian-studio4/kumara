@@ -39,6 +39,7 @@ function App() {
       setStatus(err.response.status);
       message.error(err.data.message);
       if (err.data && err.data.message === 'Wrong type token') {
+        message.error('Sesi Telah Habis');
         history.push('/user/login');
       }
     }

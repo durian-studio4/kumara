@@ -332,7 +332,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
             <div className={styles.box3}>
               <div className={styles.group}>
                 <label className={styles.label} htmlFor="code">
-                  Code
+                  Code Pelanggan
                 </label>
                 <Input
                   className={styles.input}

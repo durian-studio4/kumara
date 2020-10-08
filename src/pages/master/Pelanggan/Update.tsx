@@ -35,6 +35,7 @@ const initialState = {
   npwp: '',
   email: '',
   phone: '',
+  kode: '',
   id_kelurahan: 0,
   kelurahan: '',
   id_kecamatan: 0,
@@ -61,7 +62,7 @@ const UpdateComponent: React.FC<Props> = ({
 
   const [appState, setState] = useState(initialState);
 
-  const { name, alamat, npwp, email, phone } = appState;
+  const { name, alamat, kode, npwp, email, phone } = appState;
 
   const [isDisabled, setDisabled] = useState(false);
 
@@ -129,6 +130,7 @@ const UpdateComponent: React.FC<Props> = ({
     name,
     alamat,
     npwp,
+    kode,
     email,
     phone,
     gender,
@@ -349,6 +351,21 @@ const UpdateComponent: React.FC<Props> = ({
                     id="kode"
                     disabled={true}
                     value={kode_pos.kode || 0}
+                  />
+                </div>
+              </div>
+              <div className={styles.box3}>
+                <div className={styles.group}>
+                  <label className={styles.label} htmlFor="kode">
+                    Code Pelanggan
+                  </label>
+                  <Input
+                    className={styles.input}
+                    type="text"
+                    id="kode"
+                    placeholder="Isi Code Pelanggan"
+                    value={kode}
+                    onChange={handleChangeState}
                   />
                 </div>
               </div>

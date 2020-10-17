@@ -250,7 +250,7 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                   value={suplier.text}
                   onSelect={suplier.selectText}
                   onChange={suplier.changeText}
-                />
+                /> 
               </div>
             </div>
             <div className={styles.box3}>

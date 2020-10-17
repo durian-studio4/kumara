@@ -17,7 +17,7 @@ export interface CheckoutPembayaran {
 }
 
 const PembayaranComponent: React.FC<Props> = () => {
-  const [loadingExport, setLoadingExport] = useState(false);
+  // const [loadingExport, setLoadingExport] = useState(false);
   const [isRedirect, setIsRedirect] = useState(false);
 
   const [dataPembayaran, statusPembayaran, isLoading, isError, fetchData, postData] = useFetch();
@@ -37,29 +37,29 @@ const PembayaranComponent: React.FC<Props> = () => {
     setIsRedirect(true);
   };
 
-  const exportToExcelPembayaran = async () => {
-    setLoadingExport(true);
-    try {
-      const posting = await fetch(`${REACT_APP_ENV}/admin/v1/sales/pos/${id_params}/excel`, {
-        method: 'post',
-        headers: {
-          Authorization: String(Cookie.get('token')),
-        },
-      });
-      const blob = await posting.blob();
-      const result = blob;
-      setLoadingExport(false);
-      let elem = document.createElement('a');
-      elem.href = window.URL.createObjectURL(result);
-      elem.download = 'Invoice.xlsx';
-      window.document.body.appendChild(elem);
-      elem.click();
-      window.document.body.removeChild(elem);
-    } catch (error) {
-      console.log(error.message);
-      setLoadingExport(false);
-    }
-  };
+  // const exportToExcelPembayaran = async () => {
+  //   setLoadingExport(true);
+  //   try {
+  //     const posting = await fetch(`${REACT_APP_ENV}/admin/v1/sales/pos/${id_params}/excel`, {
+  //       method: 'post',
+  //       headers: {
+  //         Authorization: String(Cookie.get('token')),
+  //       },
+  //     });
+  //     const blob = await posting.blob();
+  //     const result = blob;
+  //     setLoadingExport(false);
+  //     let elem = document.createElement('a');
+  //     elem.href = window.URL.createObjectURL(result);
+  //     elem.download = 'Invoice.xlsx';
+  //     window.document.body.appendChild(elem);
+  //     elem.click();
+  //     window.document.body.removeChild(elem);
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     setLoadingExport(false);
+  //   }
+  // };
 
   if (isRedirect) {
     return <Redirect to="/sales/home" />;
@@ -72,9 +72,9 @@ const PembayaranComponent: React.FC<Props> = () => {
         dataPembayaran={dataPembayaran}
         statusPembayaran={Number(statusPembayaran)}
         checkoutPembayaran={checkoutPembayaran}
-        exportExcelPembayaran={exportToExcelPembayaran}
+        // exportExcelPembayaran={exportToExcelPembayaran}
         isLoading={Boolean(isLoading)}
-        isLoadingExport={loadingExport}
+        // isLoadingExport={loadingExport}
         isError={Boolean(isError)}
       />
     </div>

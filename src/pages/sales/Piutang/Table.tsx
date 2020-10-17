@@ -12,7 +12,7 @@ interface Props {
   error: boolean;
   cancel: (id: string) => void;
   handleVisibleUpdate: (e: any) => void;
-  handleVisibleConfirm: (e: any) => void;
+  handleVisibleConfirm: (id: string) => void;
 }
 
 const TableRetur: React.FC<Props> = ({
@@ -100,7 +100,7 @@ const TableRetur: React.FC<Props> = ({
                 <Button
                   className={styles.button}
                   id={props.id}
-                  onClick={handleVisibleConfirm}
+                  onClick={() => handleVisibleConfirm(props.id)}
                   type="primary"
                 >
                   Selesai

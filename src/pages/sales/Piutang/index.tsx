@@ -65,9 +65,9 @@ const PiutangComponent: React.FC<Props> = ({}) => {
     nama_bank: initialBank[nama_bank].value,
   });
 
-  const handleVisibleConfirm = (e: any) => {
+  const handleVisibleConfirm = (id: string) => {
     setVisibleConfirm(!visibleConfirm);
-    setIdConfirm(e.target.id);
+    setIdConfirm(Number(id));
   };
 
   const handleVisibleUpdate = (e: any) => {

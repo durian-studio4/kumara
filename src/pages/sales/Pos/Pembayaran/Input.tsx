@@ -5,7 +5,6 @@ import styles from './index.less';
 import Bank from './Bank';
 
 import useSelect from '@/hooks/useSelect';
-import useNumber from '@/hooks/useNumber';
 
 import SelectAll from '@/components/Select/SelectAll';
 
@@ -19,9 +18,9 @@ interface Props {
   dataPembayaran: any;
   statusPembayaran: number;
   checkoutPembayaran: ({ json, clear }: CheckoutPembayaran) => void;
-  exportExcelPembayaran: () => void;
+  // exportExcelPembayaran: () => void;
   isLoading: boolean;
-  isLoadingExport: boolean;
+  // isLoadingExport: boolean;
   isError: boolean;
 }
 
@@ -72,9 +71,9 @@ const InputComponent: React.FC<Props> = ({
   dataPembayaran,
   statusPembayaran,
   checkoutPembayaran,
-  exportExcelPembayaran,
+  // exportExcelPembayaran,
   isLoading,
-  isLoadingExport,
+  // isLoadingExport,
   isError,
 }) => {
   const id_suplier = dataPembayaran.pembeli ? dataPembayaran.pembeli.id_suplier : 0;
@@ -82,9 +81,8 @@ const InputComponent: React.FC<Props> = ({
   const [keterangan, setKeterangan] = useState('');
   const [checkoutDisabled, setCheckoutDisabled] = useState(false);
 
-  const [jumlah_pb, setJumlahPb, onClearJumlahPb] = useSelect('0');
-
-  const [tempo, onChangeTempo, onClearTempo] = useNumber('');
+  const [jumlah_pb, setJumlahPb] = useState('0');
+  const [tempo, setTempo] = useState('');
 
   const [id_type_pembayaran, onChangeType, onClearType] = useSelect('1');
   const [nama_bank, onChangeBank] = useSelect('0');
@@ -109,22 +107,24 @@ const InputComponent: React.FC<Props> = ({
   });
 
   const onChangeKeterangan = (e: { target: HTMLInputElement }) => setKeterangan(e.target.value);
+  const onChangeTempo = (e: { target: HTMLInputElement }) => setTempo(e.target.value);
 
   const onChangePb = (e: any) => {
-    const { value } = e;
+    const { value } = e.target;
 
-    if (value >= dataPembayaran.saldo_pb) {
+    if (Number(value) >= Number(dataPembayaran.saldo_pb)) {
       setJumlahPb(dataPembayaran.saldo_pb);
       return false;
     }
     setJumlahPb(value);
+    return true;
   };
 
   const onClearState = () => {
     setKeterangan('');
     onClearType();
-    onClearJumlahPb();
-    onClearTempo();
+    setJumlahPb('0');
+    setTempo('');
   };
 
   const onCheckout = () => {
@@ -197,7 +197,11 @@ const InputComponent: React.FC<Props> = ({
                   onChange={onChangePb}
                   disabled={!dataPembayaran.saldo_pb}
                 />
-                <span style={{ color: 'red', opacity: '0.5' }}>{dataPembayaran.saldo_pb}</span>
+                <span style={{ color: 'red', opacity: '0.5' }}>
+                  {dataPembayaran.saldo_pb
+                    ? Number(dataPembayaran.saldo_pb).toLocaleString()
+                    : null}
+                </span>
               </div>
             </div>
           </Fragment>
@@ -255,7 +259,7 @@ const InputComponent: React.FC<Props> = ({
                 </Button>
               </div>
             </div>
-            <div className={styles.box10}>
+            {/* <div className={styles.box10}>
               <div className={styles.group} style={{ marginTop: '1.3em' }}>
                 <Button
                   type="primary"
@@ -266,7 +270,7 @@ const InputComponent: React.FC<Props> = ({
                   Convert Invoice to Excel and Print
                 </Button>
               </div>
-            </div>
+            </div> */}
           </Col>
         </div>
       </Row>

@@ -78,7 +78,10 @@ const UpdateComponent: React.FC<Props> = ({
     //   total: data_detail.total.split('Rp').join('').split('.').join('').trim(),
     //   qty: data_detail.qty_confirm,
     // });
-    setDate(data_detail.expired_date);
+    if (data_detail) {
+      const date = data_detail.expired_date ? data_detail.expired_date : initialDate;
+      setDate(date);
+    }
   }, [data_detail]);
 
   useEffect(() => {
@@ -176,7 +179,7 @@ const UpdateComponent: React.FC<Props> = ({
             <DatePicker
               style={{ width: '100%' }}
               onChange={onChangeDate}
-              defaultValue={moment(data_detail.expired_date || initialDate)}
+              value={moment(expired_date, 'DD-MM-YYYY')}
             />
           </div>
         </div>

@@ -36,8 +36,12 @@ function App() {
     } catch (err) {
       setLoading(false);
       setIsError(true);
-      setStatus(err.response.status);
-      message.error(err.data.message);
+      if (err.response) {
+        setStatus(err.response.status);
+      }
+      if (err.data) {
+        message.error(err.data.message);
+      }
       if (err.data && err.data.error === 'Invalid token id') {
         message.error('Sesi Telah Habis');
         history.push('/user/login');

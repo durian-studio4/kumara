@@ -19,6 +19,7 @@ const OperationalComponent: React.FC<Props> = () => {
   const [isDisabled, setDisabled] = useState(false);
 
   const [total, onChangeTotal, onClearTotal] = useNumber('');
+  const [totalEdit, onChangeTotalEdit, onClearTotalEdit] = useNumber('');
 
   const [visible, setVisible] = useState(false);
   const [id_row, setId] = useState(0);
@@ -75,6 +76,7 @@ const OperationalComponent: React.FC<Props> = () => {
   const handleClearState = () => {
     setState('');
     onClearTotal();
+    onClearTotalEdit();
     setVisible(false);
     setId(0);
   };
@@ -86,7 +88,7 @@ const OperationalComponent: React.FC<Props> = () => {
   const updatePengeluaran = () => {
     postPengeluaran(
       `${REACT_APP_ENV}/admin/v1/finance/pengeluaran/${id_row}/update`,
-      JSON.stringify({ total }),
+      JSON.stringify({ total: totalEdit }),
       handleClearState,
     );
   };
@@ -155,8 +157,8 @@ const OperationalComponent: React.FC<Props> = () => {
         <EditComponent
           idParams={id_row}
           visible={visible}
-          total={String(total)}
-          onChangeTotal={onChangeTotal}
+          total={String(totalEdit)}
+          onChangeTotal={onChangeTotalEdit}
           onCreate={updatePengeluaran}
           onCancel={handleClearState}
         />

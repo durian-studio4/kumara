@@ -17,7 +17,7 @@ import TotalPendapatan from './components/TotalPendapatan';
 
 import DatePicker from './components/DatePicker';
 
-import useSelect from '@/hooks/useSelect';
+import useSelect from '../hooks/useSelect';
 
 let initialDate = new Date();
 let y = initialDate.getFullYear();

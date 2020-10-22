@@ -13,7 +13,7 @@ interface Props {
   total: string;
   onCreate: () => void;
   onCancel: () => void;
-  onChangeTotal: (e: { target: HTMLInputElement }) => void;
+  onChangeTotal: (e: any) => void;
 }
 
 const EditComponent: React.FC<Props> = ({

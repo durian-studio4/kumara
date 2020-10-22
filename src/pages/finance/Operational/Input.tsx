@@ -4,7 +4,7 @@ import NumberFormat from 'react-number-format';
 import styles from './index.less';
 
 interface Props {
-  onChangeState: (e: { target: HTMLInputElement }) => void;
+  onChangeState: (e: any) => void;
   onChangeTotal: (e: any) => void;
   onCreate: () => void;
   onLoadButton: boolean;
@@ -45,11 +45,11 @@ const InputComponent: React.FC<Props> = ({
 
         <div className={styles.box10}>
           <div className={styles.group}>
-            <label className={styles.label} htmlFor="total">
+            <label className={styles.label} htmlFor="total_add">
               Jumlah Pengeluaran
             </label>
             <NumberFormat
-              id="total"
+              id="total_add"
               className={styles.number}
               placeholder="Isi Jumlah Pengeluaran"
               thousandSeparator={true}

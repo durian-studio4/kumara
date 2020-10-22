@@ -11,7 +11,7 @@ import TablePengeluaran from './Table';
 
 import DatePicker from '../Home/components/DatePicker';
 
-import useSelect from '@/hooks/useSelect';
+import useSelect from '../hooks/useSelect';
 
 interface Props {}
 

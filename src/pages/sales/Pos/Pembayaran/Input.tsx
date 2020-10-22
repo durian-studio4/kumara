@@ -98,14 +98,6 @@ const InputComponent: React.FC<Props> = ({
     setKeterangan('');
   }, [id_type_pembayaran]);
 
-  const DataJSON = JSON.stringify({
-    id_type_pembayaran,
-    tempo,
-    jumlah_pb,
-    keterangan,
-    nama_bank: initialBank[nama_bank].value,
-  });
-
   const onChangeKeterangan = (e: { target: HTMLInputElement }) => setKeterangan(e.target.value);
   const onChangeTempo = (e: { target: HTMLInputElement }) => setTempo(e.target.value);
 
@@ -128,6 +120,14 @@ const InputComponent: React.FC<Props> = ({
   };
 
   const onCheckout = () => {
+    const DataJSON = JSON.stringify({
+      id_type_pembayaran,
+      tempo,
+      jumlah_pb,
+      keterangan,
+      nama_bank: initialBank[nama_bank].value,
+    });
+
     checkoutPembayaran({
       json: DataJSON,
       clear: onClearState,

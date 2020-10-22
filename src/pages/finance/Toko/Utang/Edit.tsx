@@ -48,7 +48,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     nama_barang,
     qty,
     harga,
-    id_suplier: suplier.text,
+    id_suplier: suplier.id,
     id_satuan_barang,
   });
 
@@ -89,10 +89,10 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     return setDisabled(false);
   }, [harga, nama_barang, suplier.text, nama_sales, qty, id_satuan_barang]);
 
-  useEffect(() => {
-    onClearSatuan(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nama_barang]);
+  // useEffect(() => {
+  //   onClearSatuan();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [nama_barang]);
 
   const onChangeState = (e: { target: HTMLInputElement }) => {
     const { value } = e.target;
@@ -203,6 +203,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
                     </label>
                     <SelectSatuan
                       address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${nama_barang}`}
+                      initial={data_list.satuan_barang}
                       handleChange={onChangeSatuan}
                     />
                   </div>

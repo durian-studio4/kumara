@@ -77,7 +77,9 @@ const TableComponent: React.FC<Props> = ({
         align: 'center',
         title: 'Expired Date',
         dataIndex: 'expired_date',
-        render: (props: Date) => <span>{props ? format(props, 'dd/MM/yyyy') : null}</span>,
+        render: (props: Date) => (
+          <span>{props ? format(new Date(props), 'dd/MM/yyyy') : null}</span>
+        ),
         ...getColumnSearchProps('expired_date'),
       },
       {

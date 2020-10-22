@@ -33,7 +33,7 @@ const initialState = {
   qty_gudang: '',
 };
 
-const initialDate = format(new Date(), 'dd-MM-yyyy');
+const initialDate = format(new Date(), 'yyyy-MM-dd');
 
 const UpdateComponent: React.FC<Props> = ({
   id_update,

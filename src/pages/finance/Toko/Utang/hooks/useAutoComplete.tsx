@@ -7,6 +7,7 @@ interface Props {
 
 function App({ idSelect, textSelect }: Props) {
   const [text, setText] = useState('');
+  const [values, setValues] = useState('');
   const [id, setId] = useState(0);
 
   useEffect(() => {
@@ -22,15 +23,18 @@ function App({ idSelect, textSelect }: Props) {
   };
 
   const selectText = (value: any, e: any) => {
-    setText(value);
+    setText(e.children);
     setId(value);
+    setValues(e.children);
   };
 
   const clearText = () => {
     setText('');
+    setValues('');
+    setId(0);
   };
 
-  return { text, id, changeText, selectText, clearText };
+  return { text, id, values, changeText, selectText, clearText };
 }
 
 export default App;

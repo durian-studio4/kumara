@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Input, Row } from 'antd';
+import NumberFormat from 'react-number-format';
 import styles from './index.less';
 
-import useNumber from '@/hooks/useNumber';
+import useNumber from '../hooks/useNumber';
 import useSelect from '@/hooks/useSelect';
 
 import SelectBarang from '@/components/Select/SelectBarang';
@@ -101,12 +102,14 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
               </label>
               <Row justify="space-between">
                 <div className={styles.box6}>
-                  <Input
-                    className={styles.input}
+                  <NumberFormat
                     id="qty"
-                    placeholder="0"
+                    className={styles.number}
+                    placeholder="Isi Qty"
+                    thousandSeparator={true}
+                    thousandsGroupStyle={'thousand'}
+                    onValueChange={onChangeQty}
                     value={qty}
-                    onChange={onChangeQty}
                   />
                 </div>
                 {nama_barang ? (
@@ -128,12 +131,14 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
               <label className={styles.label} htmlFor="total">
                 Total Harga
               </label>
-              <Input
-                className={styles.input}
+              <NumberFormat
                 id="total"
-                placeholder="0"
+                className={styles.number}
+                placeholder="Isi Total Harga"
+                thousandSeparator={true}
+                thousandsGroupStyle={'thousand'}
+                onValueChange={onChangeTotal}
                 value={total}
-                onChange={onChangeTotal}
               />
             </div>
           </div>

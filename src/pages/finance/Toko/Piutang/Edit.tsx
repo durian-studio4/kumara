@@ -93,10 +93,10 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     return setDisabled(false);
   }, [harga, nama_barang, suplier.text, nama_pengambil, nama_sales, qty, id_satuan_barang]);
 
-  useEffect(() => {
-    onClearSatuan(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nama_barang]);
+  // useEffect(() => {
+  //   onClearSatuan(0);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [nama_barang]);
 
   useEffect(() => {
     if (data_list && data_list.harga) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { Modal, Row, Button } from 'antd';
 import styles from '../index.less';
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 
 import useCreate from '@/hooks/useCreate';
 import useFetch from '@/hooks/useFetch';
@@ -31,7 +31,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
 
   const [{ no, harga, qty }, setState] = useState(initialState);
   const [visibleEdit, setVisibleEdit] = useState(false);
-  const [loading_download, setLoadingDownload] = useState(false);
+  // const [loading_download, setLoadingDownload] = useState(false);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -81,30 +81,30 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
     }));
   };
 
-  const downloadExcel = async (xtype: any) => {
-    setLoadingDownload(true);
-    try {
-      const fetching = await fetch(`${REACT_APP_ENV}/admin/v1/finance/pajak/excel`, {
-        method: 'post',
-        body: JSON.stringify({ invoice: data.no_faktur, xtype }),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: Cookie.get('token'),
-        },
-      });
-      const blob = await fetching.blob();
-      const result = blob;
-      let elm = document.createElement('a');
-      elm.href = window.URL.createObjectURL(result);
-      elm.download = `${data.no_faktur}.xlsx`;
-      document.body.appendChild(elm);
-      elm.click();
-      document.body.removeChild(elm);
-      setLoadingDownload(false);
-    } catch (error) {
-      setLoadingDownload(false);
-    }
-  };
+  // const downloadExcel = async (xtype: any) => {
+  //   setLoadingDownload(true);
+  //   try {
+  //     const fetching = await fetch(`${REACT_APP_ENV}/admin/v1/finance/pajak/excel`, {
+  //       method: 'post',
+  //       body: JSON.stringify({ invoice: data.no_faktur, xtype }),
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: Cookie.get('token'),
+  //       },
+  //     });
+  //     const blob = await fetching.blob();
+  //     const result = blob;
+  //     let elm = document.createElement('a');
+  //     elm.href = window.URL.createObjectURL(result);
+  //     elm.download = `${data.no_faktur}.xlsx`;
+  //     document.body.appendChild(elm);
+  //     elm.click();
+  //     document.body.removeChild(elm);
+  //     setLoadingDownload(false);
+  //   } catch (error) {
+  //     setLoadingDownload(false);
+  //   }
+  // };
 
   const json_array_list = no.map((data, i) => ({
     no: String(data),
@@ -140,7 +140,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
               harga={harga}
               handleHargaChange={handleHargaChange}
               handleUnitChange={handleUnitChange}
-              isLoadingUpdate={Boolean(isLoading_update)}
+              // isLoadingUpdate={Boolean(isLoading_update)}
               visibleEdit={visibleEdit}
             />
           </Row>
@@ -185,7 +185,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
           </Fragment>
         )}
       </Row>
-      <Row justify="center">
+      {/* <Row justify="center">
         <Button
           onClick={() => downloadExcel('1')}
           className={styles.button}
@@ -204,7 +204,7 @@ const DetailComponent: React.FC<Props> = ({ idParams, visible, onCancel }) => {
         >
           Convert Pajak ke Excel
         </Button>
-      </Row>
+      </Row> */}
     </Modal>
   );
 };

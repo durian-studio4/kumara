@@ -5,13 +5,25 @@
   font-size: 1.5em;
 }
 
+.title_add {
+  color: #1890ff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    border-collapse: collapse;
+    outline: 0;
+  }
+}
+
 .row_box {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  overflow: hidden;
-  // margin-top:
+  justify-content: flex-end;
+  align-items: flex-end;
   width: 100%;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .modal_body {
@@ -49,7 +61,7 @@
   }
 }
 
-.box6 {
+.box5 {
   flex: 0 0 60%;
   max-width: 60%;
 
@@ -96,6 +108,22 @@
   }
 }
 
+.input_title {
+  padding: 5px;
+  margin: 5px;
+  min-height: 1rem;
+  width: calc(150px + 3vmax);
+  border-radius: 0.25rem;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-collapse: collapse;
+  }
+}
+
 .button {
   text-align: center;
   margin: 5px;
@@ -118,14 +146,24 @@
   }
 }
 
-.p {
-  height: 100%;
-  width: 100%;
-}
-
-.span {
-  color: #68adfa;
+.button_title {
+  padding: 3px;
+  min-height: 1rem;
+  margin: 5px;
+  width: 4rem;
+  text-align: center;
+  color: white;
+  border-radius: 0.25rem;
+  border-color: #68adfa;
   cursor: pointer;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus,
+  &:active {
+    box-shadow: 0.15rem #68adfa;
+    border-collapse: collapse;
+    outline: 0;
+  }
 }
 
 .area {
@@ -135,18 +173,22 @@
   border: 1px solid #d9d9d9;
 }
 
-.table {
+.p {
+  height: 100%;
   width: 100%;
-  table-layout: fixed;
-  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+}
 
-  th {
-    padding: 10px 10px;
-    border-bottom: 1px solid #eee;
-  }
+.number {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.25em;
+  border: 1px solid #d9d9d9;
+  padding: 0.4em;
 
-  td {
-    padding: 1em;
-    border-bottom: 1px solid #eee;
+  &:focus {
+    border-color: #68adfa;
+    outline: none;
   }
 }

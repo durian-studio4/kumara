@@ -6,7 +6,7 @@ import Cookie from 'js-cookie';
 
 message.config({
   top: 100,
-  duration: 5,
+  duration: 1,
   maxCount: 1,
 });
 
@@ -38,7 +38,7 @@ function App() {
       setIsError(true);
       setStatus(err.response.status);
       message.error(err.data.message);
-      if (err.data && err.data.message === 'Wrong type token') {
+      if (err.data && err.data.error === 'Invalid token id') {
         message.error('Sesi Telah Habis');
         history.push('/user/login');
       }
@@ -66,11 +66,13 @@ function App() {
       message.success('success');
       return posting.data;
     } catch (error) {
-      setIsError(error.data.message);
-      setStatus(error.data.status);
       setLoading(false);
       clearState();
-      message.error(error.data.message);
+      if (error.data) {
+        setIsError(error.data.message);
+        setStatus(error.data.status);
+        message.error(error.data.message);
+      }
     }
   };
 

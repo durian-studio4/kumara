@@ -1,7 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Table, Row, Button } from 'antd';
 import styles from './index.less';
-// import { format } from 'date-fns';
 
 import useFilterColumn from '@/hooks/useFilterColumn';
 import PageError from '@/components/PageError';
@@ -10,22 +9,37 @@ interface Props {
   data: any;
   loading: boolean;
   status: number;
-  error: any;
+  error: boolean;
   cancel: (id: string) => void;
-  handleVisibleUpdate: (id: any) => void;
-  handleVisibleEdit: (id: any) => void;
+  handleVisibleUpdate: (e: any) => void;
+  handleVisibleConfirm: (id: string) => void;
 }
 
-const TableComponent: React.FC<Props> = ({
+const TableRetur: React.FC<Props> = ({
   data,
-  handleVisibleUpdate,
-  handleVisibleEdit,
-  cancel,
   loading,
-  status,
   error,
+  status,
+  cancel,
+  handleVisibleUpdate,
+  handleVisibleConfirm,
 }) => {
   const [getColumnSearchProps] = useFilterColumn();
+
+  let data_array = [];
+
+  for (let key in data) {
+    data_array.push({
+      id: data[key].id,
+      tanggal: data[key].tanggal,
+      pembeli: data[key].pembeli.name,
+      tempo: data[key].tempo,
+      total_harga: data[key].total_harga,
+      invoice: data[key].invoice,
+      nama_sales: data[key].nama_sales,
+      status_pembayaran: data[key].status_pembayaran,
+    });
+  }
 
   const columns = useMemo(
     () => [
@@ -34,50 +48,39 @@ const TableComponent: React.FC<Props> = ({
         title: 'Tanggal',
         key: 'tanggal',
         dataIndex: 'tanggal',
-        render: (props: any) => <span>{props}</span>,
         ...getColumnSearchProps('tanggal'),
       },
       {
         align: 'center',
-        title: 'Nama Toko',
-        key: 'nama_suplier',
-        dataIndex: 'nama_suplier',
-        ...getColumnSearchProps('nama_suplier'),
+        title: 'Nama Pembeli',
+        key: 'pembeli',
+        dataIndex: 'pembeli',
+        ...getColumnSearchProps('pembeli'),
       },
       {
         align: 'center',
-        title: 'Nama Pengambil',
-        key: 'nama_pengambil',
-        dataIndex: 'nama_pengambil',
-        ...getColumnSearchProps('nama_pengambil'),
+        title: 'No. Invoice',
+        key: 'invoice',
+        render: (props: any) => (
+          <span className={styles.span} id={props.id} onClick={handleVisibleUpdate}>
+            {props.invoice}
+          </span>
+        ),
+        ...getColumnSearchProps('invoice'),
       },
       {
         align: 'center',
-        title: 'Nama Barang',
-        key: 'nama_barang',
-        dataIndex: 'nama_barang',
-        ...getColumnSearchProps('nama_barang'),
+        title: 'Total Harga',
+        key: 'total_harga',
+        dataIndex: 'total_harga',
+        ...getColumnSearchProps('total_harga'),
       },
       {
         align: 'center',
-        title: 'Qtc / Satuan',
-        key: 'qty',
-        dataIndex: 'qty',
-        ...getColumnSearchProps('qty'),
-      },
-      {
-        align: 'center',
-        title: 'Harga / Satuan',
-        key: 'harga',
-        dataIndex: 'harga',
-        ...getColumnSearchProps('harga'),
-      },
-      {
-        align: 'center',
-        title: 'Harga Total',
-        key: 'total',
-        dataIndex: 'total',
-        ...getColumnSearchProps('total'),
+        title: 'Waktu Jatuh Tempo',
+        key: 'tempo',
+        dataIndex: 'tempo',
+        ...getColumnSearchProps('tempo'),
       },
       {
         align: 'center',
@@ -87,25 +90,20 @@ const TableComponent: React.FC<Props> = ({
         ...getColumnSearchProps('nama_sales'),
       },
       {
-        key: 'id',
         align: 'center',
+        title: 'Status Pembayaran',
+        key: 'status_pembayaran',
         render: (props: any) => (
           <>
-            {props.status === 0 ? (
+            {props.status_pembayaran === 0 ? (
               <Row justify="space-around">
                 <Button
                   className={styles.button}
-                  onClick={() => handleVisibleUpdate(props.id)}
+                  id={props.id}
+                  onClick={() => handleVisibleConfirm(props.id)}
                   type="primary"
                 >
                   Selesai
-                </Button>
-                <Button
-                  className={styles.button}
-                  onClick={() => handleVisibleEdit(props.id)}
-                  type="primary"
-                >
-                  Edit
                 </Button>
                 <Button
                   className={styles.button}
@@ -117,8 +115,16 @@ const TableComponent: React.FC<Props> = ({
                 </Button>
               </Row>
             ) : null}
-            {props.status === 1 ? <p style={{ color: '#1890ff' }}>Selesai</p> : null}
-            {props.status === 2 ? <p style={{ color: '#ff4d4f' }}>Batal</p> : null}
+            {props.status_pembayaran === 1 ? (
+              <p className={styles.p} style={{ color: '#1890ff' }}>
+                Selesai
+              </p>
+            ) : null}
+            {props.status_pembayaran === 2 ? (
+              <p className={styles.p} style={{ color: '#ff4d4f' }}>
+                Batal
+              </p>
+            ) : null}
           </>
         ),
       },
@@ -132,10 +138,13 @@ const TableComponent: React.FC<Props> = ({
   }
 
   return (
-    <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data.reverse()} loading={loading} />;
+    <div>
+      <p className={styles.title}>List Pembayaran Tempo</p>
+      <div style={{ overflow: 'auto' }}>
+        <Table columns={columns} dataSource={data_array} loading={loading} />
+      </div>
     </div>
   );
 };
 
-export default TableComponent;
+export default TableRetur;

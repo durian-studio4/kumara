@@ -32,7 +32,9 @@ function App() {
       message.success('success');
       return result;
     } catch (error) {
-      message.error(error.response.data.message);
+      if (error.response) {
+        message.error(error.response.data.message);
+      }
       setLoading(false);
     }
   };
@@ -56,8 +58,10 @@ function App() {
       message.success('success');
       return result;
     } catch (error) {
-      message.error(error.response.data.message);
       setLoading(false);
+      if (error.response) {
+        message.error(error.response.data.message);
+      }
     }
   };
 

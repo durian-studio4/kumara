@@ -1,6 +1,7 @@
 import React, { useMemo, Fragment } from 'react';
-import { Table, Popconfirm, Checkbox, Button } from 'antd';
+import { Table, Popconfirm, Checkbox, Button, Row } from 'antd';
 import { format } from 'date-fns';
+import styles from './index.less';
 
 import useFilterColumn from '@/hooks/useFilterColumn';
 import PageError from '@/components/PageError';
@@ -13,12 +14,14 @@ interface Props {
   remove: (id: string) => void;
   update: (id: string, value: string) => void;
   handleVisible: () => void;
+  handleVisibleEdit: (id: string) => void;
   handleUpdate: () => void;
 }
 
 const TableComponent: React.FC<Props> = ({
   data,
   handleVisible,
+  handleVisibleEdit,
   handleUpdate,
   loading,
   status,
@@ -101,11 +104,23 @@ const TableComponent: React.FC<Props> = ({
       {
         align: 'center',
         render: (props: any) => (
-          <Fragment>
-            <Button onClick={() => remove(props.id)} type="primary" danger>
+          <Row justify="space-between">
+            <Button
+              className={styles.button}
+              onClick={() => handleVisibleEdit(props.id)}
+              type="primary"
+            >
+              Edit
+            </Button>
+            <Button
+              className={styles.button}
+              onClick={() => remove(props.id)}
+              type="primary"
+              danger
+            >
               Delete
             </Button>
-          </Fragment>
+          </Row>
         ),
       },
     ],

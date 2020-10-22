@@ -54,9 +54,11 @@ const initialSatuanState = {
 
 const AddComponent: React.FC<Props> = ({ visible, onLoadButton, onCancel, onCreate, onError }) => {
   const [{ sku, brand, nama_barang }, setInputState] = useState(initialInputState);
+
   const [qtyState, setQtyState] = useState(initialQtyState);
   const [itemCheckbox, setCheckboxState] = useState(initialCheckboxState);
   const [satuanBarang, setSatuanState] = useState(initialSatuanState);
+
   const [satuan_stock, setStok] = useState([]);
   const [file_img, setFileImg] = useState([]);
 

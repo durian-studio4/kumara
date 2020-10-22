@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'umi';
 import { useParams } from 'umi';
-import Cookie from 'js-cookie';
 import styles from './index.less';
 // import Add from './Add';
 

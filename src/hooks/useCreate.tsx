@@ -11,7 +11,7 @@ message.config({
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(Date.now());
+  const [isRerender, setRerender] = useState(Date.now());
 
   const handlePost = async (url: string, data: any, clearState: () => void) => {
     setLoading(true);
@@ -25,18 +25,20 @@ function App() {
       });
       const result = await posting;
       setLoading(false);
-      setIsError(Date.now());
+      setRerender(Date.now());
       clearState();
       message.success('success');
       return result;
     } catch (error) {
       setLoading(false);
-      message.error(error.data.message);
+      if (error.data) {
+        message.error(error.data.message);
+      }
       // setIsError(error.response.message);
     }
   };
 
-  return [loading, isError, handlePost];
+  return [loading, isRerender, handlePost];
 }
 
 export default App;

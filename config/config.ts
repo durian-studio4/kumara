@@ -214,13 +214,13 @@ export default defineConfig({
                   name: 'Utang Toko',
                   icon: 'fileText',
                   path: '/finance/utang',
-                  component: './finance/Utang',
+                  component: './finance/Toko/Utang',
                 },
                 {
                   name: 'Piutang Toko',
                   icon: 'fileText',
                   path: '/finance/piutang',
-                  component: './finance/PIutang',
+                  component: './finance/Toko/Piutang',
                 },
                 {
                   name: 'Suplier',
@@ -233,6 +233,12 @@ export default defineConfig({
                   icon: 'snippets',
                   path: '/finance/operational',
                   component: './finance/Operational',
+                },
+                {
+                  name: 'Piutang Sales',
+                  icon: 'profile',
+                  path: '/finance/sales/piutang',
+                  component: './finance/Piutang',
                 },
                 {
                   name: 'Invoice',

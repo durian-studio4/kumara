@@ -9,43 +9,40 @@ import DetailPiutang from './Detail';
 import ConfirmPiutang from './Confirm';
 
 import useFetch from '@/hooks/useFetch';
-import useSelect from '@/hooks/useSelect';
+// import useSelect from '@/hooks/useSelect';
 import useCreate from '@/hooks/useCreate';
 
 import DatePicker from '@/pages/dashboard/Home/components/DatePicker';
 
 interface Props {}
 
-const initialBank = [
-  {
-    id: 1,
-    value: 'BCA',
-  },
-  {
-    id: 2,
-    value: 'BNI',
-  },
-  {
-    id: 3,
-    value: 'BRI',
-  },
-  {
-    id: 4,
-    value: 'Mandiri',
-  },
-];
+// const initialBank = [
+//   {
+//     id: 1,
+//     value: 'BCA',
+//   },
+//   {
+//     id: 2,
+//     value: 'BNI',
+//   },
+//   {
+//     id: 3,
+//     value: 'BRI',
+//   },
+//   {
+//     id: 4,
+//     value: 'Mandiri',
+//   },
+// ];
 
 const PiutangComponent: React.FC<Props> = ({}) => {
   const [visibleConfirm, setVisibleConfirm] = useState(false);
   const [visibleUpdate, setVisibleUpdate] = useState(false);
-  const [id_row_confirm, setIdConfirm] = useState(0);
-  const [id_row_update, setIdUpdate] = useState(0);
+  const [id_confirm, setIdConfirm] = useState(0);
+  const [id_update, setIdUpdate] = useState(0);
 
   const [date, setDate] = useState(['', '']);
   const [loading_excel, setLoadingExcel] = useState(false);
-
-  const [keterangan, setKeterangan] = useState('');
-  const [nama_bank, changeTypeBank] = useSelect('0');
 
   const [loading_post, status_post, fetchPost] = useCreate();
 
@@ -59,11 +56,11 @@ const PiutangComponent: React.FC<Props> = ({}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status_post]);
 
-  const DataJSON = JSON.stringify({
-    status_pembayaran: 1,
-    keterangan,
-    nama_bank: initialBank[nama_bank].value,
-  });
+  // const DataJSON = JSON.stringify({
+  //   status_pembayaran: 1,
+  //   keterangan,
+  //   nama_bank: initialBank[nama_bank].value,
+  // });
 
   const handleVisibleConfirm = (id: string) => {
     setVisibleConfirm(!visibleConfirm);
@@ -77,6 +74,7 @@ const PiutangComponent: React.FC<Props> = ({}) => {
 
   const handleClearVisibleConfirm = () => {
     setVisibleConfirm(false);
+    setIdConfirm(0);
   };
 
   const handleClearVisibleUpdate = () => {
@@ -84,19 +82,12 @@ const PiutangComponent: React.FC<Props> = ({}) => {
     setIdUpdate(0);
   };
 
-  const handleKeteranganChange = (e: { target: HTMLInputElement }) => setKeterangan(e.target.value);
-
   const onChangeDate = (date: any, dateString: any) => {
     setDate([dateString[0] || '', dateString[1] || '']);
   };
 
-  const acceptPiutang = () => {
-    fetchPost(
-      `${REACT_APP_ENV}/admin/v1/finance/transfer/${id_row_confirm}/update`,
-      DataJSON,
-      handleClearVisibleConfirm,
-    );
-    setKeterangan('');
+  const acceptPiutang = ({ json, clear }: any) => {
+    fetchPost(`${REACT_APP_ENV}/admin/v1/finance/transfer/${id_confirm}/update`, json, clear);
   };
 
   const cancelPiutang = (id: string) => {
@@ -162,16 +153,14 @@ const PiutangComponent: React.FC<Props> = ({}) => {
         <DetailPiutang
           visible={visibleUpdate}
           onCancel={handleClearVisibleUpdate}
-          idParams={String(id_row_update)}
+          idParams={String(id_update)}
         />
       ) : null}
       {visibleConfirm ? (
         <ConfirmPiutang
           visible={visibleConfirm}
-          keterangan={keterangan}
+          id_confirm={id_confirm}
           onLoading={Boolean(loading_post)}
-          onKeteranganChange={handleKeteranganChange}
-          onBankChange={changeTypeBank}
           onCancel={handleClearVisibleConfirm}
           onUpdate={acceptPiutang}
         />

@@ -35,6 +35,12 @@ const TableComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
+        title: 'SKU',
+        dataIndex: 'sku',
+        ...getColumnSearchProps('sku'),
+      },
+      {
+        align: 'center',
         title: 'Nama Barang',
         dataIndex: 'nama_barang',
         ...getColumnSearchProps('nama_barang'),

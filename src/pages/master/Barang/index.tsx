@@ -4,6 +4,7 @@ import styles from './index.less';
 
 import TableComponent from './Table';
 import AddComponent from './Add';
+import UpdateComponent from './Update';
 
 import useFetch from './hooks/useFetch';
 import useCreate from './hooks/useCreate';
@@ -26,6 +27,9 @@ const BarangComponent: React.FC<Props> = () => {
 
   const [visible, setVisible] = useState(false);
   const [update, setUpdate] = useState(false);
+
+  const [visible_edit, setVisibleEdit] = useState(false);
+  const [id_update, setIdUpdate] = useState(0);
 
   const [isLoading_barang, isStatus_barang, postBarang, updateBarang] = useCreate();
 
@@ -54,6 +58,17 @@ const BarangComponent: React.FC<Props> = () => {
   };
 
   const handleVisible = () => setVisible(!visible);
+
+  const handleVisibleEdit = (id: string) => {
+    setVisibleEdit(!visible_edit);
+    setIdUpdate(Number(id));
+  };
+
+  const handleClearEdit = () => {
+    setVisibleEdit(!visible_edit);
+    setIdUpdate(0);
+  };
+
   const handleClearState = () => {
     setVisible(false);
     setUpdate(false);
@@ -66,6 +81,10 @@ const BarangComponent: React.FC<Props> = () => {
 
   const createBarang = ({ formData, clear }: CreateBarang) => {
     postBarang(`${REACT_APP_ENV}/admin/v1/master/barang/create`, formData, clear);
+  };
+
+  const editBarang = ({ formData, clear }: any) => {
+    postBarang(`${REACT_APP_ENV}/admin/v1/master/barang/${id_update}/update`, formData, clear);
   };
 
   const updateBarangPPN = (id: string, value: string) => {
@@ -120,6 +139,7 @@ const BarangComponent: React.FC<Props> = () => {
         error={Boolean(error_list)}
         update={updateBarangPPN}
         remove={removeBarang}
+        handleVisibleEdit={handleVisibleEdit}
         handleVisible={handleVisible}
         handleUpdate={handleUpdate}
       />
@@ -128,6 +148,16 @@ const BarangComponent: React.FC<Props> = () => {
           visible={visible}
           onCancel={handleClearState}
           onCreate={createBarang}
+          onError={isStatus_barang}
+          onLoadButton={Boolean(isLoading_barang)}
+        />
+      ) : null}
+      {visible_edit ? (
+        <UpdateComponent
+          visible={visible_edit}
+          onCancel={handleClearEdit}
+          id_update={id_update}
+          onUpdate={editBarang}
           onError={isStatus_barang}
           onLoadButton={Boolean(isLoading_barang)}
         />

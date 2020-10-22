@@ -238,7 +238,7 @@ export default defineConfig({
                   name: 'Piutang Sales',
                   icon: 'profile',
                   path: '/finance/sales/piutang',
-                  component: './finance/Piutang',
+                  component: './finance/PIutang',
                 },
                 {
                   name: 'Invoice',

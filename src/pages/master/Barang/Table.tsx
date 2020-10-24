@@ -105,8 +105,9 @@ const TableComponent: React.FC<Props> = ({
       },
       {
         align: 'center',
+        fixed: 'right',
         render: (props: any) => (
-          <Row justify="space-between">
+          <Row justify="space-around">
             <Button
               className={styles.button}
               onClick={() => handleVisibleEdit(props.id)}
@@ -136,7 +137,8 @@ const TableComponent: React.FC<Props> = ({
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data.reverse()} loading={loading} />;
+      <Table columns={columns} dataSource={data.reverse()} loading={loading} scroll={{ x: 1300 }} />
+      ;
     </div>
   );
 };

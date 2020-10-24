@@ -56,6 +56,7 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
       },
       {
         align: 'center',
+        fixed: 'right',
         render: (props: any) => (
           <Row justify="space-around">
             <Button
@@ -89,7 +90,8 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} loading={loading} dataSource={data.reverse()} />;
+      <Table columns={columns} loading={loading} dataSource={data.reverse()} scroll={{ x: 1300 }} />
+      ;
     </div>
   );
 };

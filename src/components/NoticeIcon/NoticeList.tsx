@@ -32,7 +32,8 @@ const openNotification = ({ judul, deskripsi }: OpenNotification) => {
   notification.open({
     message: judul,
     description: deskripsi,
-    placement: 'bottomRight',
+    duration: 3,
+    placement: 'bottomLeft',
     onClick: () => {
       console.log('Notification Clicked!');
     },

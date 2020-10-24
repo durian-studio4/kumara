@@ -26,6 +26,12 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
       },
       {
         align: 'center',
+        title: 'Kode Pelanggan',
+        // dataIndex: 'name',
+        // ...getColumnSearchProps('name'),
+      },
+      {
+        align: 'center',
         title: 'Nama Pembeli',
         dataIndex: 'name',
         ...getColumnSearchProps('name'),
@@ -68,6 +74,7 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
       },
       {
         align: 'center',
+        fixed: 'right',
         render: (props: any) => (
           <Row justify="space-around">
             <Button
@@ -101,7 +108,7 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
 
   return (
     <div style={{ overflow: 'auto' }}>
-      <Table columns={columns} dataSource={data.reverse()} loading={loading} />;
+      <Table columns={columns} dataSource={data.reverse()} loading={loading} scroll={{ x: 1300 }} />
     </div>
   );
 };

@@ -27,8 +27,8 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, onUpdat
       {
         align: 'center',
         title: 'Kode Pelanggan',
-        // dataIndex: 'name',
-        // ...getColumnSearchProps('name'),
+        dataIndex: 'kode',
+        ...getColumnSearchProps('kode'),
       },
       {
         align: 'center',

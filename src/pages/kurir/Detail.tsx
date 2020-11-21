@@ -30,6 +30,7 @@ const DetailComponent: React.FC<Props> = ({ id, visible, onCancel, onCreate, onL
   const phone = data.pembeli && data.pembeli.phone;
   const alamat = data.pembeli && data.pembeli.alamat;
   const pembeli = data.pembeli && data.pembeli.pembeli_grup;
+  const namaEkspedisi = data.nama_expedisi;
 
   return (
     <Modal
@@ -72,6 +73,16 @@ const DetailComponent: React.FC<Props> = ({ id, visible, onCancel, onCreate, onL
                 </label>
                 <p className={styles.p} id="alamat">
                   {alamat}
+                </p>
+              </div>
+            </div>
+            <div className={styles.box10}>
+              <div className={styles.group} style={{ padding: '0.2.em !important' }}>
+                <label className={styles.label} style={{ color: '#bfbeba' }} htmlFor="alamat">
+                  Nama Ekspedisi
+                </label>
+                <p className={styles.p} id="alamat" style={{textTransform:"uppercase"}}>
+                  {namaEkspedisi || "-"}
                 </p>
               </div>
             </div>

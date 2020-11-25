@@ -71,7 +71,7 @@ const TableComponent: React.FC<Props> = ({
         width: 200,
         render: (props: any) => (
           <>
-            {props.confirm_finance === 0 ? (
+            {props.confirm_finance === 0 && props.status_pembayaran !== 1 ? (
               <Row justify="center">
                 <Button
                   className={styles.button}
@@ -108,7 +108,6 @@ const TableComponent: React.FC<Props> = ({
         ),
       },
     ],
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

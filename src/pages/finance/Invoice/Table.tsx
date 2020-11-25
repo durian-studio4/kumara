@@ -93,18 +93,17 @@ const TableComponent: React.FC<Props> = ({
                   Batal
                 </Button>
               </Row>
-            ) :null }
-            {props.status_pembayaran === 1 ? (
-              <Button
-                onClick={() => onDownloadExcel('1', props.invoice)}
-                className={styles.button}
-                disabled={onLoadDownload}
-                type="primary"
-                style={{ width: '100%' }}
+            ) : (
+            <Button
+              onClick={() => onDownloadExcel('1', props.invoice)}
+              className={styles.button}
+              disabled={onLoadDownload || props.status_pembayaran === 0}
+              type="primary"
+              style={{ width: '100%' }}
               >
-                Download Invoice
-              </Button> 
-            ) : null }
+              {props.status_pembayaran === 1? "Download Invoice" : "Menunggu Konfirmasi"}
+            </Button> 
+          )}
           </>
         ),
       },

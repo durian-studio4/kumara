@@ -71,7 +71,7 @@ const TableComponent: React.FC<Props> = ({
         width: 200,
         render: (props: any) => (
           <>
-            {props.confirm_finance === 0 && props.status_pembayaran !== 1 ? (
+            {props.confirm_finance === 0 ? (
               <Row justify="center">
                 <Button
                   className={styles.button}
@@ -93,7 +93,8 @@ const TableComponent: React.FC<Props> = ({
                   Batal
                 </Button>
               </Row>
-            ) : (
+            ) :null }
+            {props.status_pembayaran === 1 ? (
               <Button
                 onClick={() => onDownloadExcel('1', props.invoice)}
                 className={styles.button}
@@ -102,8 +103,8 @@ const TableComponent: React.FC<Props> = ({
                 style={{ width: '100%' }}
               >
                 Download Invoice
-              </Button>
-            )}
+              </Button> 
+            ) : null }
           </>
         ),
       },

@@ -83,15 +83,6 @@ const TableComponent: React.FC<Props> = ({
                   Confirm
                 </Button>
                 <Button
-                  onClick={() => onDownloadExcel('1', props.invoice)}
-                  className={styles.button}
-                  disabled={onLoadDownload}
-                  type="primary"
-                  style={{ width: '100%' }}
-                >
-                  Download Invoice
-                </Button>
-                <Button
                   className={styles.button}
                   onClick={() => onCancel(props.id)}
                   disabled={onLoadButton}
@@ -101,7 +92,6 @@ const TableComponent: React.FC<Props> = ({
                 >
                   Batal
                 </Button>
-                
               </Row>
             ) : (
               <Button

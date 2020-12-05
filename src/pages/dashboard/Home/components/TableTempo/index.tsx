@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Table } from 'antd';
 import styles from '../../index.less';
 
@@ -7,11 +7,11 @@ import PageError from '@/components/PageError';
 
 interface Props {
   id_cabang: string;
-  id_kategori: string;
   date: string[];
+  id_kategori: string;
 }
 
-const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => {
+const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
   const [data, status, loading, error, fetchList] = useFetch();
 
   const detail = data.detail && data.detail.reverse();
@@ -20,7 +20,7 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
   useEffect(() => {
     const timeOut = setTimeout(() => {
       fetchList(
-        `${REACT_APP_ENV}/admin/v1/dashboard/kategori/pengeluaran?id_cabang=${id_cabang}&kategori=${id_kategori}&start_date=${date[0]}&end_date=${date[1]}`,
+        `${REACT_APP_ENV}/admin/v1/dashboard/kategori/pendapatan?id_cabang=${id_cabang}&kategori=${id_kategori}&start_date=${date[0]}&end_date=${date[1]}`,
       );
     }, 0);
     return () => clearTimeout(timeOut);
@@ -37,22 +37,34 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
       },
       {
         align: 'center',
-        title: 'Tagihan Supplier',
-        key: 'tagihan_suplier',
-        dataIndex: 'tagihan_suplier',
+        title: 'Debit',
+        key: 'debit',
+        dataIndex: 'debit',
       },
       {
         align: 'center',
-        title: 'Tagihan Toko',
-        key: 'tagihan_toko',
-        dataIndex: 'tagihan_toko',
+        title: 'Giro',
+        key: 'giro',
+        dataIndex: 'giro',
       },
       {
         align: 'center',
-        title: 'Operational',
-        key: 'operational',
-        dataIndex: 'operational',
+        title: 'Cash',
+        key: 'cash',
+        dataIndex: 'cash',
       },
+      {
+        align: 'center',
+        title: 'Transfer',
+        key: 'transfer',
+        dataIndex: 'transfer',
+      },
+      // {
+      //   align: 'center',
+      //   title: 'Tempo',
+      //   key: 'kredit',
+      //   dataIndex: 'kredit',
+      // },
     ],
     [],
   );
@@ -61,21 +73,39 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
     () => [
       {
         align: 'center',
-        title: 'Tagihan Suplier',
-        key: 'tagihan_suplier',
-        dataIndex: 'tagihan_suplier',
+        title: 'Cash',
+        key: 'cash',
+        dataIndex: 'cash',
       },
       {
         align: 'center',
-        title: 'Tagihan Toko',
-        key: 'tagihan_toko',
-        dataIndex: 'tagihan_toko',
+        title: 'Debit',
+        key: 'debit',
+        dataIndex: 'debit',
+      },
+      // {
+      //   align: 'center',
+      //   title: 'Kredit',
+      //   key: 'kredit',
+      //   dataIndex: 'kredit',
+      // },
+      {
+        align: 'center',
+        title: 'Giro',
+        key: 'giro',
+        dataIndex: 'giro',
       },
       {
         align: 'center',
-        title: 'Operational',
-        key: 'operational',
-        dataIndex: 'operational',
+        title: 'Cash',
+        key: 'cash',
+        dataIndex: 'cash',
+      },
+      {
+        align: 'center',
+        title: 'Transfer',
+        key: 'transfer',
+        dataIndex: 'transfer',
       },
     ],
     [],
@@ -87,7 +117,7 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
 
   return (
     <div>
-      <p className={styles.title}>Kategori Pengeluaran</p>
+      <p className={styles.title}>Tempo</p>
       <div style={{ overflow: 'auto' }}>
         <Table columns={columnsDetail} dataSource={detail} loading={Boolean(loading)} />
         <Table columns={columnsTotal} dataSource={total} loading={Boolean(loading)} />
@@ -96,4 +126,4 @@ const TablePengeluaran: React.FC<Props> = ({ id_cabang, id_kategori, date }) => 
   );
 };
 
-export default TablePengeluaran;
+export default TablePendapatan;

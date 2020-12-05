@@ -59,12 +59,12 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
         key: 'transfer',
         dataIndex: 'transfer',
       },
-      {
-        align: 'center',
-        title: 'Tempo',
-        key: 'kredit',
-        dataIndex: 'kredit',
-      },
+      // {
+      //   align: 'center',
+      //   title: 'Tempo',
+      //   key: 'kredit',
+      //   dataIndex: 'kredit',
+      // },
     ],
     [],
   );
@@ -83,12 +83,12 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
         key: 'debit',
         dataIndex: 'debit',
       },
-      {
-        align: 'center',
-        title: 'Kredit',
-        key: 'kredit',
-        dataIndex: 'kredit',
-      },
+      // {
+      //   align: 'center',
+      //   title: 'Kredit',
+      //   key: 'kredit',
+      //   dataIndex: 'kredit',
+      // },
       {
         align: 'center',
         title: 'Giro',
@@ -97,9 +97,9 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
       },
       {
         align: 'center',
-        title: 'Pb',
-        key: 'pb',
-        dataIndex: 'pb',
+        title: 'Cash',
+        key: 'cash',
+        dataIndex: 'cash',
       },
       {
         align: 'center',

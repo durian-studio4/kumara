@@ -97,11 +97,11 @@ const TableComponent: React.FC<Props> = ({
             <Button
               onClick={() => onDownloadExcel('1', props.invoice)}
               className={styles.button}
-              disabled={onLoadDownload || props.status_pembayaran === 0}
+              disabled={onLoadDownload}
               type="primary"
               style={{ width: '100%' }}
               >
-              {props.status_pembayaran === 1? "Download Invoice" : "Menunggu Konfirmasi"}
+              {"Download Invoice"}
             </Button> 
           )}
           </>

@@ -10,6 +10,7 @@ import SelectKategori from './components/SelectKategori';
 import SelectCabang from './components/SelectCabang';
 import TablePengeluaran from './components/TablePengeluaran';
 import TablePendapatan from './components/TablePendapatan';
+import TableTempo from './components/TableTempo';
 import TotalOmset from './components/TotalOmset';
 import Setoran from './components/Setoran';
 import TotalPendapatan from './components/TotalPendapatan';
@@ -77,6 +78,7 @@ const HomeComponent: React.FC<Props> = () => {
       </React.Fragment>
       <TablePendapatan id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
       <TablePengeluaran id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} />
+      {/* <TableTempo id_cabang={String(cabang)} id_kategori={String(kategori)} date={date} /> */}
     </GridContent>
   );
 };

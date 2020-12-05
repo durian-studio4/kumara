@@ -89,7 +89,7 @@ const ConfirmComponent: React.FC<Props> = ({
   }, [data_list]);
 
   const DataJSON = JSON.stringify({
-    status_pembayaran: 1,
+    //status_pembayaran: 1,
     id_type_pembayaran,
     tempo,
     jumlah_pb,

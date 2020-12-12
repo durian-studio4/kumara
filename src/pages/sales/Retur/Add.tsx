@@ -4,7 +4,9 @@ import styles from './index.less';
 
 import SelectBarang from '@/components/Select/SelectBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
+import Barang from '@/components/AutoComplete/AutoBarang';
 
+import useAutoComplete from '../../hooks/useAutoComplete';
 import useNumber from '@/hooks/useNumber';
 import useSelect from '@/hooks/useSelect';
 
@@ -32,8 +34,12 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
 
   const [isDisabled, setDisabled] = useState(false);
 
-  const [nama_barang, onChangeBarang, onClearBarang] = useSelect('');
   const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect('0');
+
+  const barang = useAutoComplete({
+    idSelect: "",
+    textSelect: "",
+  });
 
   useEffect(() => {
     if (!nama_sales) {
@@ -42,7 +48,7 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
     if (!keterangan) {
       return setDisabled(true);
     }
-    if (!nama_barang) {
+    if (!barang.text) {
       return setDisabled(true);
     }
     if (!qty) {
@@ -52,18 +58,18 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
       return setDisabled(true);
     }
     return setDisabled(false);
-  }, [nama_barang, keterangan, nama_sales, qty, id_satuan_barang]);
+  }, [barang.text, keterangan, nama_sales, qty, id_satuan_barang]);
 
   useEffect(() => {
     onClearSatuan();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nama_barang]);
+  }, [barang.text]);
 
   const DataJSON = JSON.stringify({
     qty,
     keterangan,
     nama_sales,
-    nama_barang,
+    nama_barang: barang.text,
     id_satuan_barang,
   });
 
@@ -75,7 +81,7 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
   const onClearState = () => {
     setState({ ...initialState });
     onClearSatuan();
-    onClearBarang();
+    barang.clearText();
     onClearQty();
     onCancel();
   };
@@ -87,7 +93,7 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
       clear: onClearState,
     });
     onClearSatuan();
-    onClearBarang();
+    barang.clearText();
     onClearQty();
     onCancel();
   };
@@ -117,10 +123,12 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
               <label className={styles.label} htmlFor="nama_barang">
                 Nama Barang
               </label>
-              <SelectBarang
-                address={`${REACT_APP_ENV}/admin/v1/master/barang/listgroup`}
-                handleChange={onChangeBarang}
-              />
+                <Barang
+                    id="barang"
+                    value={barang.text}
+                    onChange={barang.changeText}
+                    onSelect={barang.selectText}
+                />
             </div>
           </div>
 
@@ -139,10 +147,10 @@ const AddComponent: React.FC<Props> = ({ onCancel, onCreate, onLoadButton, onErr
                     onChange={onChangeQty}
                   />
                 </div>
-                {nama_barang ? (
+                {barang.text ? (
                   <div className={styles.box3}>
                     <SelectSatuan
-                      address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${nama_barang}`}
+                      address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.text}`}
                       handleChange={onChangeSatuan}
                     />
                   </div>

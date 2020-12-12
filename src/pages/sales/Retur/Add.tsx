@@ -6,7 +6,7 @@ import SelectBarang from '@/components/Select/SelectBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
 import Barang from '@/components/AutoComplete/AutoBarang';
 
-import useAutoComplete from '../../hooks/useAutoComplete';
+import useAutoComplete from '../hooks/useAutoComplete';
 import useNumber from '@/hooks/useNumber';
 import useSelect from '@/hooks/useSelect';
 

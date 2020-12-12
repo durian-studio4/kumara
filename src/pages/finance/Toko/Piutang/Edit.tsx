@@ -11,9 +11,9 @@ import useAutoComplete from './hooks/useAutoComplete';
 import PageLoading from '@/components/PageLoading';
 import PageError from '@/components/PageError';
 
-import SelectBarang from '@/components/Select/SelectBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
 import Suplier from '@/components/AutoComplete/AutoSuplier';
+import Barang from '@/components/AutoComplete/AutoBarang';
 
 import { Piutang } from './index';
 interface Props {
@@ -40,12 +40,16 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     data_list.harga && data_list.harga.split('Rp').join('').split('.').join('').trim(),
   );
 
-  const [nama_barang, onChangeBarang, onClearBarang] = useSelect(data_list.nama_barang);
   const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect(data_list.id_satuan_barang);
 
   const suplier = useAutoComplete({
     idSelect: data_list.id_suplier,
     textSelect: data_list.nama_suplier,
+  });
+
+  const barang = useAutoComplete({
+    idSelect: data_list.id_barang,
+    textSelect: data_list.nama_barang,
   });
 
   const { nama_sales, nama_pengambil } = dataEdit;
@@ -55,7 +59,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     nama_pengambil,
     qty,
     harga,
-    nama_barang,
+    nama_barang: barang.text,
     id_suplier: suplier.id,
     id_satuan_barang,
   });
@@ -65,7 +69,6 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
       fetchList(`${REACT_APP_ENV}/admin/v1/finance/piutang/${id_edit}/select`);
     }, 0);
     return () => clearTimeout(timeOut);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id_edit]);
 
   useEffect(() => {
@@ -84,19 +87,14 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
     if (!id_satuan_barang) {
       return setDisabled(true);
     }
-    if (!nama_barang) {
+    if (!barang.text) {
       return setDisabled(true);
     }
     if (!suplier.text) {
       return setDisabled(true);
     }
     return setDisabled(false);
-  }, [harga, nama_barang, suplier.text, nama_pengambil, nama_sales, qty, id_satuan_barang]);
-
-  // useEffect(() => {
-  //   onClearSatuan(0);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [nama_barang]);
+  }, [harga, barang.text, suplier.text, nama_pengambil, nama_sales, qty, id_satuan_barang]);
 
   useEffect(() => {
     if (data_list && data_list.harga) {
@@ -116,7 +114,7 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
   const onClearState = () => {
     setDataEdit({ ...initialState });
     onClearSatuan(0);
-    onClearBarang('');
+    barang.clearText();
     onClearQty();
     onClearHarga();
     onCancel();
@@ -196,11 +194,11 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
                   <label className={styles.label} htmlFor="nama_barang">
                     Nama Barang
                   </label>
-                  <SelectBarang
-                    address={`${REACT_APP_ENV}/admin/v1/master/barang/listgroup`}
-                    select_id="nama_barang"
-                    initial={nama_barang}
-                    handleChange={onChangeBarang}
+                  <Barang
+                    id="barang"
+                    value={barang.text}
+                    onChange={barang.changeText}
+                    onSelect={barang.selectText}
                   />
                 </div>
               </div>
@@ -233,14 +231,14 @@ const EditComponent: React.FC<Props> = ({ visible, onCancel, onCreate, id_edit }
               </div>
             </Row>
             <Row>
-              {nama_barang ? (
+              {barang.text ? (
                 <div className={styles.box3}>
                   <div className={styles.group}>
                     <label className={styles.label} htmlFor="qty_satuan">
                       Satuan
                     </label>
                     <SelectSatuan
-                      address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${nama_barang}`}
+                      address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.text}`}
                       select_id="qty_satuan"
                       initial={data_list.satuan_barang}
                       handleChange={onChangeSatuan}

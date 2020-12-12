@@ -4,11 +4,12 @@ import NumberFormat from 'react-number-format';
 import styles from './index.less';
 
 import useNumber from '../hooks/useNumber';
+import useAutoComplete from '../hooks/useAutoComplete';
 import useSelect from '@/hooks/useSelect';
 
-import SelectBarang from '@/components/Select/SelectBarang';
 import SelectSatuan from '@/components/Select/SelectSatuan';
 import SelectAll from '@/components/Select/SelectAll';
+import Barang from '@/components/AutoComplete/AutoBarang';
 
 import { CreateKonsinyasi } from './index';
 
@@ -25,12 +26,16 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
   const [total, onChangeTotal, onClearTotal] = useNumber('');
   const [qty, onChangeQty, onClearQty] = useNumber('');
 
-  const [nama_barang, onChangeBarang, onClearBarang] = useSelect('');
   const [id_satuan_barang, onChangeSatuan, onClearSatuan] = useSelect('');
   const [id_suplier, onChangeSuplier, onClearSuplier] = useSelect('');
 
+  const barang = useAutoComplete({
+    idSelect: "",
+    textSelect: "",
+  });
+
   useEffect(() => {
-    if (!nama_barang) {
+    if (!barang.text) {
       return setDisabled(true);
     }
     if (!id_suplier) {
@@ -46,23 +51,23 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
       return setDisabled(true);
     }
     return setDisabled(false);
-  }, [nama_barang, id_suplier, qty, total, id_satuan_barang]);
+  }, [barang.text, id_suplier, qty, total, id_satuan_barang]);
 
   useEffect(() => {
     onClearSatuan();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [nama_barang]);
+  }, [barang.text]);
 
   const DataJSON = JSON.stringify({
     total,
     qty,
-    nama_barang,
+    nama_barang: barang.text,
     id_satuan_barang,
     id_suplier,
   });
 
   const onClearState = () => {
-    onClearBarang();
+    barang.clearText();
     onClearSatuan();
     onClearSuplier();
     onClearTotal();
@@ -86,10 +91,12 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
               <label className={styles.label} htmlFor="nama_barang ">
                 Nama Barang
               </label>
-              <SelectBarang
-                address={`${REACT_APP_ENV}/admin/v1/master/barang/listgroup`}
-                handleChange={onChangeBarang}
-              />
+                <Barang
+                    id="barang"
+                    value={barang.text}
+                    onChange={barang.changeText}
+                    onSelect={barang.selectText}
+                />
             </div>
           </div>
         </div>
@@ -112,10 +119,10 @@ const AddComponent: React.FC<Props> = ({ visible, onCancel, onCreate, onLoadButt
                     value={qty}
                   />
                 </div>
-                {nama_barang ? (
+                {barang.text ? (
                   <div className={styles.box3}>
                     <SelectSatuan
-                      address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${nama_barang}`}
+                      address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.text}`}
                       handleChange={onChangeSatuan}
                     />
                   </div>

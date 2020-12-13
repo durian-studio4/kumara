@@ -1,12 +1,19 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Modal, Row, Button, Input } from 'antd';
+import { Modal, Row, Button, Input, InputNumber } from 'antd';
 import styles from './index.less';
 
+import Bank from './Bank';
+
 import useFetch from '@/hooks/useFetch';
+import SelectAll from '@/components/Select/SelectAll';
+
+import useSelect from '@/hooks/useSelect';
 
 import PageLoading from '@/components/PageLoading';
 
 import { Piutang } from './index';
+
+
 interface Props {
   visible: boolean;
   onUpdate: ({ url, json, clear }: Piutang) => void;
@@ -16,7 +23,6 @@ interface Props {
 
 const initialState = {
   keterangan: '',
-  nama_bank: '',
 };
 
 const { TextArea } = Input;
@@ -24,7 +30,9 @@ const { TextArea } = Input;
 const UpdateComponent: React.FC<Props> = ({ id_row, visible, onCancel, onUpdate }) => {
   const [data_list, status_list, isLoading_list, error_list, fetchList] = useFetch();
 
-  const [{ keterangan, nama_bank }, setState] = useState(initialState);
+  const [{ keterangan }, setState] = useState(initialState);
+  const [id_type_pembayaran, onChangeType, onClearType] = useSelect('');
+  const [nama_bank, onChangeBank, onClearBank] = useSelect(!data_list.nama_bank ? 'BCA' : data_list.nama_bank);
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
@@ -41,16 +49,48 @@ const UpdateComponent: React.FC<Props> = ({ id_row, visible, onCancel, onUpdate 
 
   const handleClearState = () => {
     setState({ ...initialState });
+    onClearType();
+    onClearBank();
     onCancel();
   };
 
   const acceptPiutang = () => {
     onUpdate({
       url: `${REACT_APP_ENV}/admin/v1/finance/piutang/${id_row}/update`,
-      json: JSON.stringify({ status: 1, nama_bank, keterangan }),
+      json: JSON.stringify({ status: 1, nama_bank: id_type_pembayaran == '3'? nama_bank : "", keterangan, id_type_pembayaran }),
       clear: handleClearState,
     });
   };
+
+  function renderMetode() {
+    switch (id_type_pembayaran) {
+      case '1':
+        return;
+      case '3':
+        return (
+          <Fragment>
+            <div className={styles.box10}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="bank">
+                  Nama Bank
+                </label>
+                <Bank
+                  handleChange={onChangeBank}
+                  select_id="bank"
+                  initial={nama_bank}
+                />
+              </div>
+            </div>
+          </Fragment>
+        );
+      case '4':
+        return;
+      case '5':
+        return;
+      default:
+        return null;
+    }
+  }
 
   return (
     <Modal visible={visible} title="Ubah Status" width={500} closable={false} footer={null}>
@@ -63,22 +103,20 @@ const UpdateComponent: React.FC<Props> = ({ id_row, visible, onCancel, onUpdate 
             <p style={{ textAlign: 'center', fontWeight: 'bold' }}>
               Jika anda yakin ingin merubah status masukan jenis pembayaran yang digunakan
             </p>
-            {data_list.id_type_pembayaran === 3 ? (
-              <div className={styles.box10}>
-                <div className={styles.group}>
-                  <label className={styles.label} htmlFor="nama_bank">
-                    Nama Bank
-                  </label>
-                  <Input
-                    className={styles.input}
-                    id="nama_bank"
-                    type="text"
-                    value={nama_bank.toUpperCase()}
-                    onChange={onChangeState}
-                  />
-                </div>
+            <div className={styles.box10}>
+              <div className={styles.group}>
+                <label className={styles.label} htmlFor="pembayaran">
+                  Metode Pembayaran
+                </label>
+                <SelectAll
+                  address={`${REACT_APP_ENV}/admin/v1/sales/typePembayaran?id_suplier=${data_list.id_suplier}`}
+                  select_id="pembayaran"
+                  initial={id_type_pembayaran}
+                  handleChange={onChangeType}
+                />
               </div>
-            ) : null}
+            </div>
+            {renderMetode()}
             <div className={styles.box10}>
               <div className={styles.group}>
                 <label className={styles.label} htmlFor="keterangan">

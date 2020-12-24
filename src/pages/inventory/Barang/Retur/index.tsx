@@ -17,6 +17,7 @@ interface CreateBarang {
 const ReturBarangComponent: React.FC<Props> = () => {
   const [name, setName] = useState('');
   const [visible, setVisible] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [data_list, status_list, loading_list, error_list, fetchList, postList] = useFetch();
 
@@ -44,6 +45,11 @@ const ReturBarangComponent: React.FC<Props> = () => {
       filtering();
     }
   };
+
+  const onUpdateTable = () => {
+    fetchList(`${REACT_APP_ENV}/admin/v1/inventory/retur`);
+    window.location.reload();
+  }
 
   const createBarang = ({ json, clear }: CreateBarang) =>
     postList(`${REACT_APP_ENV}/admin/v1/inventory/retur`, json, clear);
@@ -77,6 +83,7 @@ const ReturBarangComponent: React.FC<Props> = () => {
         loading={Boolean(loading_list)}
         status={Number(status_list)}
         error={error_list}
+        onUpdate={()=>onUpdateTable()}
       />
       {visible ? (
         <AddComponent

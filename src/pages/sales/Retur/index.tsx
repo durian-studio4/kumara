@@ -30,6 +30,10 @@ const ReturComponent: React.FC<Props> = ({}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onUpdateTable = () => {
+    fetchList(`${REACT_APP_ENV}/admin/v1/sales/retur`);
+  }
+
   const handleVisibleAdd = () => setVisibleAdd(!visibleAdd);
 
   const createRetur = ({ url, json, clear }: CreateRetur) => {
@@ -44,7 +48,7 @@ const ReturComponent: React.FC<Props> = ({}) => {
           Tambah Retur
         </Button>
       </div>
-      <TableRetur data={data_list} loading={loading_list} status={status_list} error={error_list} />
+      <TableRetur data={data_list} loading={loading_list} status={status_list} error={error_list} onUpdate={()=>onUpdateTable()} />
       <ModalAdd
         visible={visibleAdd}
         onCreate={createRetur}

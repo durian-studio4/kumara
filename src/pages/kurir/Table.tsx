@@ -99,7 +99,7 @@ const TableKurir: React.FC<Props> = ({
           <Button
             type="primary"
             onClick={() => handleDownloadDetail({ id, sales: nama_sales })}
-            disabled={!status_pengiriman}
+            // disabled={!status_pengiriman}
           >
             Print
           </Button>

@@ -98,7 +98,7 @@ export default defineConfig({
               icon: 'table',
               path: '/listharga',
               component: './list_harga',
-              authority: ['Owner', 'Finance', 'Sales'],
+              authority: ['Owner', 'Finance', 'Sales', 'Inventory'],
             },
             {
               path: '/sales',
@@ -196,7 +196,7 @@ export default defineConfig({
               icon: 'user',
               path: '/kurir',
               component: './kurir',
-              authority: ['Owner', 'Kurir', 'Sales'],
+              authority: ['Owner', 'Kurir', 'Sales', 'Inventory'],
             },
             {
               name: 'Finance',
@@ -362,7 +362,7 @@ export default defineConfig({
     'primary-color': defaultSettings.primaryColor,
   },
   define: {
-    REACT_APP_ENV: 'https://api.posarmed.id',
+    REACT_APP_ENV: 'http://127.0.0.1:8000', // 'https://api.posarmed.id',
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
       ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION || '', // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
   },

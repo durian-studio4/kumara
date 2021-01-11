@@ -56,6 +56,11 @@ const HeaderComponent: React.FC<Props> = ({ data }) => {
                 <td align="center">:</td>
                 <td align="right">{data.pembeli && data.pembeli.npwp}</td>
               </tr>
+              <tr>
+                <td align="left">Metode Pembayaran</td>
+                <td align="center">:</td>
+                <td align="right">{data.tempo}</td>
+              </tr>
             </tbody>
           </table>
         </div>

@@ -46,9 +46,12 @@ const ReturBarangComponent: React.FC<Props> = () => {
     }
   };
 
-  const onUpdateTable = () => {
-    fetchList(`${REACT_APP_ENV}/admin/v1/inventory/retur`);
-    window.location.reload();
+  const onUpdateTable = async () => {
+    await fetchList(`${REACT_APP_ENV}/admin/v1/inventory/retur`);
+    
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 
   const createBarang = ({ json, clear }: CreateBarang) =>

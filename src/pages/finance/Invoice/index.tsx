@@ -93,7 +93,7 @@ const SetoranComponent: React.FC<Props> = () => {
       const result = blob;
       let elm = document.createElement('a');
       elm.href = window.URL.createObjectURL(result);
-      elm.download = `${invoice}.xlsx`;
+      elm.download = `${invoice}.pdf`;
       document.body.appendChild(elm);
       elm.click();
       document.body.removeChild(elm);

@@ -57,12 +57,12 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, kategori, date }) => {
         key: 'transfer',
         dataIndex: 'transfer',
       },
-      // {
-      //   align: 'center',
-      //   title: 'Tempo',
-      //   key: 'kredit',
-      //   dataIndex: 'kredit',
-      // },
+      {
+        align: 'center',
+        title: 'Tempo',
+        key: 'kredit',
+        dataIndex: 'kredit',
+      },
     ],
     [],
   );

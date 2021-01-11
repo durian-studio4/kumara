@@ -30,8 +30,12 @@ const ReturComponent: React.FC<Props> = ({}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onUpdateTable = () => {
-    fetchList(`${REACT_APP_ENV}/admin/v1/sales/retur`);
+  const onUpdateTable = async () => {
+    await fetchList(`${REACT_APP_ENV}/admin/v1/sales/retur`);
+    
+    setTimeout(() => {
+      window.location.reload();
+    }, 100);
   }
 
   const handleVisibleAdd = () => setVisibleAdd(!visibleAdd);

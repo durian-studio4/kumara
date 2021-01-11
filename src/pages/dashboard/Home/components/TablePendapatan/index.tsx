@@ -59,12 +59,12 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
         key: 'transfer',
         dataIndex: 'transfer',
       },
-      // {
-      //   align: 'center',
-      //   title: 'Tempo',
-      //   key: 'kredit',
-      //   dataIndex: 'kredit',
-      // },
+      {
+        align: 'center',
+        title: 'Tempo',
+        key: 'kredit',
+        dataIndex: 'kredit',
+      },
     ],
     [],
   );
@@ -83,12 +83,6 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
         key: 'debit',
         dataIndex: 'debit',
       },
-      // {
-      //   align: 'center',
-      //   title: 'Kredit',
-      //   key: 'kredit',
-      //   dataIndex: 'kredit',
-      // },
       {
         align: 'center',
         title: 'Giro',
@@ -107,6 +101,12 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
         key: 'transfer',
         dataIndex: 'transfer',
       },
+      {
+        align: 'center',
+        title: 'Tempo',
+        key: 'kredit',
+        dataIndex: 'kredit',
+      },
     ],
     [],
   );
@@ -120,6 +120,7 @@ const TablePendapatan: React.FC<Props> = ({ id_cabang, date, id_kategori }) => {
       <p className={styles.title}>Kategori Pendapatan</p>
       <div style={{ overflow: 'auto' }}>
         <Table columns={columnsDetail} dataSource={detail} loading={Boolean(loading)} />
+        <p style={{marginTop:"25px"}} className={styles.title}>Total Kategori Pendapatan</p>
         <Table columns={columnsTotal} dataSource={total} loading={Boolean(loading)} />
       </div>
     </div>

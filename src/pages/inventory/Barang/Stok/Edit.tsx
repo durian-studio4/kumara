@@ -250,6 +250,9 @@ const EditComponent: React.FC<Props> = ({
           </Col>
         </div>
       )}
+
+      <div style={{padding:"5px 0px 5px 0px"}}>Harga Rata-Rata: {data.avg_harga}</div>
+
       <Row justify="end">
         {/* {onError ? <p style={{ color: 'red' }}>something went wrong!</p> : null} */}
         <Button

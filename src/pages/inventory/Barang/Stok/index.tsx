@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Button, Input } from 'antd';
 import styles from './index.less'; // import Add from './Add';
-
+import Cookie from 'js-cookie';
 import Table from './Table';
 import DetailProduk from './Detail';
 import EditProduk from './Edit';
 
 import useFetch from '@/hooks/useFetch';
 import useCreate from '@/hooks/useCreate';
+
+import DatePicker from '@/pages/dashboard/Home/components/DatePicker';
 
 interface Props {}
 
@@ -24,6 +26,9 @@ const StokBarangComponent: React.FC<Props> = () => {
 
   const [id_edit, setIdEdit] = useState(0);
   const [visibleEdit, setVisibleEdit] = useState(false);
+
+  const [date, setDate] = useState(['', '']);
+  const [loading_excel, setLoadingExcel] = useState(false);
 
   const [data_list, status_list, loading_list, error_list, fetchList] = useFetch();
   const [loading_edit, error_edit, editList] = useCreate();
@@ -45,6 +50,10 @@ const StokBarangComponent: React.FC<Props> = () => {
     if (e.key.toLowerCase() === 'enter') {
       filtering();
     }
+  };
+
+  const onChangeDate = (date: any, dateString: any) => {
+    setDate([dateString[0] || '', dateString[1] || '']);
   };
 
   const onHandleVisible = (id: string) => {
@@ -75,6 +84,33 @@ const StokBarangComponent: React.FC<Props> = () => {
     editList(url, json, clear);
   };
 
+  const downloadExcel = async () => {
+    setLoadingExcel(true);
+    try {
+      const fetching = await fetch(
+        `${REACT_APP_ENV}/admin/v1/inventory/stock-opname?start_date=${date[0]}&end_date=${date[1]}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: String(Cookie.get('token')),
+          },
+        },
+      );
+      const blob = await fetching.blob();
+      const result = blob;
+      let elm = document.createElement('a');
+      elm.href = window.URL.createObjectURL(result);
+      elm.download = `Stock Opname ${date[0]}-${date[1]}.xlsx`;
+      document.body.appendChild(elm);
+      elm.click();
+      document.body.removeChild(elm);
+      setDate(['', '']);
+      setLoadingExcel(false);
+    } catch (error) {
+      setLoadingExcel(false);
+    }
+  };
+
   return (
     <div>
       <p className={styles.title}>Stok Barang</p>
@@ -92,6 +128,18 @@ const StokBarangComponent: React.FC<Props> = () => {
           Cari
         </Button>
       </div>
+      <Row style={{ marginBottom: '2em' }}>
+        <DatePicker handleChange={onChangeDate} />
+        <Button
+          type="primary"
+          className={styles.button_convert}
+          onClick={downloadExcel}
+          disabled={!Boolean(date[0]) && !Boolean(date[1])}
+        >
+          {loading_excel && 'Downloading excel...'}
+          {!loading_excel && 'Convert to Excel'}
+        </Button>
+      </Row>
       <Row justify="space-between">
         <p className={styles.title}>Expired Date</p>
       </Row>

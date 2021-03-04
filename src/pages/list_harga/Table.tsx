@@ -56,11 +56,11 @@ const TableComponent: React.FC<Props> = ({ data, loading, status, error, handleV
       },
       {
         align: 'center',
-        title: 'Harga Rata-rata',
-        ...getColumnSearchProps('avg_harga'),
-        render: ({ avg_harga }: any) => (
+        title: 'Harga Jual',
+        ...getColumnSearchProps('harga_jual'),
+        render: ({ harga_jual }: any) => (
           <span>
-            {avg_harga.map((item, i) => (
+            {harga_jual.map((item, i) => (
               <Tag color="blue" key={i}>
                 {item.toUpperCase()}
               </Tag>

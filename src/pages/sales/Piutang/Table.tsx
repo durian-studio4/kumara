@@ -102,6 +102,7 @@ const TableRetur: React.FC<Props> = ({
                   id={props.id}
                   onClick={() => handleVisibleConfirm(props.id)}
                   type="primary"
+                  disabled={true}
                 >
                   Selesai
                 </Button>
@@ -110,6 +111,7 @@ const TableRetur: React.FC<Props> = ({
                   onClick={() => cancel(props.id)}
                   type="primary"
                   danger
+                  disabled={true}
                 >
                   Batal
                 </Button>

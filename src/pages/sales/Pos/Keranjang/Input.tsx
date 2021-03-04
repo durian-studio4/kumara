@@ -39,7 +39,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
     const timeOut = setTimeout(() => {
       if (barang.values) {
         fetching(
-          `${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`,
+          `${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${encodeURIComponent(barang.values)}`,
         );
       }
     }, 0);
@@ -51,7 +51,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
     const timeOut = setTimeout(() => {
       if (barang.values && id_satuan_barang) {
         fetchingHarga(
-          `${REACT_APP_ENV}/admin/v1/master/barang/hargacheck?nama_barang=${barang.values}&id_satuan_barang=${id_satuan_barang}`,
+          `${REACT_APP_ENV}/admin/v1/master/barang/hargacheck?nama_barang=${encodeURIComponent(barang.values)}&id_satuan_barang=${id_satuan_barang}`,
         );
       }
     }, 0);
@@ -191,7 +191,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
                     <label className={styles.label}>Satuan Barang</label>
                     {barang.values ? (
                       <SelectSatuan
-                        address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${barang.values}`}
+                        address={`${REACT_APP_ENV}/admin/v1/master/barang/selectgroup?nama_barang=${encodeURIComponent(barang.values)}`}
                         select_id="qty_barang"
                         initial="Mohon Pilih"
                         handleChange={onChangeSatuan}

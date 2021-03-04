@@ -31,6 +31,7 @@ const EditComponent: React.FC<Props> = ({
 
   const [qty_display, setQtyDisplay] = useState('');
   const [qty_gudang, setQtyGudang] = useState('');
+  const [harga_jual, setHargaJual] = useState('');
 
   const [display_action, setDisplayAction] = useState('');
   const [gudang_action, setGudangAction] = useState('');
@@ -47,6 +48,16 @@ const EditComponent: React.FC<Props> = ({
     const { value } = e.target;
 
     setQtyDisplay(value);
+  };
+
+  useEffect(() => {
+    setHargaJual(data.harga_jual)
+  }, [data.harga_jual])
+
+  const onChangeHargaJual = (e: { target: HTMLInputElement }) => {
+    const { value } = e.target;
+
+    setHargaJual(value)
   };
 
   const onChangeGudang = (e: { target: HTMLInputElement }) => {
@@ -67,6 +78,7 @@ const EditComponent: React.FC<Props> = ({
     setQtyGudang('');
     setDisplayAction('');
     setGudangAction('');
+    setHargaJual('')
   };
 
   const onEditGudang = () => {
@@ -87,6 +99,16 @@ const EditComponent: React.FC<Props> = ({
         clear: onClearState,
       });
     }
+  };
+
+  const onEditHargaJual = () => {
+      onCreate({
+        url: `${REACT_APP_ENV}/admin/v1/inventory/barang/${id}/update`,
+        json: JSON.stringify({
+          harga_jual,
+        }),
+        clear: onClearState,
+      });
   };
 
   const onEditDisplay = () => {
@@ -247,11 +269,34 @@ const EditComponent: React.FC<Props> = ({
                 </div>
               </div>
             </Row>
+            <Row>
+              <div className={styles.box3}>
+                <div className={styles.group}>
+                  <label className={styles.label} htmlFor="qty_gudang">
+                    Harga Jual
+                  </label>
+                  <Input
+                    className={styles.input}
+                    type="text"
+                    id="harga_jual"
+                    value={harga_jual}
+                    onChange={onChangeHargaJual}
+                    placeholder="Harga Jual"
+                  />
+                  <Button
+                    id="simpan_gudang"
+                    disabled={Boolean(loading_list) || onLoading}
+                    onClick={onEditHargaJual}
+                    type="primary"
+                  >
+                    Simpan
+                  </Button>
+                </div>
+              </div>
+            </Row>
           </Col>
         </div>
       )}
-
-      <div style={{padding:"5px 0px 5px 0px"}}>Harga Rata-Rata: {data.avg_harga}</div>
 
       <Row justify="end">
         {/* {onError ? <p style={{ color: 'red' }}>something went wrong!</p> : null} */}

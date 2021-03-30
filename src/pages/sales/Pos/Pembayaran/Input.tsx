@@ -83,6 +83,7 @@ const InputComponent: React.FC<Props> = ({
 
   const [jumlah_pb, setJumlahPb] = useState('0');
   const [tempo, setTempo] = useState('');
+  const [jumlahDp, setJumlahDp] = useState('');
 
   const [id_type_pembayaran, onChangeType, onClearType] = useSelect('1');
   const [nama_bank, onChangeBank] = useSelect('0');
@@ -100,6 +101,7 @@ const InputComponent: React.FC<Props> = ({
 
   const onChangeKeterangan = (e: { target: HTMLInputElement }) => setKeterangan(e.target.value);
   const onChangeTempo = (e: { target: HTMLInputElement }) => setTempo(e.target.value);
+  const onChangeJumlahDp= (e: { target: HTMLInputElement }) => setJumlahDp(e.target.value);
 
   const onChangePb = (e: any) => {
     const { value } = e.target;
@@ -126,6 +128,7 @@ const InputComponent: React.FC<Props> = ({
       jumlah_pb,
       keterangan,
       nama_bank: initialBank[nama_bank].value,
+      jumlah_dp: jumlahDp
     });
 
     checkoutPembayaran({
@@ -172,6 +175,21 @@ const InputComponent: React.FC<Props> = ({
                   </div>
                   <div className={styles.box3}>
                     <Input className={styles.input} value="Hari" disabled={true} />
+                  </div>
+                </Row>
+
+                <label className={styles.label} htmlFor="dp">
+                  Down Payment
+                </label>
+                <Row justify="space-between">
+                  <div className={styles.box6}>
+                    <Input
+                      className={styles.input}
+                      id="dp"
+                      value={jumlahDp}
+                      onChange={onChangeJumlahDp}
+                      placeholder="0"
+                    />
                   </div>
                 </Row>
               </div>

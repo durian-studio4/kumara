@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { Input, Row, Button, Card, Spin } from 'antd';
+import { Input, Row, Button, Card, Spin, Checkbox } from 'antd';
 import { default as NumberFormat } from 'react-number-format';
 import styles from './index.less';
 
@@ -32,6 +32,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
   const [harga, onChangeHarga, onClearHarga] = useNumber('');
   const [diskon, onChangeDiskon, onClearDiskon] = useNumber('');
   const [qty, onChangeQty, onClearQty] = useNumber('');
+  const [isTax11, onChangeIsTax11] = useState(0);
 
   const barang = useAutoComplete();
 
@@ -82,6 +83,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
     harga,
     id_satuan_barang,
     diskon: !diskon ? 0 : diskon,
+    isTax11: isTax11,
   });
 
   const handleClearState = () => {
@@ -89,6 +91,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
     onClearDiskon();
     onClearHarga();
     onClearSatuan();
+    onChangeIsTax11(0);
     barang.clearText();
   };
 
@@ -239,11 +242,19 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
         </Fragment>
       )}
       <Row
-        justify="end"
+        //justify="end"
         style={{
           marginTop: '1em',
+          display: 'flex'
         }}
       >
+        <div className={styles.group}>
+          <Checkbox value={isTax11} onChange={(e)=>onChangeIsTax11(e.target.checked)} />
+          <label className={styles.label} style={{marginLeft:"5px"}} htmlFor="diskon">
+            Tax 1.1
+          </label>
+        </div>
+        <div style={{flex:1}}/>
         <Button
           type="primary"
           onClick={tambahBarang}

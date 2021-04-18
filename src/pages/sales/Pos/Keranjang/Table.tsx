@@ -39,7 +39,7 @@ const TableComponent: React.FC<Props> = ({
               <th>Harga</th>
               <th>Jumlah</th>
               <th>Diskon</th>
-              <th>-</th>
+              <th>Tax 1.1</th>
               <th>Tax 10%</th>
               <th />
             </tr>

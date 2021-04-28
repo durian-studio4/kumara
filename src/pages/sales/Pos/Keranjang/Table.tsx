@@ -37,10 +37,10 @@ const TableComponent: React.FC<Props> = ({
               <th>Unit</th>
               <th>Satuan</th>
               <th>Harga</th>
-              <th>Jumlah</th>
               <th>Diskon</th>
               <th>Tax 1.1</th>
               <th>Tax 10%</th>
+              <th>Jumlah</th>
               <th />
             </tr>
           </thead>
@@ -52,10 +52,10 @@ const TableComponent: React.FC<Props> = ({
                   <td>{item.qty}</td>
                   <td>{item.satuan_barang}</td>
                   <td>{item.harga}</td>
-                  <td>{item.jumlah}</td>
                   <td>{Math.ceil(item.diskon).toLocaleString('id')}</td>
                   <td>{item.t11}</td>
                   <td>{item.tax}</td>
+                  <td>{item.jumlah}</td>
                   <td>
                     <Button onClick={() => onDelete(item.no)} type="primary" danger>
                       Hapus
@@ -77,10 +77,10 @@ const TableComponent: React.FC<Props> = ({
               <td />
               <td />
               <td />
-              <td>{data.total_harga}</td>
               <td>{data.total_diskon}</td>
               <td>{data.total_t11}</td>
               <td>{data.total_tax}</td>
+              <td>{data.total_tagihan}</td>
             </tr>
           </tbody>
         </table>

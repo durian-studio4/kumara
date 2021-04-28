@@ -249,7 +249,7 @@ const InputComponent: React.FC<Props> = ({ onCreate, onLoading }) => {
         }}
       >
         <div className={styles.group}>
-          <Checkbox value={isTax11} onChange={(e)=>onChangeIsTax11(e.target.checked)} />
+          <Checkbox checked={isTax11} onChange={(e)=>onChangeIsTax11(e.target.checked)} />
           <label className={styles.label} style={{marginLeft:"5px"}} htmlFor="diskon">
             Tax 1.1
           </label>

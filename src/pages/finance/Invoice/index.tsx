@@ -34,7 +34,7 @@ const SetoranComponent: React.FC<Props> = () => {
 
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      fetchList(`${REACT_APP_ENV}/admin/v1/finance/pajak?is_tax=${pajak}`);
+      fetchList(`${REACT_APP_ENV}/admin/v1/finance/pajak?is_tax=${pajak || 2}`);
     }, 0);
     return () => clearTimeout(timeOut);
     // eslint-disable-next-line react-hooks/exhaustive-deps
